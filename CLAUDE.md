@@ -11,6 +11,41 @@
 
 ---
 
+## Development & Deployment Process
+
+All code changes follow this flow:
+
+```
+Local Mac → GitHub (main) → Vercel (auto-deploy) → Live site
+```
+
+### Steps
+
+1. **Claude makes changes** locally on the Mac
+2. **User reviews** on localhost (`npm run dev`) or by looking at the code
+3. **User says "commit"** — Claude creates a git commit with a clear message
+4. **Claude pushes to GitHub** — which triggers Vercel to auto-redeploy
+5. **Live site updates** within ~1 minute
+
+### Rules
+
+- **Never commit without user approval**
+- **Never push to GitHub without user approval**
+- **Always verify build passes** (`npx next build`) before committing
+- All work happens on `main` branch (no feature branches unless requested)
+- GitHub repo is the **single source of truth** for code
+- `.env.local` is gitignored — must be created manually on each machine
+
+### Setting up on a new Mac
+
+1. Install Node.js
+2. `git clone https://github.com/adventureathleteindia/adventure-athlete-india.git`
+3. `cd adventure-athlete-india/website && npm install`
+4. Create `.env.local` with Supabase keys (ask Claude for the template)
+5. `npm run dev` — local dev server at localhost:3000
+
+---
+
 ## Prototype-First Development
 
 Prototypes in `/design/prototypes/` are the **source of truth**.

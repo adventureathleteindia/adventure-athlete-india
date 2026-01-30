@@ -65,7 +65,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
         <div className="flex flex-col items-start">
           <Link
             href="/"
-            className={`font-[family-name:var(--font-heading)] text-[11px] md:text-sm font-medium tracking-[1.5px] md:tracking-[var(--tracking-widest)] uppercase whitespace-nowrap ${logoClasses}`}
+            className={`font-[family-name:var(--font-heading)] text-[11px] lg:text-sm font-medium tracking-[1.5px] lg:tracking-[var(--tracking-widest)] uppercase whitespace-nowrap ${logoClasses}`}
           >
             Adventure Athlete India
           </Link>
@@ -136,7 +136,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
         </div>
 
         {/* Desktop Links - per prototype: 5 nav links, hover bg white/10 for transparent, black/5 for solid */}
-        <ul className="hidden md:flex list-none gap-8">
+        <ul className="hidden lg:flex list-none gap-8">
           {[
             { href: "/experiences", label: "Experiences" },
             { href: "/tours-programs", label: "Tours & Programs" },
@@ -163,12 +163,12 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
         </ul>
 
         {/* CTA Button - Desktop only (hidden on mobile) */}
-        <Link href="/plan" className="btn-flag !hidden md:!inline-block">
+        <Link href="/plan" className="btn-flag !hidden lg:!inline-block">
           Plan Your Adventure
         </Link>
 
         {/* Mobile only: Small CTA + Hamburger */}
-        <div className="flex items-center gap-3 md:!hidden">
+        <div className="flex items-center gap-3 lg:!hidden">
           {/* Mobile CTA - smaller version */}
           <Link
             href="/plan"
@@ -202,7 +202,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] md:hidden">
+        <div className="fixed inset-0 z-[100] lg:hidden">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/50"
