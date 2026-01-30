@@ -32,6 +32,9 @@ const referralSources = [
 export default function PlanPage() {
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const toggleActivity = (value: string) => {
     setSelectedActivities((prev) =>
@@ -57,7 +60,57 @@ export default function PlanPage() {
       {/* Form - per prototype: padding-top: 40px, padding-bottom: 70px (default section padding), container centered with max-width 768px */}
       <section style={{ paddingTop: '40px', paddingBottom: '70px' }}>
         <div style={{ maxWidth: '768px', margin: '0 auto', padding: '0 24px' }} className="md:px-10">
-          <form>
+          {submitted ? (
+            <div style={{ textAlign: 'center', padding: '40px 0' }}>
+              <div style={{ fontSize: '32px', marginBottom: '12px' }}>Inquiry Sent!</div>
+              <p style={{ color: 'var(--color-slate)', marginBottom: '8px' }}>Thanks for reaching out.</p>
+              <p style={{ color: 'var(--color-slate)', marginBottom: '24px' }}>I&apos;ll get back to you within 24-48 hours with ideas.</p>
+              <button
+                onClick={() => { setSubmitted(false); setSelectedActivities([]); setSelectedDifficulty(""); }}
+                className="btn btn-primary"
+              >
+                Send Another Inquiry
+              </button>
+            </div>
+          ) : (
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            setError("");
+            const form = e.currentTarget;
+            const fd = new FormData(form);
+            try {
+              const res = await fetch("/api/leads", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name: fd.get("name"),
+                  email: fd.get("email"),
+                  phone: fd.get("phone"),
+                  nationality: fd.get("nationality") as string,
+                  source_form: "plan",
+                  activities: selectedActivities,
+                  difficulty: selectedDifficulty,
+                  people: fd.get("people"),
+                  dates: fd.get("dates"),
+                  description: fd.get("description"),
+                  referral: fd.get("referral"),
+                }),
+              });
+              if (!res.ok) throw new Error("Failed");
+              setSubmitted(true);
+              form.reset();
+            } catch {
+              setError("Something went wrong. Please try again or contact via WhatsApp.");
+            } finally {
+              setLoading(false);
+            }
+          }}>
+            {error && (
+              <div style={{ padding: '12px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '8px', color: '#DC2626', fontSize: '14px', marginBottom: '16px' }}>
+                {error}
+              </div>
+            )}
             {/* About You Section */}
             <div className="mb-8 pb-8 border-b border-[var(--color-gray-200)]">
               <h2 className="font-[family-name:var(--font-heading)] text-xl mb-6 pb-3 border-b-2 border-[var(--color-amber)] inline-block">
@@ -68,13 +121,13 @@ export default function PlanPage() {
                   <label className="form-label">
                     Name <span className="text-red-600">*</span>
                   </label>
-                  <input type="text" className="form-input" required />
+                  <input type="text" name="name" className="form-input" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">
                     Nationality <span className="text-red-600">*</span>
                   </label>
-                  <input type="text" className="form-input" required />
+                  <input type="text" name="nationality" className="form-input" required />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -82,13 +135,13 @@ export default function PlanPage() {
                   <label className="form-label">
                     Email <span className="text-red-600">*</span>
                   </label>
-                  <input type="email" className="form-input" required />
+                  <input type="email" name="email" className="form-input" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">
                     WhatsApp / Phone <span className="text-red-600">*</span>
                   </label>
-                  <input type="tel" className="form-input" required />
+                  <input type="tel" name="phone" className="form-input" required />
                 </div>
               </div>
             </div>
@@ -158,11 +211,11 @@ export default function PlanPage() {
                   <label className="form-label">
                     Number of people <span className="text-red-600">*</span>
                   </label>
-                  <input type="number" className="form-input" min="1" required />
+                  <input type="number" name="people" className="form-input" min="1" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Preferred dates</label>
-                  <input type="text" className="form-input" placeholder="e.g., March 15-20, 2026" />
+                  <input type="text" name="dates" className="form-input" placeholder="e.g., March 15-20, 2026" />
                 </div>
               </div>
             </div>
@@ -178,6 +231,7 @@ export default function PlanPage() {
                   What&apos;s your ideal adventure? <span className="text-red-600">*</span>
                 </label>
                 <textarea
+                  name="description"
                   className="form-textarea"
                   rows={5}
                   placeholder="Share your fitness level, what you're hoping for, any concerns..."
@@ -187,7 +241,7 @@ export default function PlanPage() {
 
               <div className="form-group">
                 <label className="form-label">How did you hear about me?</label>
-                <select className="form-select">
+                <select name="referral" className="form-select">
                   {referralSources.map((source) => (
                     <option key={source.value} value={source.value}>
                       {source.label}
@@ -212,14 +266,15 @@ export default function PlanPage() {
               </label>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full py-[18px]">
-              Send Inquiry
+            <button type="submit" disabled={loading} className="btn btn-primary w-full py-[18px]" style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}>
+              {loading ? "Sending..." : "Send Inquiry"}
             </button>
 
             <p className="text-center text-[var(--color-slate)] text-sm mt-4">
               I&apos;ll get back to you within 24-48 hours.
             </p>
           </form>
+          )}
         </div>
       </section>
 

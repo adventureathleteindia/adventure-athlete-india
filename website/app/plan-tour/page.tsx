@@ -82,6 +82,9 @@ export default function PlanTourPage() {
   const [selectedFlexibility, setSelectedFlexibility] = useState("");
   const [selectedAccommodation, setSelectedAccommodation] = useState("");
   const [selectedPickup, setSelectedPickup] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const toggleActivity = (value: string) => {
     setSelectedActivities((prev) =>
@@ -107,7 +110,66 @@ export default function PlanTourPage() {
       {/* Form */}
       <section style={{ paddingTop: '40px' }}>
         <div className="container" style={{ maxWidth: '768px' }}>
-          <form>
+          {submitted ? (
+            <div style={{ textAlign: 'center', padding: '40px 0' }}>
+              <div style={{ fontSize: '32px', marginBottom: '12px' }}>Tour Inquiry Sent!</div>
+              <p style={{ color: 'var(--color-slate)', marginBottom: '8px' }}>Thanks for your detailed submission.</p>
+              <p style={{ color: 'var(--color-slate)', marginBottom: '24px' }}>I&apos;ll get back to you within 48 hours with a custom itinerary proposal.</p>
+              <button
+                onClick={() => { setSubmitted(false); setSelectedActivities([]); setSelectedLevel(""); setSelectedFlexibility(""); setSelectedAccommodation(""); setSelectedPickup(""); }}
+                style={{ padding: '12px 24px', background: 'var(--color-forest)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
+              >
+                Send Another Inquiry
+              </button>
+            </div>
+          ) : (
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            setError("");
+            const form = e.currentTarget;
+            const fd = new FormData(form);
+            try {
+              const res = await fetch("/api/leads", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name: fd.get("name"),
+                  email: fd.get("email"),
+                  phone: fd.get("phone"),
+                  nationality: fd.get("nationality") as string,
+                  source_form: "plan_tour",
+                  city: fd.get("city"),
+                  program: fd.get("program"),
+                  activities: selectedActivities,
+                  experience_level: selectedLevel,
+                  dates: fd.get("dates"),
+                  group_size: fd.get("group_size"),
+                  flexibility: selectedFlexibility,
+                  duration: fd.get("duration"),
+                  budget: fd.get("budget"),
+                  accommodation: selectedAccommodation,
+                  pickup: selectedPickup,
+                  dietary: fd.get("dietary"),
+                  medical: fd.get("medical"),
+                  excitement: fd.get("excitement"),
+                  referral: fd.get("referral"),
+                }),
+              });
+              if (!res.ok) throw new Error("Failed");
+              setSubmitted(true);
+              form.reset();
+            } catch {
+              setError("Something went wrong. Please try again or contact via WhatsApp.");
+            } finally {
+              setLoading(false);
+            }
+          }}>
+            {error && (
+              <div style={{ padding: '12px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '8px', color: '#DC2626', fontSize: '14px', marginBottom: '16px' }}>
+                {error}
+              </div>
+            )}
 
             {/* Section 1: About You */}
             <div style={{ marginBottom: '32px', paddingBottom: '32px', borderBottom: '1px solid var(--color-gray-200)' }}>
@@ -119,13 +181,13 @@ export default function PlanTourPage() {
                   <label className="form-label">
                     Full Name <span style={{ color: '#DC2626' }}>*</span>
                   </label>
-                  <input type="text" className="form-input" required />
+                  <input type="text" name="name" className="form-input" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">
                     Email <span style={{ color: '#DC2626' }}>*</span>
                   </label>
-                  <input type="email" className="form-input" required />
+                  <input type="email" name="email" className="form-input" required />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '16px', marginBottom: '16px' }}>
@@ -133,19 +195,19 @@ export default function PlanTourPage() {
                   <label className="form-label">
                     Phone / WhatsApp <span style={{ color: '#DC2626' }}>*</span>
                   </label>
-                  <input type="tel" className="form-input" required />
+                  <input type="tel" name="phone" className="form-input" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">
                     Nationality <span style={{ color: '#DC2626' }}>*</span>
                   </label>
-                  <input type="text" className="form-input" required />
+                  <input type="text" name="nationality" className="form-input" required />
                 </div>
               </div>
               <div className="grid grid-cols-1" style={{ gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">Current City</label>
-                  <input type="text" className="form-input" placeholder="Where are you based?" />
+                  <input type="text" name="city" className="form-input" placeholder="Where are you based?" />
                 </div>
               </div>
             </div>
@@ -161,7 +223,7 @@ export default function PlanTourPage() {
                 <label className="form-label">
                   Program of Interest <span style={{ color: '#DC2626' }}>*</span>
                 </label>
-                <select className="form-select" required>
+                <select name="program" className="form-select" required>
                   {programs.map((program) => (
                     <option key={program.value} value={program.value}>
                       {program.label}
@@ -244,13 +306,13 @@ export default function PlanTourPage() {
               <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '16px', marginBottom: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">Preferred Travel Dates</label>
-                  <input type="text" className="form-input" placeholder="e.g., March 15-22, 2026" />
+                  <input type="text" name="dates" className="form-input" placeholder="e.g., March 15-22, 2026" />
                 </div>
                 <div className="form-group">
                   <label className="form-label">
                     Group Size <span style={{ color: '#DC2626' }}>*</span>
                   </label>
-                  <input type="number" className="form-input" min={1} required placeholder="Number of people" />
+                  <input type="number" name="group_size" className="form-input" min={1} required placeholder="Number of people" />
                 </div>
               </div>
 
@@ -277,7 +339,7 @@ export default function PlanTourPage() {
               <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">Duration</label>
-                  <select className="form-select">
+                  <select name="duration" className="form-select">
                     {durationOptions.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
@@ -287,7 +349,7 @@ export default function PlanTourPage() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Budget Range</label>
-                  <select className="form-select">
+                  <select name="budget" className="form-select">
                     {budgetOptions.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
@@ -370,13 +432,14 @@ export default function PlanTourPage() {
               {/* Dietary Requirements */}
               <div className="form-group">
                 <label className="form-label">Dietary Requirements</label>
-                <input type="text" className="form-input" placeholder="e.g., Vegetarian, Vegan, Gluten-free..." />
+                <input type="text" name="dietary" className="form-input" placeholder="e.g., Vegetarian, Vegan, Gluten-free..." />
               </div>
 
               {/* Special Requirements */}
               <div className="form-group" style={{ marginTop: '16px' }}>
                 <label className="form-label">Special Requirements / Medical Conditions</label>
                 <textarea
+                  name="medical"
                   className="form-textarea"
                   rows={3}
                   placeholder="Anything I should know — allergies, injuries, medical conditions..."
@@ -395,6 +458,7 @@ export default function PlanTourPage() {
                   What excites you most about this trip? <span style={{ color: '#DC2626' }}>*</span>
                 </label>
                 <textarea
+                  name="excitement"
                   className="form-textarea"
                   rows={5}
                   placeholder="Share your expectations, what you're hoping to experience, any specific interests..."
@@ -404,7 +468,7 @@ export default function PlanTourPage() {
 
               <div className="form-group">
                 <label className="form-label">How did you hear about us?</label>
-                <select className="form-select">
+                <select name="referral" className="form-select">
                   {referralSources.map((source) => (
                     <option key={source.value} value={source.value}>
                       {source.label}
@@ -434,10 +498,11 @@ export default function PlanTourPage() {
             {/* Submit Button */}
             <button
               type="submit"
+              disabled={loading}
               style={{
                 width: '100%',
                 padding: '18px',
-                background: 'linear-gradient(90deg, #F59E0B 0%, #B45309 100%)',
+                background: loading ? '#9CA3AF' : 'linear-gradient(90deg, #F59E0B 0%, #B45309 100%)',
                 color: 'white',
                 border: 'none',
                 fontFamily: 'var(--font-body)',
@@ -446,16 +511,17 @@ export default function PlanTourPage() {
                 letterSpacing: '1px',
                 textTransform: 'uppercase',
                 borderRadius: '4px',
-                cursor: 'pointer',
+                cursor: loading ? 'not-allowed' : 'pointer',
               }}
             >
-              Send Tour Inquiry
+              {loading ? "Sending..." : "Send Tour Inquiry"}
             </button>
 
             <p style={{ textAlign: 'center', color: 'var(--color-slate)', fontSize: '14px', marginTop: '16px' }}>
               I&apos;ll get back to you within 48 hours with a custom itinerary proposal.
             </p>
           </form>
+          )}
         </div>
       </section>
 

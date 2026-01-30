@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Navigation, Footer } from "@/components/layout";
 
@@ -36,6 +37,37 @@ const socialLinks = [
 ];
 
 export default function ContactPage() {
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          source_form: "contact",
+          message: formData.get("message"),
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to send");
+      setSubmitted(true);
+      form.reset();
+    } catch {
+      setError("Something went wrong. Please try WhatsApp or email instead.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Navigation variant="solid" />
@@ -119,27 +151,47 @@ export default function ContactPage() {
             <div style={{ background: 'var(--color-gray-50)', padding: '32px', borderRadius: '12px' }}>
               {/* Per prototype: font-size: 20px; margin-bottom: 24px */}
               <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', marginBottom: '24px' }}>Quick Message</h2>
-              <form>
+              {submitted ? (
+                <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                  <div style={{ fontSize: '32px', marginBottom: '12px' }}>Sent!</div>
+                  <p style={{ color: 'var(--color-slate)', marginBottom: '16px' }}>I&apos;ll get back to you within 24-48 hours.</p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="btn"
+                    style={{ background: 'var(--color-forest)', color: 'white' }}
+                  >
+                    Send Another
+                  </button>
+                </div>
+              ) : (
+              <form onSubmit={handleSubmit}>
+                {error && (
+                  <div style={{ padding: '12px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '8px', color: '#DC2626', fontSize: '14px', marginBottom: '16px' }}>
+                    {error}
+                  </div>
+                )}
                 <div className="form-group">
                   <label className="form-label">Name</label>
-                  <input type="text" className="form-input" required />
+                  <input type="text" name="name" className="form-input" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Email</label>
-                  <input type="email" className="form-input" required />
+                  <input type="email" name="email" className="form-input" required />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Message</label>
-                  <textarea className="form-textarea" rows={4} required></textarea>
+                  <textarea name="message" className="form-textarea" rows={4} required></textarea>
                 </div>
                 <button
                   type="submit"
+                  disabled={loading}
                   className="btn"
-                  style={{ width: '100%', background: 'linear-gradient(90deg, #F59E0B 0%, #B45309 100%)', color: 'white' }}
+                  style={{ width: '100%', background: loading ? '#9CA3AF' : 'linear-gradient(90deg, #F59E0B 0%, #B45309 100%)', color: 'white', cursor: loading ? 'not-allowed' : 'pointer' }}
                 >
-                  Send Message
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
               </form>
+              )}
               {/* Per prototype: font-size: 13px; color: var(--slate); margin-top: 16px; text-align: center; white-space: nowrap */}
               <p style={{ fontSize: '13px', color: 'var(--color-slate)', marginTop: '16px', textAlign: 'center', whiteSpace: 'nowrap' }}>
                 For detailed tour inquiries, use the{" "}
