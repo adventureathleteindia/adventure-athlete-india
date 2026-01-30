@@ -65,27 +65,21 @@ describe('Footer', () => {
     })
   })
 
-  describe('Experiences Column', () => {
-    it('renders Experiences heading', () => {
+  describe('Explore Column', () => {
+    it('renders Explore heading', () => {
       render(<Footer />)
-      // Experiences heading appears in both mobile and desktop
-      const headings = screen.getAllByText('Experiences')
+      const headings = screen.getAllByText('Explore')
       expect(headings.length).toBeGreaterThanOrEqual(1)
     })
 
-    it('renders experience types', () => {
+    it('renders explore links', () => {
       render(<Footer />)
-      // Experience types appear in both mobile and desktop versions
-      const mtbLinks = screen.getAllByText('Mountain Biking')
-      expect(mtbLinks.length).toBeGreaterThanOrEqual(1)
-      const roadLinks = screen.getAllByText('Road Cycling')
-      expect(roadLinks.length).toBeGreaterThanOrEqual(1)
-      const trailLinks = screen.getAllByText('Trail Running')
-      expect(trailLinks.length).toBeGreaterThanOrEqual(1)
-      const hikingLinks = screen.getAllByText('Hiking')
-      expect(hikingLinks.length).toBeGreaterThanOrEqual(1)
-      const natureLinks = screen.getAllByText('Nature Walks')
-      expect(natureLinks.length).toBeGreaterThanOrEqual(1)
+      const experiencesLinks = screen.getAllByText('Experiences')
+      expect(experiencesLinks.length).toBeGreaterThanOrEqual(1)
+      const toursLinks = screen.getAllByText('Tours & Programs')
+      expect(toursLinks.length).toBeGreaterThanOrEqual(1)
+      const rentalsLinks = screen.getAllByText('Equipment Rentals')
+      expect(rentalsLinks.length).toBeGreaterThanOrEqual(1)
     })
   })
 

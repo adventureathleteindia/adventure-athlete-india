@@ -204,7 +204,7 @@ export default function FAQPage() {
                 marginTop: 0,
               }}
             >
-              I'm happy to chat and answer anything else.
+              I&apos;m happy to chat and answer anything else.
             </p>
             <Link
               href="/contact"
