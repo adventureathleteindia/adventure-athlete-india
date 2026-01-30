@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atul Chauhan — Athlete Profile | Adventure Athlete India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #2D5A3D;
+    --forest-dark: #1E3F2A;
+    --forest-light: #3A7A50;
+    --amber: #D97706;
+    --amber-light: #F59E0B;
+    --dark: #1A202C;
+    --slate: #64748b;
+    --light-bg: #F8FAF9;
+    --card-bg: #FFFFFF;
+    --border: #E2E8F0;
+    --gold: #D97706;
+    --silver: #94A3B8;
+    --bronze: #B45309;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    color: var(--dark);
+    background: #EAEFEC;
+    line-height: 1.6;
+  }
+
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    box-shadow: 0 0 60px rgba(0,0,0,0.08);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 420px;
+    background: linear-gradient(165deg, var(--forest-dark) 0%, var(--forest) 40%, var(--forest-light) 100%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 48px 40px;
+  }
+
+  .hero-bg-image {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.18;
+    mix-blend-mode: luminosity;
+  }
+
+  /* Mountain silhouette SVG overlay */
+  .hero-mountains {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    opacity: 0.12;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-brand {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 16px;
+  }
+
+  .hero-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1.05;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .hero-tagline {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    border-left: 3px solid var(--amber);
+    padding-left: 14px;
+  }
+
+  .hero-tagline .tpipe {
+    color: var(--amber-light);
+    margin: 0 6px;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hero-meta-item svg {
+    width: 15px;
+    height: 15px;
+    fill: var(--amber-light);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 40px 48px;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .section-divider {
+    width: 40px;
+    height: 3px;
+    background: var(--amber);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* ── STATS DASHBOARD ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 14px;
+    text-align: center;
+    transition: box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    box-shadow: 0 2px 12px rgba(45,90,61,0.08);
+  }
+
+  .stat-value {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--forest);
+    line-height: 1.1;
+  }
+
+  .stat-unit {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--slate);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-top: 4px;
+  }
+
+  /* ── BIO ── */
+  .bio-text {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #374151;
+  }
+
+  .bio-text p + p {
+    margin-top: 14px;
+  }
+
+  .bio-highlight {
+    background: linear-gradient(120deg, rgba(45,90,61,0.08) 0%, rgba(249,158,11,0.08) 100%);
+    border-left: 3px solid var(--forest);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    margin: 20px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* ── ACHIEVEMENTS ── */
+  .achievement-category {
+    margin-bottom: 32px;
+  }
+
+  .achievement-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .achievement-cat-header {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .achievement-cat-header svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .achievement-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .achievement-table thead th {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--slate);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .achievement-table tbody tr {
+    border-bottom: 1px solid #F1F5F9;
+  }
+
+  .achievement-table tbody tr:hover {
+    background: #F8FAF9;
+  }
+
+  .achievement-table td {
+    padding: 9px 10px;
+    vertical-align: middle;
+    color: #374151;
+    line-height: 1.4;
+  }
+
+  .achievement-table td:first-child {
+    width: 38px;
+    text-align: center;
+  }
+
+  .medal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: #FFF;
+    flex-shrink: 0;
+  }
+
+  .medal-gold {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+    box-shadow: 0 1px 4px rgba(217,119,6,0.3);
+  }
+
+  .medal-silver {
+    background: linear-gradient(135deg, #6B7280, #94A3B8);
+    box-shadow: 0 1px 4px rgba(100,116,139,0.3);
+  }
+
+  .medal-bronze {
+    background: linear-gradient(135deg, #92400E, #B45309);
+    box-shadow: 0 1px 4px rgba(180,83,9,0.3);
+  }
+
+  .medal-place {
+    background: #E2E8F0;
+    color: var(--slate);
+  }
+
+  .event-name {
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .event-detail {
+    font-size: 12.5px;
+    color: var(--slate);
+    margin-top: 1px;
+  }
+
+  .event-year {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+
+  /* ── PHOTO BREAK ── */
+  .photo-break {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+
+  .photo-break img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55) saturate(1.1);
+  }
+
+  .photo-break-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(45,90,61,0.7) 0%, rgba(26,32,44,0.5) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-break-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* ── NOTABLE FIRSTS ── */
+  .firsts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .first-card {
+    background: linear-gradient(135deg, var(--forest-dark), var(--forest));
+    border-radius: 8px;
+    padding: 20px 16px;
+    text-align: center;
+    color: #FFF;
+  }
+
+  .first-card-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 10px;
+    fill: var(--amber-light);
+  }
+
+  .first-card-peak {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+
+  .first-card-elev {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--amber-light);
+  }
+
+  .first-card-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  /* ── CREDENTIALS ── */
+  .cred-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .cred-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+
+  .cred-card-value {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--forest);
+  }
+
+  .cred-card-label {
+    font-size: 12px;
+    color: var(--slate);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* ── GOALS ── */
+  .goals-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .goals-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  .goal-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .goal-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--amber);
+  }
+
+  /* ── SPONSOR VALUE ── */
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .sponsor-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sponsor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--amber);
+    border-radius: 2px 0 0 2px;
+  }
+
+  .sponsor-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--forest);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .sponsor-card-text {
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-timeline {
+    position: relative;
+    padding-left: 24px;
+    border-left: 2px solid var(--border);
+  }
+
+  .edu-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .edu-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .edu-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    background: var(--forest);
+    border-radius: 50%;
+    border: 2px solid #FFF;
+    box-shadow: 0 0 0 2px var(--forest);
+  }
+
+  .edu-degree {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark);
+  }
+
+  .edu-school {
+    font-size: 14px;
+    color: var(--slate);
+  }
+
+  .edu-score {
+    font-size: 13px;
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  /* ── CONTACT FOOTER ── */
+  .contact-footer {
+    background: linear-gradient(165deg, var(--forest-dark) 0%, var(--forest) 100%);
+    padding: 40px 48px;
+    color: #FFF;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .contact-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 28px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .contact-item a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+  }
+
+  .contact-item a:hover {
+    color: var(--amber-light);
+  }
+
+  .contact-item svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--amber-light);
+    flex-shrink: 0;
+  }
+
+  .contact-qr {
+    text-align: center;
+  }
+
+  .contact-qr img {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    border: 3px solid rgba(255,255,255,0.15);
+  }
+
+  .contact-qr-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  .footer-brand {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer-brand-year {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body {
+      background: #FFF;
+    }
+
+    .page-container {
+      box-shadow: none;
+      max-width: 100%;
+    }
+
+    .hero {
+      min-height: 320px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .stat-card:hover,
+    .achievement-table tbody tr:hover {
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .photo-break {
+      height: 120px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .first-card {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .contact-footer {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .section {
+      break-inside: avoid;
+    }
+
+    .achievement-category {
+      break-inside: avoid;
+    }
+
+    .medal {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero {
+      padding: 36px 24px 32px;
+      min-height: 360px;
+    }
+
+    .hero-name {
+      font-size: 38px;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+    }
+
+    .section {
+      padding: 32px 24px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .firsts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cred-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sponsor-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .contact-info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-item {
+      justify-content: center;
+    }
+
+    .section-title {
+      font-size: 22px;
+    }
+
+    .achievement-table {
+      font-size: 13px;
+    }
+
+    .footer-brand {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-container">
+
+  <!-- ════════════════════════════ HERO ════════════════════════════ -->
+  <header class="hero">
+    <div class="hero-bg-image"></div>
+    <svg class="hero-mountains" viewBox="0 0 800 120" preserveAspectRatio="none" fill="rgba(0,0,0,0.5)">
+      <polygon points="0,120 100,45 180,80 280,20 350,65 450,10 520,55 600,25 680,60 750,30 800,70 800,120"/>
+      <polygon points="0,120 60,75 140,95 220,55 300,85 400,40 480,75 560,50 640,80 720,45 800,90 800,120" fill="rgba(0,0,0,0.3)"/>
+    </svg>
+    <div class="hero-content">
+      <div class="hero-brand">Adventure Athlete India</div>
+      <h1 class="hero-name">Atul Chauhan</h1>
+      <div class="hero-subtitle">Engineer <span style="color: var(--amber-light); font-weight: 300;">|</span> Mountain Biker <span style="color: var(--amber-light); font-weight: 300;">|</span> Trail Runner <span style="color: var(--amber-light); font-weight: 300;">|</span> Adventure Guide</div>
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Shimla, Himachal Pradesh, India
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+          Age 31 &middot; DOB: 28 Feb 1994
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════ PHYSICAL STATS ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Performance Metrics</div>
+    <h2 class="section-title">Athlete Dashboard</h2>
+    <div class="section-divider"></div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">185 <span class="stat-unit">cm</span></div>
+        <div class="stat-label">Height</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">78 <span class="stat-unit">kg</span></div>
+        <div class="stat-label">Weight</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">54 <span class="stat-unit">bpm</span></div>
+        <div class="stat-label">Resting HR</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">190 <span class="stat-unit">bpm</span></div>
+        <div class="stat-label">Max HR</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">290<span class="stat-unit">W</span></div>
+        <div class="stat-label">FTP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">54 <span class="stat-unit">min</span></div>
+        <div class="stat-label">Best VK</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">41 <span class="stat-unit">min</span></div>
+        <div class="stat-label">Best 10K*</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">555</div>
+        <div class="stat-label">ITRA Score</div>
+      </div>
+    </div>
+    <p style="font-size: 11px; color: var(--slate); margin-top: 8px; text-align: right;">*10K on 300m+ elevation course</p>
+  </section>
+
+  <!-- ════════════════════════════ BIO ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Profile</div>
+    <h2 class="section-title">About Atul</h2>
+    <div class="section-divider"></div>
+
+    <div class="bio-text">
+      <p>Atul Chauhan is an engineer turned competitive trail runner and mountain biker based in Shimla, Himachal Pradesh &mdash; the heart of the Indian Himalayas. Since his debut at Hero MTB Himalaya in 2016, where he finished 10th in the open men's solo category, he has built a decade-long competitive career that spans mountain biking nationals, trail ultras, vertical kilometre races, and duathlons.</p>
+
+      <p>A 3x HP State Team member at Mountain Biking Nationals, multiple race winner (Tuffman 10K 2022 &amp; 2024, HASTPA Duathlon 2023), and consistent podium finisher across disciplines, Atul brings a rare versatility to Indian endurance sport &mdash; equally competitive on a bike and on foot.</p>
+
+      <div class="bio-highlight">
+        Beyond racing, Atul is the founder of <strong>Adventure Athlete India</strong> &mdash; a licensed Himalayan adventure guide service offering curated trail running, mountain biking, hiking experiences, and multi-day tours for domestic and international clients.
+      </div>
+
+      <p>He holds a Licensed HP Tourism Guide certification (Reg: 080724 42383, valid through August 2027) and is one of a select few athletes in India who compete at the state and national level while simultaneously operating an adventure tourism business.</p>
+
+      <p>With a B.Tech in Computer Science and an MBA, Atul brings an engineer's mindset to everything he does &mdash; combining technical discipline with athletic grit and business acumen to build Adventure Athlete India into a growing platform that connects athletes and adventure seekers with the raw, unfiltered Himalayas.</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ ACHIEVEMENTS: RUNNING ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Competition Record</div>
+    <h2 class="section-title">Race Achievements</h2>
+    <div class="section-divider"></div>
+
+    <!-- Running -->
+    <div class="achievement-category">
+      <div class="achievement-cat-header">
+        <svg viewBox="0 0 24 24" fill="var(--forest)"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/></svg>
+        Trail Running &amp; Duathlon
+      </div>
+      <table class="achievement-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Event</th>
+            <th style="text-align: right;">Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="medal medal-gold">1</span></td>
+            <td>
+              <div class="event-name">HASTPA Run and Bike</div>
+              <div class="event-detail">Duathlon &mdash; Running Category</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2023</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-gold">1</span></td>
+            <td>
+              <div class="event-name">Tuffman Shimla 10K</div>
+              <div class="event-detail">Mountain Run</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2024</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-gold">1</span></td>
+            <td>
+              <div class="event-name">Tuffman Shimla 10K</div>
+              <div class="event-detail">Mountain Run</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2022</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-gold">1</span></td>
+            <td>
+              <div class="event-name">2nd Adventure Racing Championship</div>
+              <div class="event-detail">Duathlon &mdash; Team of Four</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2017</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-silver">2</span></td>
+            <td>
+              <div class="event-name">Silk Route Ultra Trail 15km</div>
+              <div class="event-detail">Trail Ultra</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2023</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-silver">2</span></td>
+            <td>
+              <div class="event-name">The Hell Race VK</div>
+              <div class="event-detail">Vertical Kilometre</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2019</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-bronze">3</span></td>
+            <td>
+              <div class="event-name">Summit Run Sethan Dome - Hampta</div>
+              <div class="event-detail">Mountain Trail</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2025</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-bronze">3</span></td>
+            <td>
+              <div class="event-name">Tuffman 6hrs Relay Run</div>
+              <div class="event-detail">Relay &mdash; Panchkula</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2021</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">4</span></td>
+            <td>
+              <div class="event-name">Mt. Patalsu Challenge</div>
+              <div class="event-detail">Solang Valley</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2020</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">6</span></td>
+            <td>
+              <div class="event-name">Hanumangarh Epic (The Hell Race)</div>
+              <div class="event-detail">Trail Ultra</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2023</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">8</span></td>
+            <td>
+              <div class="event-name">Voice Against Drugs Marathon</div>
+              <div class="event-detail">Shimla</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2016</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">9</span></td>
+            <td>
+              <div class="event-name">Shimla Daud Half Marathon</div>
+              <div class="event-detail">Half Marathon</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2017</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mountain Biking -->
+    <div class="achievement-category">
+      <div class="achievement-cat-header">
+        <svg viewBox="0 0 24 24" fill="var(--forest)"><path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm5.8-10l2.4-2.4.8.8c1.3 1.3 3 2.1 5.1 2.1V9c-1.5 0-2.7-.6-3.6-1.5l-1.9-1.9c-.5-.4-1-.6-1.6-.6s-1.1.2-1.4.6L7.8 8.4c-.4.4-.6.9-.6 1.4 0 .6.2 1.1.6 1.4L11 14v5h2v-6.2l-2.2-2.3zM19 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/></svg>
+        Mountain Biking &amp; Road Cycling
+      </div>
+      <table class="achievement-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Event</th>
+            <th style="text-align: right;">Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="medal medal-gold">1</span></td>
+            <td>
+              <div class="event-name">2-Day XCM MTB Shimla Race</div>
+              <div class="event-detail">Team Category</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2017</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-silver">2</span></td>
+            <td>
+              <div class="event-name">XCC Race Sunni</div>
+              <div class="event-detail">Cross-Country Short Track</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2020</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-silver">2</span></td>
+            <td>
+              <div class="event-name">2-Day MTB Shimla Race</div>
+              <div class="event-detail">Team Category &middot; 3rd Overall</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2019</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-bronze">3</span></td>
+            <td>
+              <div class="event-name">Tour de Sanawar XCC</div>
+              <div class="event-detail">Sanawar School</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2019</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-bronze">3</span></td>
+            <td>
+              <div class="event-name">Green Wheelz XCO</div>
+              <div class="event-detail">Gurugram</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2019</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-bronze">3</span></td>
+            <td>
+              <div class="event-name">Battle of Mountain Bikers</div>
+              <div class="event-detail">Chandigarh</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2021</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">4</span></td>
+            <td>
+              <div class="event-name">Riders of the Storm XCO</div>
+              <div class="event-detail">Chandigarh</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2020</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">4</span></td>
+            <td>
+              <div class="event-name">Trails and Dust Race</div>
+              <div class="event-detail">2-Day Stage Race &mdash; Manali</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2017</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">4</span></td>
+            <td>
+              <div class="event-name">Hero MTB Himalaya</div>
+              <div class="event-detail">8-Day XCM &mdash; Team Category</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2017</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">5</span></td>
+            <td>
+              <div class="event-name">HP State MTB Championship</div>
+              <div class="event-detail">State Championship</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2019</span></td>
+          </tr>
+          <tr>
+            <td><span class="medal medal-place">7</span></td>
+            <td>
+              <div class="event-name">Bangalore Mountain Festival XCO</div>
+              <div class="event-detail">Cross-Country Olympic</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2018</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Nationals -->
+    <div class="achievement-category">
+      <div class="achievement-cat-header">
+        <svg viewBox="0 0 24 24" fill="var(--forest)"><path d="M14 6l-1-2H5v17h2v-7h5l1 2h7V6h-6zm4 8h-4l-1-2H7V6h5l1 2h5v6z"/></svg>
+        National-Level Representation &middot; HP State Team
+      </div>
+      <table class="achievement-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Event</th>
+            <th style="text-align: right;">Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--forest)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </td>
+            <td>
+              <div class="event-name">MTB Nationals &mdash; XCO</div>
+              <div class="event-detail">Representing Himachal Pradesh &middot; 15th place</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2021</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--forest)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </td>
+            <td>
+              <div class="event-name">Road Cycling Nationals &mdash; TT</div>
+              <div class="event-detail">Representing Himachal Pradesh &middot; 23rd place</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2019</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--forest)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </td>
+            <td>
+              <div class="event-name">MTB Nationals &mdash; XCO</div>
+              <div class="event-detail">Representing Himachal Pradesh &middot; 15th place</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2018</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--forest)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </td>
+            <td>
+              <div class="event-name">Road Cycling Nationals</div>
+              <div class="event-detail">Representing Himachal Pradesh</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2018</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--forest)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </td>
+            <td>
+              <div class="event-name">MTB Nationals &mdash; XCO</div>
+              <div class="event-detail">Representing Himachal Pradesh &middot; 20th place</div>
+            </td>
+            <td style="text-align: right;"><span class="event-year">2017</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ PHOTO BREAK ════════════════════════════ -->
+  <div class="photo-break">
+    <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1200&q=80" alt="Mountain biking in the mountains" loading="lazy">
+    <div class="photo-break-overlay">
+      <span class="photo-break-text">Built in the Himalayas</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ NOTABLE FIRSTS ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Exploration</div>
+    <h2 class="section-title">First-Ever Mountain Bike Summits</h2>
+    <div class="section-divider"></div>
+
+    <div class="firsts-grid">
+      <div class="first-card">
+        <svg class="first-card-icon" viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+        <div class="first-card-peak">Chandernahan Lake</div>
+        <div class="first-card-elev">4,000m</div>
+        <div class="first-card-desc">First MTB summit</div>
+      </div>
+      <div class="first-card">
+        <svg class="first-card-icon" viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+        <div class="first-card-peak">Kuppar Peak</div>
+        <div class="first-card-elev">3,350m</div>
+        <div class="first-card-desc">First MTB summit</div>
+      </div>
+      <div class="first-card">
+        <svg class="first-card-icon" viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+        <div class="first-card-peak">Kot Kali Peak</div>
+        <div class="first-card-elev">3,250m</div>
+        <div class="first-card-desc">First MTB summit</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ CREDENTIALS ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">Certifications &amp; Qualifications</h2>
+    <div class="section-divider"></div>
+
+    <div class="cred-grid">
+      <div class="cred-card">
+        <div class="cred-card-value">HP Tourism Guide</div>
+        <div class="cred-card-label">Licensed Guide<br>Reg: 080724 42383<br>Valid through Aug 2027</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-value">ITRA 555</div>
+        <div class="cred-card-label">International Trail Running<br>Association Score</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-value">3x State Team</div>
+        <div class="cred-card-label">HP State Representative<br>MTB Nationals &middot; Also Road Cycling</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ EDUCATION ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="section-divider"></div>
+
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <div class="edu-degree">MBA</div>
+        <div class="edu-school">Himachal Pradesh University, 2019</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">B.Tech &mdash; Computer Science</div>
+        <div class="edu-school">Lovely Professional University, 2015</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">Senior Secondary</div>
+        <div class="edu-school">DAV Public School, New Shimla</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ FUTURE GOALS ════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Vision</div>
+    <h2 class="section-title">Future Goals</h2>
+    <div class="section-divider"></div>
+
+    <ul class="goals-list">
+      <li>
+        <div class="goal-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div><strong>International Trail Running</strong> &mdash; Represent India at international trail running events and ultra-distance races</div>
+      </li>
+      <li>
+        <div class="goal-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div><strong>International MTB Racing</strong> &mdash; Compete in XCM mountain biking events on the international stage</div>
+      </li>
+      <li>
+        <div class="goal-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div><strong>Himalayan FKT Attempts</strong> &mdash; Establish Fastest Known Times on iconic Himalayan routes, both on foot and by bike</div>
+      </li>
+      <li>
+        <div class="goal-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div><strong>Scale Adventure Athlete India</strong> &mdash; Grow the platform into a leading adventure sports brand in the Himalayas</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ════════════════════════════ SPONSORSHIP VALUE ════════════════════════════ -->
+  <section class="section" style="background: var(--light-bg);">
+    <div class="section-label">Partnership</div>
+    <h2 class="section-title">What a Sponsor Gets</h2>
+    <div class="section-divider"></div>
+
+    <div class="sponsor-grid">
+      <div class="sponsor-card">
+        <div class="sponsor-card-title">Digital Visibility</div>
+        <div class="sponsor-card-text">Active across Instagram (@adventureathlete.in), YouTube (@adventureathleindia), Strava, and Facebook &mdash; with a growing, engaged audience in the outdoor and adventure niche.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-card-title">Authentic Content</div>
+        <div class="sponsor-card-text">Regular race content, training footage, and raw Himalayan adventure videos. Real stories from real terrain &mdash; the kind of content audiences connect with.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-card-title">Brand Ambassador</div>
+        <div class="sponsor-card-text">As a licensed guide running organized tours, sponsors gain direct exposure to international tourists and domestic adventure seekers through guided experiences.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-card-title">Race Calendar</div>
+        <div class="sponsor-card-text">Active competitor in trail running and MTB events across India. Jersey, gear, and equipment visibility at races throughout the year.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-card-title">Demographic Reach</div>
+        <div class="sponsor-card-text">Audience spans fitness enthusiasts, adventure travelers, and cycling/running communities across India and internationally &mdash; an increasingly valuable consumer segment.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-card-title">Website Placement</div>
+        <div class="sponsor-card-text">adventureathleteindia.com &mdash; sponsor logo placement, featured partnerships, and integrated brand storytelling on the website.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ CONTACT FOOTER ════════════════════════════ -->
+  <footer class="contact-footer">
+    <div class="section-label" style="color: var(--amber-light); margin-bottom: 4px;">Get in Touch</div>
+    <h2 class="section-title" style="color: #FFF; margin-bottom: 24px;">Contact &amp; Social</h2>
+
+    <div class="contact-grid">
+      <div class="contact-info-grid">
+        <!-- Email -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <a href="mailto:adventureathleteindia@gmail.com">adventureathleteindia@gmail.com</a>
+        </div>
+        <!-- Phone -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          <a href="tel:+919459033240">+91-9459033240</a>
+        </div>
+        <!-- Website -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+          <a href="https://adventureathleteindia.com" target="_blank">adventureathleteindia.com</a>
+        </div>
+        <!-- Instagram -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          <a href="https://instagram.com/adventureathlete.in" target="_blank">@adventureathlete.in</a>
+        </div>
+        <!-- YouTube -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+          <a href="https://youtube.com/@adventureathleindia" target="_blank">@adventureathleindia</a>
+        </div>
+        <!-- Facebook -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04z"/></svg>
+          <a href="https://facebook.com/adventureathleteindia" target="_blank">Adventure Athlete India</a>
+        </div>
+        <!-- Strava -->
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
+          <a href="https://www.strava.com/athletes/atulchauhan" target="_blank">Atul Chauhan</a>
+        </div>
+      </div>
+
+      <div class="contact-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://adventureathleteindia.com" alt="QR Code - adventureathleteindia.com" loading="lazy">
+        <div class="contact-qr-label">Scan to visit</div>
+      </div>
+    </div>
+
+    <div class="footer-brand">
+      <div class="footer-brand-name">Adventure Athlete India</div>
+      <div class="footer-brand-year">Athlete Profile &middot; 2026</div>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Your Tour | Adventure Athlete India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Logo socials */
+        .nav-logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .logo-socials {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .logo-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+            transition: opacity 0.2s, color 0.2s;
+            color: currentColor;
+        }
+        .logo-socials a:hover { opacity: 1; }
+        .logo-socials a.instagram:hover { color: #E4405F; }
+        .logo-socials a.youtube:hover { color: #FF0000; }
+        .logo-socials a.strava:hover { color: #FC4C02; }
+        .logo-socials a.facebook:hover { color: #1877F2; }
+        .logo-socials svg { width: 14px; height: 14px; }
+
+        /* Form sections */
+        .form-section {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+        .form-section-title {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--amber);
+            display: inline-block;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Checkbox grid */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        /* Radio cards */
+        .radio-card {
+            padding: 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-card:hover {
+            border-color: var(--forest);
+        }
+        .radio-card input:checked + .radio-card-content {
+            color: var(--forest);
+        }
+        .radio-card-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .radio-card-desc {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* Experience level grid */
+        .difficulty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        /* Accommodation radio cards */
+        .accommodation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        /* Flexibility radio group */
+        .radio-inline-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .radio-inline-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .radio-inline-group input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--forest);
+        }
+
+        /* Flag CTA button (nav) */
+        .btn-flag {
+            position: relative;
+            background: linear-gradient(90deg, #F59E0B 0%, #B45309 100%);
+            padding: 12px 24px;
+            border: none;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(180, 83, 9, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-flag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(180, 83, 9, 0.45);
+        }
+        .btn-flag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.1) 80%, transparent 100%);
+            animation: flagShimmer 2.5s ease-in-out infinite;
+            transform: skewX(-20deg);
+        }
+        @keyframes flagShimmer {
+            0% { left: -100%; }
+            60%, 100% { left: 100%; }
+        }
+
+        /* Footer social hover */
+        .footer-social a:hover.instagram { background: #E4405F !important; }
+        .footer-social a:hover.facebook { background: #1877F2 !important; }
+        .footer-social a:hover.youtube { background: #FF0000 !important; }
+        .footer-social a:hover.strava { background: #FC4C02 !important; }
+
+        /* Footer mountain wave */
+        .footer-mountain-wave {
+            position: absolute;
+            top: -79px;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+        .footer {
+            padding-top: 40px !important;
+            background: linear-gradient(180deg, #3a7a52 0%, #2D5A3D 40%, #1e3d29 100%) !important;
+        }
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (Solid for inner pages) -->
+    <nav class="nav nav-solid">
+        <div class="nav-container">
+            <div class="nav-logo-wrapper">
+                <a href="01-home.html" class="nav-logo dark">Adventure Athlete India</a>
+                <span class="logo-socials">
+                    <a href="#" class="instagram" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="youtube" title="YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="#" class="strava" title="Strava">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </a>
+                    <a href="#" class="facebook" title="Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </span>
+            </div>
+            <ul class="nav-links dark">
+                <li><a href="02-experiences.html">Experiences</a></li>
+                <li><a href="14-tours-programs.html" class="active">Tours & Programs</a></li>
+                <li><a href="15-rentals.html">Rentals</a></li>
+                <li><a href="04-about.html">About</a></li>
+                <li><a href="07-contact.html">Contact</a></li>
+            </ul>
+            <a href="08-plan.html" class="btn-flag">Plan Your Adventure</a>
+            <button class="nav-mobile dark">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header compact" style="text-align: center;">
+        <div class="container">
+            <span class="section-label">Tours & Programs</span>
+            <h1 class="section-title">Plan Your Tour</h1>
+            <p class="section-text mx-auto text-center">
+                Tell me about your dream adventure — I'll design it around you.
+            </p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <section style="padding-top: 40px;">
+        <div class="container max-w-3xl">
+            <form>
+
+                <!-- Section 1: About You -->
+                <div class="form-section">
+                    <h2 class="form-section-title">About You</h2>
+                    <div class="form-row mb-4">
+                        <div class="form-group">
+                            <label class="form-label">Full Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email <span class="required">*</span></label>
+                            <input type="email" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="form-group">
+                            <label class="form-label">Phone / WhatsApp <span class="required">*</span></label>
+                            <input type="tel" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nationality <span class="required">*</span></label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Current City</label>
+                            <input type="text" class="form-input" placeholder="Where are you based?">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Program Interest -->
+                <div class="form-section">
+                    <h2 class="form-section-title">Program Interest</h2>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Program of Interest <span class="required">*</span></label>
+                        <select class="form-select" required>
+                            <option value="">Select a program...</option>
+                            <option value="shimla-dharamshala">Shimla to Dharamshala Bike Tour</option>
+                            <option value="manali-leh">Manali to Leh High Altitude Ride</option>
+                            <option value="village-base-camp">Village Base Camp</option>
+                            <option value="wellness-retreat">Wellness Retreat</option>
+                            <option value="train-with-pro">Train with a Pro</option>
+                            <option value="custom">Custom / Not Sure</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Activity Focus <span class="required">*</span></label>
+                        <div class="checkbox-grid">
+                            <label class="form-check">
+                                <input type="checkbox" name="activity-focus" value="cycling">
+                                <span>Cycling / MTB</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" name="activity-focus" value="trail-running">
+                                <span>Trail Running</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" name="activity-focus" value="hiking">
+                                <span>Hiking</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" name="activity-focus" value="yoga-wellness">
+                                <span>Yoga / Wellness</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" name="activity-focus" value="mix">
+                                <span>Mix of Activities</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Experience Level <span class="required">*</span></label>
+                        <div class="difficulty-grid">
+                            <label class="radio-card">
+                                <input type="radio" name="experience-level" value="beginner" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Beginner</div>
+                                    <div class="radio-card-desc">New to this, excited to learn</div>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="experience-level" value="intermediate" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Intermediate</div>
+                                    <div class="radio-card-desc">Some experience, ready for more</div>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="experience-level" value="advanced" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Advanced</div>
+                                    <div class="radio-card-desc">Experienced and fit</div>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="experience-level" value="pro" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Pro</div>
+                                    <div class="radio-card-desc">Competitive athlete level</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Trip Details -->
+                <div class="form-section">
+                    <h2 class="form-section-title">Trip Details</h2>
+
+                    <div class="form-row mb-4">
+                        <div class="form-group">
+                            <label class="form-label">Preferred Travel Dates</label>
+                            <input type="text" class="form-input" placeholder="e.g., March 15-22, 2026">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Group Size <span class="required">*</span></label>
+                            <input type="number" class="form-input" min="1" required placeholder="Number of people">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Flexibility</label>
+                        <div class="radio-inline-group">
+                            <label>
+                                <input type="radio" name="flexibility" value="fixed">
+                                <span>Fixed dates</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="flexibility" value="flexible-week">
+                                <span>Flexible within a week</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="flexibility" value="completely-flexible">
+                                <span>Completely flexible</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Duration</label>
+                            <select class="form-select">
+                                <option value="">Select duration...</option>
+                                <option value="3-days">3 days</option>
+                                <option value="4-5-days">4-5 days</option>
+                                <option value="1-week">1 week</option>
+                                <option value="2-weeks">2 weeks</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Budget Range</label>
+                            <select class="form-select">
+                                <option value="">Select budget...</option>
+                                <option value="budget">Budget-friendly</option>
+                                <option value="mid-range">Mid-range</option>
+                                <option value="premium">Premium</option>
+                                <option value="not-sure">Not sure yet</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Logistics -->
+                <div class="form-section">
+                    <h2 class="form-section-title">Logistics</h2>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Accommodation Preference</label>
+                        <div class="accommodation-grid">
+                            <label class="radio-card">
+                                <input type="radio" name="accommodation" value="budget" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Budget</div>
+                                    <div class="radio-card-desc">Hostels, homestays, camping</div>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="accommodation" value="comfortable" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Comfortable</div>
+                                    <div class="radio-card-desc">Hotels, guesthouses</div>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="accommodation" value="premium" style="display: none;">
+                                <div class="radio-card-content">
+                                    <div class="radio-card-title">Premium</div>
+                                    <div class="radio-card-desc">Best available, private rooms</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Need Airport/Station Pickup?</label>
+                        <div class="radio-inline-group">
+                            <label>
+                                <input type="radio" name="pickup" value="yes">
+                                <span>Yes</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="pickup" value="no">
+                                <span>No</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="pickup" value="not-sure">
+                                <span>Not sure yet</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Dietary Requirements</label>
+                            <input type="text" class="form-input" placeholder="e.g., Vegetarian, Vegan, Gluten-free...">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 16px;">
+                        <label class="form-label">Special Requirements / Medical Conditions</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Anything I should know — allergies, injuries, medical conditions..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 5: Tell Me More -->
+                <div class="form-section">
+                    <h2 class="form-section-title">Tell Me More</h2>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">What excites you most about this trip? <span class="required">*</span></label>
+                        <textarea class="form-textarea" rows="5" placeholder="Share your expectations, what you're hoping to experience, any specific interests..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">How did you hear about us?</label>
+                        <select class="form-select">
+                            <option value="">Select one...</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="google">Google Search</option>
+                            <option value="friend">Friend / Referral</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="tripadvisor">TripAdvisor</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Consent -->
+                <div class="form-group mb-8">
+                    <label class="form-check">
+                        <input type="checkbox" required>
+                        <span style="font-size: 14px; color: var(--slate);">
+                            I agree to the <a href="11-privacy.html" style="color: var(--amber); text-decoration: underline;">privacy policy</a> and <a href="10-terms.html" style="color: var(--amber); text-decoration: underline;">terms</a>.
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" style="width: 100%; padding: 18px; background: linear-gradient(90deg, #F59E0B 0%, #B45309 100%); color: white; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+                    Send Tour Inquiry
+                </button>
+
+                <p style="text-align: center; color: var(--slate); font-size: 14px; margin-top: 16px;">
+                    I'll get back to you within 48 hours with a custom itinerary proposal.
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="position: relative; overflow: hidden;">
+        <div class="footer-mountain-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="width: 100%; height: 80px; display: block;">
+                <path fill="#2D5A3D" d="M0,120 L0,80 Q60,60 120,70 L200,50 L280,75 L320,45 L400,65 L480,35 L560,55 L640,25 L720,50 L800,20 L880,45 L960,15 L1040,40 L1120,10 L1200,35 L1280,5 L1360,30 L1440,0 L1440,120 Z"/>
+            </svg>
+        </div>
+        <div style="position: absolute; top: 100px; right: 40px; opacity: 0.08;">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="2" fill="white"/>
+                </pattern>
+                <rect width="120" height="120" fill="url(#dots)"/>
+            </svg>
+        </div>
+        <div style="position: absolute; bottom: 80px; left: 40px; opacity: 0.06;">
+            <svg width="150" height="100" viewBox="0 0 150 100" fill="white">
+                <path d="M75 10 L120 80 L100 80 L85 55 L70 80 L30 80 Z"/>
+                <path d="M40 30 L70 80 L10 80 Z"/>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="nav-logo" style="margin-bottom: 16px;">Adventure Athlete India</div>
+                <p>Experience the raw Himalayas.</p>
+                <p style="margin-top: 24px;">
+                    Shimla, HP, India<br>
+                    +91-9459033240<br>
+                    adventureathleteindia@gmail.com
+                </p>
+                <div class="footer-social" style="display: flex; gap: 12px; margin-top: 20px;">
+                    <a href="#" class="instagram" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="facebook" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="#" class="youtube" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="YouTube">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="#" class="strava" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Strava">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="02-experiences.html">Experiences</a></li>
+                    <li><a href="14-tours-programs.html">Tours & Programs</a></li>
+                    <li><a href="15-rentals.html">Equipment Rentals</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="04-about.html">About Me</a></li>
+                    <li><a href="06-why-aai.html">Why Us</a></li>
+                    <li><a href="07-contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="09-faq.html">FAQ</a></li>
+                    <li><a href="10-terms.html">Terms</a></li>
+                    <li><a href="11-privacy.html">Privacy</a></li>
+                    <li><a href="12-safety.html">Safety</a></li>
+                    <li><a href="13-cancellation.html">Cancellation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Adventure Athlete India <span class="pipe">|</span> Atul Chauhan</span>
+            <span>Licensed HP Tourism Guide (Reg: 080724 42383)</span>
+        </div>
+    </footer>
+
+    <script>
+        // Radio card selection visual feedback
+        document.querySelectorAll('.radio-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Find the parent group (difficulty-grid or accommodation-grid)
+                const parent = card.closest('.difficulty-grid, .accommodation-grid');
+                if (parent) {
+                    parent.querySelectorAll('.radio-card').forEach(c => {
+                        c.style.borderColor = '';
+                        c.style.background = '';
+                    });
+                }
+                card.style.borderColor = 'var(--forest)';
+                card.style.background = 'var(--gray-50)';
+            });
+        });
+    </script>
+</body>
+</html>

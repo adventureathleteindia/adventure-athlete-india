@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Athlete India - Design Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Option A - Original */
+            --a-primary: #2D5A3D;
+            --a-accent: #D97706;
+            --a-text: #1A202C;
+            --a-muted: #64748b;
+
+            /* Option B - Premium */
+            --b-primary: #1E3932;
+            --b-accent: #B7872F;
+            --b-text: #1C1C1C;
+            --b-muted: #6B7280;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #fff;
+        }
+
+        /* Toggle */
+        .toggle-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            color: #fff;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            z-index: 1000;
+            font-size: 14px;
+        }
+
+        .toggle-bar label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-bar input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .swatch-mini {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .swatch-mini span {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        /* Main content */
+        main {
+            padding-top: 50px;
+        }
+
+        /* Navigation - Minimal like Patagonia */
+        nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-cta {
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+        }
+
+        /* Palette A styles */
+        body.palette-a .nav-cta { background: var(--a-accent); }
+        body.palette-a .accent-text { color: var(--a-accent); }
+        body.palette-a .accent-bg { background: var(--a-accent); }
+        body.palette-a .primary-text { color: var(--a-primary); }
+        body.palette-a .primary-bg { background: var(--a-primary); }
+
+        /* Palette B styles */
+        body.palette-b .nav-cta { background: var(--b-accent); }
+        body.palette-b .accent-text { color: var(--b-accent); }
+        body.palette-b .accent-bg { background: var(--b-accent); }
+        body.palette-b .primary-text { color: var(--b-primary); }
+        body.palette-b .primary-bg { background: var(--b-primary); }
+
+        /* Hero - Full bleed image */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4)),
+                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 80px 40px;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            max-width: 500px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: transform 0.2s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Section spacing */
+        section {
+            padding: 100px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            max-width: 600px;
+        }
+
+        .section-text {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 600px;
+            color: #444;
+        }
+
+        /* Route Cards - Clean, image-forward */
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .route-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .route-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .route-card:hover .route-image img {
+            transform: scale(1.03);
+        }
+
+        .route-image {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .route-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .route-category {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .route-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .route-meta {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* About Section - Editorial */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-content {
+            padding: 40px 0;
+        }
+
+        .about-content .section-text {
+            margin-bottom: 32px;
+        }
+
+        .credentials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .credential {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .credential-icon {
+            font-size: 18px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 120px 40px;
+        }
+
+        .cta-section .section-title {
+            margin: 0 auto 16px;
+        }
+
+        .cta-section .section-text {
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Footer - Simple */
+        footer {
+            padding: 60px 40px;
+            color: white;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+
+        .footer-col a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 60px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* Color comparison bar */
+        .color-bar {
+            padding: 30px 40px;
+            background: #f8f8f8;
+            border-bottom: 1px solid #eee;
+        }
+
+        .color-bar h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: #666;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 24px;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-swatch-box {
+            width: 80px;
+            height: 50px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .color-swatch-label {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .about-section {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            nav {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="palette-b">
+    <!-- Toggle between palettes -->
+    <div class="toggle-bar">
+        <label>
+            <input type="radio" name="palette" value="a" onchange="setPalette('a')">
+            <span>Option A - Original</span>
+            <span class="swatch-mini">
+                <span style="background: #2D5A3D"></span>
+                <span style="background: #D97706"></span>
+            </span>
+        </label>
+        <label>
+            <input type="radio" name="palette" value="b" onchange="setPalette('b')" checked>
+            <span>Option B - Premium</span>
+            <span class="swatch-mini">
+                <span style="background: #1E3932"></span>
+                <span style="background: #B7872F"></span>
+            </span>
+        </label>
+    </div>
+
+    <main>
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">Adventure Athlete India</div>
+            <ul class="nav-links">
+                <li><a href="#">Experiences</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <a href="#" class="nav-cta accent-bg">Plan Your Adventure</a>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Experience the Raw Himalayas</h1>
+                <p>Trails that don't show up on maps. Guided by someone who's spent years discovering them.</p>
+                <a href="#" class="hero-btn accent-bg">Explore Experiences</a>
+            </div>
+        </section>
+
+        <!-- Color Reference -->
+        <div class="color-bar">
+            <h3>Current Palette</h3>
+            <div class="color-swatches" id="colorSwatches">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+
+        <!-- Latest Routes -->
+        <section>
+            <span class="section-label accent-text">Latest Adventures</span>
+            <h2 class="section-title">Recently Explored</h2>
+            <p class="section-text">Every route is a story. These are the trails I've been discovering lately.</p>
+
+            <div class="routes-grid">
+                <div class="route-card">
+                    <div class="route-image">
+                        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80" alt="Mountain biking trail">
+                    </div>
+                    <div class="route-category accent-text">Mountain Biking</div>
+                    <h3 class="route-title">Kuppar Peak Loop</h3>
+                    <p class="route-meta">32 km · 1200m ↑ · Hard · 4-5 hrs</p>
+                </div>
+
+                <div class="route-card">
+                    <div class="route-image">
+                        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80" alt="Trail running">
+                    </div>
+                    <div class="route-category accent-text">Trail Running</div>
+                    <h3 class="route-title">Shali Tibba Summit</h3>
+                    <p class="route-meta">18 km · 900m ↑ · Moderate · 3-4 hrs</p>
+                </div>
+
+                <div class="route-card">
+                    <div class="route-image">
+                        <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80" alt="Himalayan vista">
+                    </div>
+                    <div class="route-category accent-text">Hiking</div>
+                    <h3 class="route-title">Hatu Peak Trail</h3>
+                    <p class="route-meta">12 km · 600m ↑ · Moderate · 4-5 hrs</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about-section">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=800&q=80" alt="Atul Chauhan">
+            </div>
+            <div class="about-content">
+                <span class="section-label accent-text">The Athlete</span>
+                <h2 class="section-title">I'm Atul. I ride, I run, I explore.</h2>
+                <p class="section-text">
+                    Based in Shimla, I've spent years discovering trails that most maps don't show.
+                    This isn't a tour company — it's a personal invitation to experience the Himalayas
+                    the way I do. Every route here is one I've ridden, run, or hiked myself.
+                </p>
+                <p class="section-text">
+                    When you book with Adventure Athlete India, you get me. Personal attention,
+                    real connection, shared passion for these mountains.
+                </p>
+                <div class="credentials">
+                    <div class="credential">
+                        <span class="credential-icon">🚴</span>
+                        <span>Elite Cyclist</span>
+                    </div>
+                    <div class="credential">
+                        <span class="credential-icon">🏃</span>
+                        <span>Trail Runner</span>
+                    </div>
+                    <div class="credential">
+                        <span class="credential-icon">🎫</span>
+                        <span>Licensed Guide</span>
+                    </div>
+                    <div class="credential">
+                        <span class="credential-icon">🏆</span>
+                        <span>5x Nationals</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2 class="section-title">Not sure where to start?</h2>
+            <p class="section-text">
+                Share your vibe — fitness level, interests, dates. I'll craft an experience just for you.
+            </p>
+            <a href="#" class="cta-btn accent-bg">Let's Plan Together</a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="primary-bg">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo">Adventure Athlete India</span>
+                    <p class="footer-tagline">Experience the raw Himalayas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Experiences</h4>
+                    <ul>
+                        <li><a href="#">Mountain Biking</a></li>
+                        <li><a href="#">Trail Running</a></li>
+                        <li><a href="#">Hiking</a></li>
+                        <li><a href="#">Nature Walks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">About Me</a></li>
+                        <li><a href="#">Achievements</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Strava</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Adventure Athlete India · Atul Chauhan</span>
+                <span>Licensed HP Tourism Guide</span>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const palettes = {
+            a: {
+                primary: '#2D5A3D',
+                accent: '#D97706',
+                text: '#1A202C',
+                muted: '#64748b',
+                name: 'Original'
+            },
+            b: {
+                primary: '#1E3932',
+                accent: '#B7872F',
+                text: '#1C1C1C',
+                muted: '#6B7280',
+                name: 'Premium'
+            }
+        };
+
+        function setPalette(p) {
+            document.body.className = 'palette-' + p;
+            updateSwatches(p);
+        }
+
+        function updateSwatches(p) {
+            const palette = palettes[p];
+            document.getElementById('colorSwatches').innerHTML = `
+                <div class="color-swatch">
+                    <div class="color-swatch-box" style="background: ${palette.primary}"></div>
+                    <div class="color-swatch-label">Primary<br>${palette.primary}</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-swatch-box" style="background: ${palette.accent}"></div>
+                    <div class="color-swatch-label">Accent<br>${palette.accent}</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-swatch-box" style="background: ${palette.text}"></div>
+                    <div class="color-swatch-label">Text<br>${palette.text}</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-swatch-box" style="background: ${palette.muted}"></div>
+                    <div class="color-swatch-label">Muted<br>${palette.muted}</div>
+                </div>
+            `;
+        }
+
+        // Initialize
+        updateSwatches('b');
+    </script>
+</body>
+</html>

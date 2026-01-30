@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences Dashboard | Adventure Athlete India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Adventure Athlete India - Design System */
+        :root {
+            --forest: #2D5A3D;
+            --forest-dark: #1E3D2A;
+            --amber: #D97706;
+            --amber-light: #F59E0B;
+            --dark: #1A202C;
+            --slate: #64748b;
+            --slate-dark: #475569;
+            --slate-light: #94a3b8;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --red: #EF4444;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--gray-50);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+            color: var(--white);
+            padding: 32px 28px;
+            margin-bottom: 28px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: headerShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes headerShimmer {
+            0% { left: -100%; }
+            60%, 100% { left: 100%; }
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            position: relative;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .stat-card .number {
+            font-family: var(--font-heading);
+            font-size: 2.25rem;
+            font-weight: 500;
+            color: var(--forest);
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+            margin-top: 4px;
+        }
+
+        /* Filters */
+        .filters {
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .filters label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--amber);
+        }
+
+        .filters select {
+            padding: 10px 14px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filters select:focus {
+            outline: none;
+            border-color: var(--forest);
+        }
+
+        /* Routes Grid */
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .experience-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .experience-card-image {
+            height: 140px;
+            background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .experience-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .experience-card-content {
+            padding: 20px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .cat-mtb { background: #e74c3c; color: white; }
+        .cat-road { background: #3498db; color: white; }
+        .cat-gravel { background: #9b59b6; color: white; }
+        .cat-trail { background: #e67e22; color: white; }
+        .cat-road-run { background: #1abc9c; color: white; }
+        .cat-hiking { background: #27ae60; color: white; }
+        .cat-nature { background: #95a5a6; color: white; }
+        .cat-fkt { background: #e91e63; color: white; }
+
+        .experience-card-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+
+        .experience-card-intro {
+            font-size: 14px;
+            color: var(--slate);
+            margin-bottom: 12px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .experience-card-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--slate-dark);
+            margin-bottom: 16px;
+        }
+
+        .experience-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .experience-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .status-draft {
+            background: rgba(217, 119, 6, 0.1);
+            color: var(--amber);
+        }
+
+        .status-polished {
+            background: rgba(45, 90, 61, 0.1);
+            color: var(--forest);
+        }
+
+        .status-published {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .experience-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-small:hover {
+            background: var(--gray-50);
+            border-color: var(--forest);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .empty-state h2 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--slate);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--slate-light);
+            margin-bottom: 24px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 28px;
+            border-radius: 12px;
+            max-width: 650px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--forest);
+        }
+
+        .modal-header h2 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--slate);
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section h3 {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 8px;
+        }
+
+        .detail-section p {
+            font-size: 15px;
+            color: var(--slate-dark);
+        }
+
+        .detail-box {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .checklist-item.done {
+            color: var(--forest);
+        }
+
+        .checklist-item.pending {
+            color: var(--slate-light);
+        }
+
+        .checklist-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .checklist-item.done .checklist-icon {
+            background: rgba(45, 90, 61, 0.1);
+            color: var(--forest);
+        }
+
+        .checklist-item.pending .checklist-icon {
+            background: var(--gray-100);
+            color: var(--slate-light);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--forest);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .experiences-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Experiences Dashboard</h1>
+                <p>Your adventure documentation hub</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="loadExperiences()">Load Experiences</button>
+                <a href="experience-entry.html" class="btn btn-primary">+ New Experience</a>
+            </div>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="number" id="totalExperiences">0</div>
+                <div class="label">Total Experiences</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="draftExperiences">0</div>
+                <div class="label">Drafts</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="polishedExperiences">0</div>
+                <div class="label">Polished</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="totalDistance">0</div>
+                <div class="label">Total km</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <label>Filter:</label>
+            <select id="filterStatus" onchange="filterExperiences()">
+                <option value="all">All Status</option>
+                <option value="draft">Draft</option>
+                <option value="polished">Polished</option>
+                <option value="published">Published</option>
+            </select>
+            <select id="filterCategory" onchange="filterExperiences()">
+                <option value="all">All Categories</option>
+                <option value="mtb">Mountain Biking</option>
+                <option value="road">Road Cycling</option>
+                <option value="gravel">Gravel Cycling</option>
+                <option value="trail">Trail Running</option>
+                <option value="road-run">Road Running</option>
+                <option value="hiking">Hiking / Trekking</option>
+                <option value="nature">Nature Walk</option>
+                <option value="fkt">FKT Attempt</option>
+            </select>
+        </div>
+
+        <div id="experiencesContainer">
+            <div class="empty-state">
+                <h2>No experiences loaded yet</h2>
+                <p>Click "Load Experiences" to select your experience-data.json files, or create a new experience.</p>
+                <button class="btn btn-primary" onclick="loadExperiences()">
+                    Load Experiences
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Experience Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let allExperiences = [];
+
+        // Load experiences from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const saved = localStorage.getItem('adventureExperiences');
+            if (saved) {
+                allExperiences = JSON.parse(saved);
+                renderExperiences();
+                updateStats();
+            }
+        });
+
+        // Load experiences from files
+        async function loadExperiences() {
+            try {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.multiple = true;
+                input.accept = '.json';
+
+                input.onchange = async (e) => {
+                    const files = e.target.files;
+
+                    for (let file of files) {
+                        try {
+                            const text = await file.text();
+                            const data = JSON.parse(text);
+
+                            // Check if this experience already exists
+                            const existingIndex = allExperiences.findIndex(r => r.meta.route_id === data.meta.route_id);
+                            if (existingIndex >= 0) {
+                                allExperiences[existingIndex] = data; // Update existing
+                            } else {
+                                allExperiences.push(data); // Add new
+                            }
+                        } catch (err) {
+                            console.error('Error reading file:', file.name, err);
+                        }
+                    }
+
+                    // Sort by date (newest first)
+                    allExperiences.sort((a, b) => new Date(b.basic_info.date) - new Date(a.basic_info.date));
+
+                    // Save to localStorage
+                    localStorage.setItem('adventureExperiences', JSON.stringify(allExperiences));
+
+                    renderExperiences();
+                    updateStats();
+                };
+
+                input.click();
+            } catch (err) {
+                console.error('Error loading experiences:', err);
+            }
+        }
+
+        // Render experiences grid
+        function renderExperiences() {
+            const container = document.getElementById('experiencesContainer');
+            const statusFilter = document.getElementById('filterStatus').value;
+            const categoryFilter = document.getElementById('filterCategory').value;
+
+            let filtered = allExperiences;
+
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(r => {
+                    if (statusFilter === 'draft') return !r.checklist.polished;
+                    if (statusFilter === 'polished') return r.checklist.polished && !r.checklist.published;
+                    if (statusFilter === 'published') return r.checklist.published;
+                    return true;
+                });
+            }
+
+            if (categoryFilter !== 'all') {
+                filtered = filtered.filter(r => r.basic_info.categoryValue === categoryFilter);
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No experiences found</h2>
+                        <p>Try adjusting your filters or load more experiences.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="experiences-grid">
+                    ${filtered.map(exp => createExperienceCard(exp)).join('')}
+                </div>
+            `;
+        }
+
+        // Create experience card HTML
+        function createExperienceCard(exp) {
+            const status = getStatus(exp);
+            const statusClass = status.toLowerCase();
+            const categoryClass = 'cat-' + (exp.basic_info.categoryValue || 'hiking');
+            const categoryEmoji = getCategoryEmoji(exp.basic_info.categoryValue);
+
+            const hasImage = exp.media && exp.media.card_image;
+
+            return `
+                <div class="experience-card" data-id="${exp.meta.route_id}">
+                    <div class="experience-card-image">
+                        ${hasImage
+                            ? `<img src="${exp.media.card_image}" alt="${exp.basic_info.title}">`
+                            : categoryEmoji
+                        }
+                    </div>
+                    <div class="experience-card-content">
+                        <span class="category-badge ${categoryClass}">${exp.basic_info.category}</span>
+                        <h3 class="experience-card-title">${exp.basic_info.title}</h3>
+                        <p class="experience-card-intro">${exp.basic_info.intro || 'No description'}</p>
+                        <div class="experience-card-meta">
+                            <span>${formatDate(exp.basic_info.date)}</span>
+                            ${exp.metrics.distance ? `<span>${exp.metrics.distance}</span>` : ''}
+                            ${exp.metrics.elevation ? `<span>${exp.metrics.elevation}</span>` : ''}
+                        </div>
+                        <div class="experience-card-footer">
+                            <span class="status-badge status-${statusClass}">${status}</span>
+                            <div class="experience-card-actions">
+                                <button class="btn-small" onclick="viewDetails('${exp.meta.route_id}')">View</button>
+                                <button class="btn-small" onclick="removeExperience('${exp.meta.route_id}')">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get status
+        function getStatus(exp) {
+            if (exp.checklist.published) return 'Published';
+            if (exp.checklist.polished) return 'Polished';
+            return 'Draft';
+        }
+
+        // Get category emoji
+        function getCategoryEmoji(categoryValue) {
+            const emojis = {
+                'mtb': '🚵',
+                'road': '🚴',
+                'gravel': '🚴‍♂️',
+                'trail': '🏃',
+                'road-run': '🏃‍♂️',
+                'hiking': '🥾',
+                'nature': '🌲',
+                'fkt': '⚡'
+            };
+            return emojis[categoryValue] || '🏔️';
+        }
+
+        // Format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('totalExperiences').textContent = allExperiences.length;
+            document.getElementById('draftExperiences').textContent = allExperiences.filter(r => !r.checklist.polished).length;
+            document.getElementById('polishedExperiences').textContent = allExperiences.filter(r => r.checklist.polished).length;
+
+            const totalDistance = allExperiences.reduce((sum, r) => sum + (r.metrics.distance_km || 0), 0);
+            document.getElementById('totalDistance').textContent = Math.round(totalDistance);
+        }
+
+        // Filter experiences
+        function filterExperiences() {
+            renderExperiences();
+        }
+
+        // View details
+        function viewDetails(expId) {
+            const exp = allExperiences.find(r => r.meta.route_id === expId);
+            if (!exp) return;
+
+            document.getElementById('modalTitle').textContent = exp.basic_info.title;
+
+            const checklistItems = [
+                { key: 'basic_info_complete', label: 'Basic info complete' },
+                { key: 'location_complete', label: 'Location complete' },
+                { key: 'metrics_available', label: 'Metrics available' },
+                { key: 'notes_added', label: 'Notes added' },
+                { key: 'media_added', label: 'Media added' },
+                { key: 'polished', label: 'Polished by Claude' },
+                { key: 'published', label: 'Published to website' }
+            ];
+
+            const checklistHtml = checklistItems.map(item => {
+                const done = exp.checklist[item.key];
+                return `
+                    <div class="checklist-item ${done ? 'done' : 'pending'}">
+                        <span class="checklist-icon">${done ? '✓' : '○'}</span>
+                        ${item.label}
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="detail-section">
+                    <h3>Intro</h3>
+                    <p>${exp.basic_info.intro || 'No intro yet'}</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Location</h3>
+                    <p>
+                        <strong>Route:</strong> ${exp.location.route || `${exp.location.start_point} → ${exp.location.end_point}`}<br>
+                        <strong>Region:</strong> ${exp.location.location}
+                    </p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-value">${exp.metrics.distance || '--'}</div>
+                            <div class="metric-label">Distance</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${exp.metrics.elevation || '--'}</div>
+                            <div class="metric-label">Elevation</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${exp.metrics.duration || '--'}</div>
+                            <div class="metric-label">Duration</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${exp.metrics.max_altitude_m ? exp.metrics.max_altitude_m + 'm' : '--'}</div>
+                            <div class="metric-label">Max Alt</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${exp.basic_info.difficulty || '--'}</div>
+                            <div class="metric-label">Difficulty</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${exp.basic_info.difficultyLevel || '--'}/5</div>
+                            <div class="metric-label">Level</div>
+                        </div>
+                    </div>
+                    ${exp.metrics.strava_link ? `<p style="margin-top: 12px;"><a href="${exp.metrics.strava_link}" target="_blank" style="color: #FC4C02;">View on Strava →</a></p>` : ''}
+                </div>
+
+                <div class="detail-section">
+                    <h3>Website Extras</h3>
+                    <p>
+                        <strong>Best Season:</strong> ${exp.website_extras?.best_season || 'Not set'}<br>
+                        <strong>Gear:</strong> ${exp.website_extras?.gear || 'Not set'}
+                    </p>
+                    ${exp.website_extras?.what_to_bring?.length ? `
+                        <p style="margin-top: 8px;"><strong>What to Bring:</strong></p>
+                        <ul style="margin-left: 20px; color: var(--slate-dark);">
+                            ${exp.website_extras.what_to_bring.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                </div>
+
+                <div class="detail-section">
+                    <h3>Raw Notes</h3>
+                    <div class="detail-box" style="max-height: 150px; overflow-y: auto; white-space: pre-wrap;">
+${exp.notes.raw_description || 'No notes yet'}</div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Media</h3>
+                    <p>
+                        Photos: ${exp.media.photos_count || 0}<br>
+                        Videos: ${exp.media.videos_count || 0}<br>
+                        Audio: ${exp.media.audio_count || 0}<br>
+                        GPX: ${exp.media.has_gpx ? 'Yes' : 'No'}<br>
+                        YouTube: ${exp.media.youtube_id ? `<a href="https://youtube.com/watch?v=${exp.media.youtube_id}" target="_blank">${exp.media.youtube_id}</a>` : 'None'}
+                    </p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Checklist</h3>
+                    ${checklistHtml}
+                </div>
+
+                ${exp.polished_content?.instagram_caption ? `
+                    <div class="detail-section">
+                        <h3>Instagram Caption</h3>
+                        <div class="detail-box" style="white-space: pre-wrap;">${exp.polished_content.instagram_caption}</div>
+                    </div>
+                ` : ''}
+
+                <div class="detail-section" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--gray-200);">
+                    <p style="color: var(--slate); font-size: 13px;">
+                        <strong>Folder:</strong> experiences/${exp.meta.folder_name}/<br>
+                        <strong>Created:</strong> ${exp.meta.created_date}
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        // Remove experience from dashboard
+        function removeExperience(expId) {
+            if (confirm('Remove this experience from dashboard? (Files are not deleted)')) {
+                allExperiences = allExperiences.filter(r => r.meta.route_id !== expId);
+                localStorage.setItem('adventureExperiences', JSON.stringify(allExperiences));
+                renderExperiences();
+                updateStats();
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

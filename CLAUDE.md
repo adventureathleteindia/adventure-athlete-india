@@ -1,0 +1,305 @@
+# Adventure Athlete India - Claude Code Rules
+
+## Social Handles
+
+| Platform | Handle |
+|----------|--------|
+| Instagram | @adventureathlete.in |
+| YouTube | @adventureathleindia |
+| Facebook | Adventure Athlete India |
+| Strava | Atul Chauhan (atulchauhan) |
+
+---
+
+## Prototype-First Development
+
+Prototypes in `/design/prototypes/` are the **source of truth**.
+
+### The One Rule That Matters
+
+> **Always verify COMPUTED styles in browser - never trust CSS rules or Tailwind classes**
+
+### Process
+
+1. Open prototype in browser
+2. **Run `getComputedStyle()`** on elements to get actual rendered values
+3. Use **inline styles** (not Tailwind) for colors, fonts, spacing
+4. Compare screenshots of prototype vs live site
+5. Verify computed styles match in both
+
+### Why Inline Styles Over Tailwind
+
+Tailwind classes can be overridden by global CSS (e.g., `a { color: inherit }`). Inline styles cannot.
+
+```jsx
+// Use this
+<Link style={{ color: 'white' }}>Link</Link>
+
+// Not this - can be overridden
+<Link className="text-white">Link</Link>
+```
+
+### Animation Rules
+
+| Property | How to Handle |
+|----------|--------------|
+| Duration | Use EXACT value from prototype (e.g., `1.2s`, not `2s`) |
+| Timing | Use EXACT function (`linear` vs `ease-in-out` matters) |
+| Keyframes | Copy percentage values exactly (`100%` vs `200%` matters) |
+| Conditional | Check if prototype shows animation always or conditionally |
+
+### Typography Rules
+
+| Property | How to Handle |
+|----------|--------------|
+| Font family | Use CSS variable or exact font name |
+| Font size | Use exact pixel value, not Tailwind approximation |
+| Letter spacing | Use exact value (e.g., `3px`, `0.5px`) |
+| Line height | Use exact value or ratio from prototype |
+| Text transform | Match exactly (uppercase, none, etc.) |
+
+### Spacing Rules
+
+| Property | How to Handle |
+|----------|--------------|
+| Padding | Use exact values (e.g., `padding: 80px 40px`) |
+| Margin | Use exact values |
+| Gap | Use exact values |
+| Container max-width | Use exact values |
+
+### Visual Effects Rules
+
+| Property | How to Handle |
+|----------|--------------|
+| Box shadow | Copy EXACT shadow values from prototype |
+| Gradients | Copy EXACT color stops and percentages |
+| Border radius | Use exact pixel values |
+| Opacity | Use exact decimal values |
+
+### Code Pattern: Inline Styles for Exact Values
+
+When prototype has specific values that don't map to Tailwind:
+
+```jsx
+// CORRECT - exact prototype values
+<div style={{ padding: '80px 40px', maxWidth: '700px' }}>
+
+// WRONG - Tailwind approximation
+<div className="p-20 max-w-2xl">
+```
+
+## Prototype File Mapping
+
+| Page | Prototype |
+|------|-----------|
+| Home | `/design/prototypes/01-home.html` |
+| Experiences | `/design/prototypes/02-experiences.html` |
+| Experience Detail | `/design/prototypes/03-experience-detail.html` |
+| About | `/design/prototypes/04-about.html` |
+| Why AAI | `/design/prototypes/06-why-aai.html` |
+| Contact | `/design/prototypes/07-contact.html` |
+| Plan | `/design/prototypes/08-plan.html` |
+| FAQ | `/design/prototypes/09-faq.html` |
+| Terms | `/design/prototypes/10-terms.html` |
+| Privacy | `/design/prototypes/11-privacy.html` |
+| Safety | `/design/prototypes/12-safety.html` |
+| Cancellation | `/design/prototypes/13-cancellation.html` |
+| Tours & Programs | `/design/prototypes/14-tours-programs.html` |
+| Equipment Rentals | `/design/prototypes/15-rentals.html` |
+| Plan Tour | `/design/prototypes/16-plan-tour.html` |
+
+## Design Assets
+
+Standalone HTML files for print/sharing — not part of the Next.js website.
+
+| Asset | File | Purpose |
+|-------|------|---------|
+| Business Card | `/design/business-card/business-card.html` | Front + back, 3.5x2in, QR code, social handles |
+| Athlete Profile | `/design/athlete-profile/athlete-profile.html` | Sponsor portfolio/resume, A4 print-optimized |
+| Hotel Pamphlet | `/design/hotel-pamphlet/hotel-pamphlet.html` | A5 flyer for hotel front desks, day experiences only |
+
+### Atul's Credential Ordering
+
+Standard ordering across all materials:
+
+> **Engineer | Mountain Biker | Trail Runner | National Level Athlete**
+| Tours & Programs | `/design/prototypes/14-tours-programs.html` |
+| Equipment Rentals | `/design/prototypes/15-rentals.html` |
+| Plan Tour | `/design/prototypes/16-plan-tour.html` |
+
+## Adding New Experiences
+
+All experience data lives in `/website/lib/experiences.ts`. This is the **single source of truth**.
+
+### Quick Start: Add a Coming Soon Experience
+
+```typescript
+// In experiences array, add:
+{
+  slug: "new-experience-name",
+  title: "New Experience Name",
+  category: "Mountain Biking",
+  categoryValue: "mtb",
+  location: "District, Himachal Pradesh",
+  image: "https://images.unsplash.com/photo-...",
+  distance: "32 km",
+  elevation: "1200m",
+  difficulty: "Hard",  // "Easy" | "Moderate" | "Hard"
+  difficultyLevel: 4,  // 1-5
+  duration: "4-5 hrs",
+  hasContent: false,   // Shows "Coming Soon"
+}
+```
+
+### Full Experience (with detail page)
+
+When ready to publish, set `hasContent: true` and add detail fields:
+
+```typescript
+{
+  // Basic info (required)
+  slug: "kuppar-peak-loop",
+  title: "Kuppar Peak Loop",
+  category: "Mountain Biking",
+  categoryValue: "mtb",
+  location: "Shimla District, Himachal Pradesh",
+  image: "https://...",
+  distance: "32 km",
+  elevation: "1200m",
+  difficulty: "Hard",
+  difficultyLevel: 4,
+  duration: "4-5 hrs",
+  hasContent: true,
+
+  // Additional stats (optional but recommended)
+  route: "Shimla → Kuppar Peak → Shimla (Loop)",
+  bestSeason: "Mar-Jun, Sep-Nov",
+  gear: "MTB · Full-sus recommended",
+
+  // Images (optional)
+  heroImage: "https://...",  // High-res hero, defaults to image
+  photos: ["url1", "url2", ...],  // Gallery photos, 4-8 recommended
+
+  // Content (optional)
+  intro: "Opening hook paragraph (larger text)",
+  openingParagraph: "Personal story paragraph",
+  content: "Main route description. Use \\n\\n for paragraphs.",
+  gettingThere: "How to reach. Supports **bold** markdown.",
+  whatToBring: ["Item 1", "Item 2", ...],
+  notes: [{ title: "Tip:", text: "Details" }],
+
+  // Media (optional)
+  audio: { title: "Trail Notes", duration: "12 min", src: "url" },
+  video: { thumbnail: "url", title: "Full Ride", youtubeId: "abc123" },
+  stravaActivityId: "1234567890",
+
+  // Author (optional - defaults to Atul Chauhan)
+  author: { name: "...", image: "...", credentials: "...", socials: {...} },
+}
+```
+
+### Category Values
+
+| Category | Value |
+|----------|-------|
+| Mountain Biking | `mtb` |
+| Road Cycling | `road` |
+| Gravel Cycling | `gravel` |
+| Trail Running | `trail` |
+| Road Running | `road-run` |
+| Hiking/Trekking | `hiking` |
+| Nature Walk | `nature` |
+| FKT | `fkt` |
+
+### Where Data Appears
+
+- **Home page**: First 3 experiences (RouteCards)
+- **Experiences page**: All experiences with filtering
+- **Experience detail**: Full content if `hasContent: true`
+- **About page**: Photo gallery from experience images
+
+### Conditional Rendering
+
+All optional fields use conditional rendering:
+- Empty strings (`""`) for media will NOT render the section
+- Author defaults to `defaultAuthor` (Atul Chauhan)
+- Photos default to single image array from card image
+
+---
+
+## Experiences Documentation System
+
+Experiences are documented in `/experiences/` folder before being published to the website.
+
+### Workflow
+
+```
+1. After adventure → Fill experience-entry.html
+2. Upload GPX → Auto-calculates metrics
+3. Add media files to folder
+4. "Claude, polish experience XXX" → Generates content
+5. Review preview.html → Edit/approve
+6. Add to experiences.ts → Publish to website
+```
+
+### Polishing Experiences
+
+When asked to "polish experience XXX", follow `/experiences/POLISHING-GUIDE.md` exactly. Key rules:
+- **DON'T ADD** - Never invent details not in the raw notes
+- **DON'T MISS** - Every practical tip/warning from raw notes MUST appear in final content
+- Use the preview template which follows brand design system (forest green, amber, Oswald font)
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `/experiences/experience-entry.html` | Form to create new experiences (open in browser) |
+| `/experiences/dashboard.html` | View all experiences and status |
+| `/experiences/POLISHING-GUIDE.md` | Instructions for Claude when polishing (MUST READ) |
+| `/experiences/preview-template.html` | Brand-styled template for previews (do not change colors/fonts) |
+| `/experiences/scripts/parse-gpx.py` | GPX parser for elevation graphs (25m distance sampling) |
+| `/experiences/XXX/experience-data.json` | Single source of truth for each experience |
+| `/experiences/XXX/preview.html` | Generated preview (after polishing) |
+
+### experience-data.json Structure
+
+```json
+{
+  "meta": { "slug", "hasContent", "polished" },
+  "basic_info": { "title", "intro", "category", "categoryValue", "difficulty", "difficultyLevel" },
+  "location": { "start_point", "end_point", "route", "district", "state", "location" },
+  "metrics": { "distance", "elevation", "duration", "max_altitude_m", "strava_activity_id" },
+  "website_extras": { "best_season", "gear", "what_to_bring[]" },
+  "notes": { "raw_description" },
+  "media": { "hero_image", "card_image", "photos[]", "youtube_id", "video_thumbnail" },
+  "polished_content": { "website_description", "instagram_caption", "youtube_description" }
+}
+```
+
+### GPX Auto-Parsing
+
+The experience-entry form parses GPX files to auto-calculate:
+- Distance (km) via Haversine formula
+- Elevation gain (m)
+- Duration from timestamps
+- Max/Start altitude
+
+### From Experience to Website
+
+When experience is ready, map `experience-data.json` fields to `experiences.ts`:
+
+| experience-data.json | experiences.ts |
+|----------------------|----------------|
+| `basic_info.title` | `title` |
+| `basic_info.intro` | `intro` |
+| `basic_info.categoryValue` | `categoryValue` |
+| `basic_info.difficultyLevel` | `difficultyLevel` |
+| `location.location` | `location` |
+| `metrics.distance` | `distance` |
+| `metrics.elevation` | `elevation` |
+| `metrics.strava_activity_id` | `stravaActivityId` |
+| `website_extras.best_season` | `bestSeason` |
+| `website_extras.gear` | `gear` |
+| `website_extras.what_to_bring` | `whatToBring` |
+| `media.youtube_id` | `video.youtubeId` |
+| `polished_content.*` | Content fields |

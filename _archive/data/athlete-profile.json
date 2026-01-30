@@ -1,0 +1,44 @@
+{
+  "name": "Atul Chauhan",
+  "location": "Shimla, Himachal Pradesh, India",
+  "tagline": "Ride. Run. Explore. Himalayas.",
+
+  "credentials": {
+    "guide_license": {
+      "registration_number": "080724 42383",
+      "issuing_authority": "HP Tourism",
+      "valid_until": "2027-08-08",
+      "status": "active"
+    },
+    "itra_score": 555,
+    "national_championships": 5
+  },
+
+  "achievements": [
+    "5x National MTB Champion",
+    "National Trail Running Champion",
+    "Multiple Podium Finishes in Ultra Marathons",
+    "ITRA Score: 555",
+    "FTP: 290W",
+    "Vertical Kilometer PR: 54 minutes"
+  ],
+
+  "physical_stats": {
+    "ftp_watts": 290,
+    "vertical_km_time": "54 min",
+    "specialty": ["MTB", "Trail Running", "Ultra Distance"]
+  },
+
+  "social_media": {
+    "instagram": {
+      "handle": "@adventure.athlete.india",
+      "current_followers": 1200,
+      "goal_followers": 10000
+    },
+    "youtube": {
+      "current_subscribers": 1100,
+      "goal_subscribers": 10000
+    },
+    "strava": "linked"
+  }
+}

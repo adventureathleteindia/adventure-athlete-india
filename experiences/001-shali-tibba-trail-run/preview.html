@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Preview | Adventure Athlete India</title>
+    <!-- Brand Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Chart.js for elevation profile -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        /*
+         * Adventure Athlete India - Preview Template
+         * Design System Reference: /design/prototypes/styles.css
+         */
+
+        :root {
+            --forest: #2D5A3D;
+            --forest-dark: #1E3D2A;
+            --amber: #D97706;
+            --amber-light: #F59E0B;
+            --dark: #1A202C;
+            --slate: #64748b;
+            --slate-dark: #475569;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--gray-50);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        header {
+            background: var(--forest);
+            color: var(--white);
+            padding: 40px 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        header .experience-meta {
+            font-size: 14px;
+            opacity: 0.85;
+            letter-spacing: 0.5px;
+        }
+
+        .status-bar {
+            background: var(--white);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .status-draft { background: #FEF3C7; color: #92400E; }
+        .status-review { background: #DBEAFE; color: #1E40AF; }
+        .status-final { background: #D1FAE5; color: #065F46; }
+
+        .content-section {
+            background: var(--white);
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--gray-100);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .section-actions { display: flex; gap: 8px; }
+
+        .btn {
+            padding: 10px 18px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover { transform: translateY(-1px); }
+        .btn-copy { background: var(--forest); color: var(--white); }
+        .btn-copy:hover { background: var(--forest-dark); }
+        .btn-copy.copied { background: var(--amber); }
+        .btn-edit { background: var(--slate); color: var(--white); }
+        .btn-edit:hover { background: var(--slate-dark); }
+        .btn-download { background: var(--forest); color: var(--white); }
+        .btn-download:hover { background: var(--forest-dark); }
+
+        .btn-primary {
+            background: var(--amber);
+            color: var(--white);
+            padding: 14px 28px;
+            font-size: 15px;
+        }
+
+        .btn-primary:hover {
+            background: var(--amber-light);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+        }
+
+        .section-content { padding: 20px; }
+
+        .content-display {
+            white-space: pre-wrap;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--slate-dark);
+        }
+
+        .content-edit {
+            display: none;
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.8;
+            border: 2px solid var(--forest);
+            resize: vertical;
+        }
+
+        .content-edit:focus { outline: none; border-color: var(--amber); }
+        .editing .content-display { display: none; }
+        .editing .content-edit { display: block; }
+        .editing .btn-edit { background: var(--amber); }
+
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            padding: 24px;
+            background: var(--gray-50);
+        }
+
+        .fact-item { text-align: center; padding: 12px; }
+
+        .fact-value {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--forest);
+            margin-bottom: 4px;
+        }
+
+        .fact-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+
+        .instagram-preview {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 3px;
+        }
+
+        .instagram-preview-inner { background: var(--white); padding: 20px; }
+
+        .youtube-preview { background: #FF0000; padding: 3px; }
+        .youtube-preview-inner { background: var(--white); padding: 20px; }
+
+        .source-info {
+            background: var(--white);
+            border-left: 4px solid var(--amber);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .source-info h4 {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 8px;
+        }
+
+        .checklist-section {
+            background: var(--white);
+            border-left: 4px solid var(--forest);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .checklist-section h3 {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--forest);
+            margin-bottom: 16px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 14px;
+        }
+
+        .checklist-item:last-child { border-bottom: none; }
+
+        .checklist-status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .checklist-status.done { background: var(--forest); color: var(--white); }
+        .checklist-status.missing { background: #EF4444; color: var(--white); }
+        .checklist-status.warning { background: var(--amber); color: var(--white); }
+
+        .finalize-section {
+            background: var(--white);
+            padding: 40px;
+            text-align: center;
+            margin-top: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .finalize-section h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .finalize-section p { color: var(--slate); margin-bottom: 24px; font-size: 15px; }
+
+        .author-box { text-align: center; padding: 28px; }
+
+        .author-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .author-brand { color: var(--slate); font-weight: 400; }
+
+        .author-credentials {
+            color: var(--slate);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .author-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .author-links a {
+            color: var(--forest);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .author-links a:hover { color: var(--amber); }
+
+        .char-count { font-size: 12px; color: var(--slate); text-align: right; margin-top: 8px; }
+        .char-count.warning { color: #EF4444; }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--dark);
+            color: var(--white);
+            padding: 14px 24px;
+            font-size: 14px;
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.show { display: block; }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Elevation Profile Section */
+        .elevation-section { background: var(--white); margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .elevation-chart-container { padding: 20px; position: relative; }
+        .elevation-chart-wrapper { position: relative; height: 250px; margin-bottom: 16px; }
+
+        .elevation-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .elevation-stat { text-align: center; }
+
+        .elevation-stat-value {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--forest);
+        }
+
+        .elevation-stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+
+        .no-elevation-data { padding: 40px; text-align: center; color: var(--slate); }
+        .no-elevation-data p { margin-bottom: 8px; }
+
+        .gpx-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .gpx-tab {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .gpx-tab:hover { border-color: var(--forest); }
+        .gpx-tab.active { background: var(--forest); color: var(--white); border-color: var(--forest); }
+        .gpx-chart-panel { display: none; }
+        .gpx-chart-panel.active { display: block; }
+
+        @media (max-width: 600px) {
+            .section-header { flex-direction: column; gap: 12px; }
+            .quick-facts { grid-template-columns: repeat(2, 1fr); }
+            header h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shali Tibba Trail Run</h1>
+            <div class="experience-meta">Trail Running | Easy | January 11, 2026</div>
+        </header>
+
+        <div class="status-bar">
+            <div>
+                <span class="status-badge status-review" id="statusBadge">Ready for Review</span>
+            </div>
+            <div style="font-size: 13px; color: #64748b;">
+                <span>Generated: January 16, 2026</span>
+            </div>
+        </div>
+
+        <!-- Source Info -->
+        <div class="source-info">
+            <h4>Content Generated From</h4>
+            <div>
+                <strong>Route:</strong> Khatnol to Shali Tibba Summit to Khatnol<br>
+                <strong>Your notes:</strong> "Started around 1 PM... took 50-55 minutes to the top... 360 view... next time start earlier..."
+            </div>
+        </div>
+
+        <!-- Website Migration Checklist -->
+        <div class="checklist-section">
+            <h3>Website Migration Checklist</h3>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>title:</strong> Shali Tibba Trail Run</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>intro:</strong> 360 Himalayan views from one of the best short trails near Shimla</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>categoryValue:</strong> trail</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>difficulty:</strong> Easy (difficultyLevel: 1)</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>location:</strong> Shimla District, Himachal Pradesh</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>route:</strong> Khatnol to Shali Tibba Summit to Khatnol (Out & Back)</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>distance:</strong> 8.8 km</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>elevation:</strong> 657m</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>duration:</strong> 2-2.5 hrs</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>stravaActivityId:</strong> 17012112435</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>bestSeason:</strong> Skip monsoon (mid-June to September end)</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>gear:</strong> Trail shoes, Poles recommended</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>whatToBring:</strong> 5 items listed</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status done">OK</span>
+                <span><strong>video.youtubeId:</strong> gB8VA90piM0</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status missing">!</span>
+                <span><strong>heroImage:</strong> Need to add URL</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status missing">!</span>
+                <span><strong>image (card):</strong> Need to add URL</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status missing">!</span>
+                <span><strong>photos:</strong> Need to add array of URLs</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status warning">?</span>
+                <span><strong>content:</strong> See Website Description below (needs approval)</span>
+            </div>
+            <div class="checklist-item">
+                <span class="checklist-status warning">?</span>
+                <span><strong>gettingThere:</strong> See Getting There section below (needs approval)</span>
+            </div>
+        </div>
+
+        <!-- Quick Facts -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>Quick Facts</h2>
+            </div>
+            <div class="quick-facts">
+                <div class="fact-item">
+                    <div class="fact-value">8.8 km</div>
+                    <div class="fact-label">Round Trip</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value">657m</div>
+                    <div class="fact-label">Elevation</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value">50-55 min</div>
+                    <div class="fact-label">To Summit</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value">Easy</div>
+                    <div class="fact-label">Difficulty</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elevation Profile -->
+        <div class="content-section elevation-section" id="elevationSection">
+            <div class="section-header">
+                <h2>Elevation Profile</h2>
+                <div class="section-actions">
+                    <button class="btn btn-download" onclick="downloadElevationPNG()" id="downloadElevationBtn">
+                        Download PNG
+                    </button>
+                </div>
+            </div>
+            <div class="gpx-tabs" id="gpxTabs" style="display: none;"></div>
+            <div id="elevationContent"></div>
+        </div>
+
+        <!-- Website Description -->
+        <div class="content-section" id="websiteSection">
+            <div class="section-header">
+                <h2>Website Description</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('website')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('website')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="content-display" id="websiteDisplay"># Shali Tibba Trail Run
+
+One of the most rewarding short trail runs near Shimla. The summit gives you a complete 360 degree panorama of the Himalayan ranges.
+
+## The Experience
+
+I took this trail on a January afternoon, starting from Khatnol village. It was one of those bright sunny winter days, short but perfect for a run. The trail was dry despite it being winter. Usually there's snow this time of year, but the dry weather meant good running conditions. The path is rocky throughout, so I brought a pole for the descent. Took me about 50-55 minutes to reach the top, including stops to shoot some video.
+
+The summit is the real reward. Standing there with views in every direction, it's one of those moments where you forget you're just a couple hours from Shimla. There's a small temple at the top with a Pujari, and you can even camp here with permission.
+
+## Quick Facts
+
+| | |
+|---|---|
+| **Start/End** | Khatnol |
+| **Distance** | 8.8 km (round trip) |
+| **Elevation** | 657m gain |
+| **Time** | 50-60 min to summit |
+| **Best Season** | Skip monsoon (mid-June to September end) |
+
+## Getting There
+
+Bus from Shimla ISBT to Khatnol (3 hours), then 3 km offroad to the trail head. Or drive, around 2-2.5 hours one way from Shimla. Can also take a cab.
+
+## What to Bring
+
+- Trail running shoes (rocky terrain)
+- 1 liter water (there's water at the top too)
+- Trekking pole (helps on the descent)
+- Energy bar or snack
+- Extra layer for the summit
+- In off-season, carry your own food. The shop at the top may not be open.
+
+## My Notes
+
+Started too late at 1 PM. Next time I'd go earlier for better light and more time at the top. This would also be a great spot for sunrise. Solo runs are fine here, but it'd be more fun with company. The trail is straightforward, no navigation issues.
+
+---
+
+**Atul Chauhan** | Adventure Athlete India
+Elite Cyclist | Trail Runner | Licensed Guide | Engineer
+
+Instagram: @adventureathlete.in | YouTube: @adventureathleindia | Strava: atulchauhan</div>
+                <textarea class="content-edit" id="websiteEdit"></textarea>
+                <div class="char-count" id="websiteCount"></div>
+            </div>
+        </div>
+
+        <!-- Instagram Caption -->
+        <div class="content-section" id="instagramSection">
+            <div class="section-header">
+                <h2>Instagram Caption</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('instagram')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('instagram')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="instagram-preview">
+                    <div class="instagram-preview-inner">
+                        <div class="content-display" id="instagramDisplay">360 degrees of Himalayan views. That's what's waiting at the top of Shali Tibba.
+
+Took this trail on a bright sunny January afternoon. One of those short winter days that are perfect for a quick summit. Usually there's snow up here this time of year, but the trail was dry and clear. Rocky path, about 50 minutes up if you're moving steady.
+
+The summit though. Just you and the mountains in every direction. Would be amazing for sunrise too.
+
+Pro tip: Start earlier than 1 PM (unlike me). And if it's off-season, carry your own food.
+
+---
+
+Location: Shali Tibba, near Shimla
+Time: 50-55 min to summit
+Difficulty: Easy trail run / hike
+Views: 360 degree panorama at top
+
+#shalitibba #shimla #himachalpradesh #trailrunning #himalayas #outdoorindia
+
+- Atul</div>
+                        <textarea class="content-edit" id="instagramEdit"></textarea>
+                        <div class="char-count" id="instagramCount">0 / 2200 characters</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YouTube Description -->
+        <div class="content-section" id="youtubeSection">
+            <div class="section-header">
+                <h2>YouTube Description</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('youtube')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('youtube')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="youtube-preview">
+                    <div class="youtube-preview-inner">
+                        <div class="content-display" id="youtubeDisplay">Shali Tibba Trail Run | 360 Degree Himalayan Views Near Shimla
+
+One of the best short trail runs near Shimla with incredible summit views. 360 degree panorama of Himalayan ranges.
+
+Route: Khatnol to Shali Tibba Summit to Khatnol
+Time: 50-55 min to summit
+Difficulty: Easy
+Date: January 2026
+
+---
+
+TIMESTAMPS:
+0:00 - Starting from trail head
+[Add timestamps based on your video]
+
+---
+
+ABOUT THIS ROUTE:
+Shali Tibba is a great trail near Shimla. The trail starts from Khatnol village (3 km offroad from main road). Rocky terrain but well-marked. The summit has a small temple with a resident Pujari. Water is available there. You can even camp at the top with permission. Great spot for sunrise views too.
+
+NOTE: In off-season, carry your own food. The shop at the top may not be open.
+
+GETTING THERE:
+- Bus from Shimla ISBT to Khatnol (3 hours)
+- Then 3 km offroad to trail head
+- Or drive (2-2.5 hours from Shimla)
+
+WHAT TO BRING:
+- Trail shoes (rocky terrain)
+- Trekking pole (helpful for descent)
+- 1L water
+- Energy bar
+- Extra layer for summit
+
+---
+
+FOLLOW MY ADVENTURES:
+Instagram: @adventureathlete.in
+YouTube: youtube.com/@adventureathleindia
+Strava: strava.com/athletes/atulchauhan
+
+YouTube Video: https://www.youtube.com/watch?v=gB8VA90piM0
+
+---
+
+#shalitibba #shimla #trailrunning #himachalpradesh #himalayas #outdoorindia</div>
+                        <textarea class="content-edit" id="youtubeEdit"></textarea>
+                        <div class="char-count" id="youtubeCount"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Short Summary -->
+        <div class="content-section" id="summarySection">
+            <div class="section-header">
+                <h2>Short Summary</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('summary')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('summary')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="content-display" id="summaryDisplay">360 degree Himalayan views from this easy summit near Shimla. Rocky trail, about 50 minutes up. Great for a short trail run or hike.</div>
+                <textarea class="content-edit" id="summaryEdit" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Author Section -->
+        <div class="content-section" id="authorSection">
+            <div class="section-header">
+                <h2>Author Section</h2>
+                <div class="section-actions">
+                    <button class="btn btn-copy" onclick="copyAuthor()">Copy</button>
+                </div>
+            </div>
+            <div class="author-box">
+                <div class="author-name">Atul Chauhan <span class="author-brand">| Adventure Athlete India</span></div>
+                <div class="author-credentials">Elite Cyclist | Trail Runner | Licensed Guide | Engineer</div>
+                <div class="author-links">
+                    <a href="https://instagram.com/adventureathlete.in" target="_blank">Instagram</a>
+                    <a href="https://youtube.com/@adventureathleindia" target="_blank">YouTube</a>
+                    <a href="https://strava.com/athletes/atulchauhan" target="_blank">Strava</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finalize -->
+        <div class="finalize-section">
+            <h3>Ready to Finalize?</h3>
+            <p>Review all content above. Edit if needed. Then click finalize to save.</p>
+            <button class="btn btn-primary" onclick="finalizeContent()">
+                Finalize & Save Content
+            </button>
+            <p style="margin-top: 16px; font-size: 13px; color: #64748b;">
+                This will download all content files. Move them to the experience's <code>content/</code> folder.
+            </p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        function syncContent(section) {
+            const display = document.getElementById(section + 'Display');
+            const edit = document.getElementById(section + 'Edit');
+            if (display && edit) {
+                edit.value = display.textContent;
+            }
+        }
+
+        function toggleEdit(section) {
+            const sectionEl = document.getElementById(section + 'Section');
+            const display = document.getElementById(section + 'Display');
+            const edit = document.getElementById(section + 'Edit');
+
+            if (sectionEl.classList.contains('editing')) {
+                display.textContent = edit.value;
+                sectionEl.classList.remove('editing');
+            } else {
+                sectionEl.classList.add('editing');
+                edit.focus();
+            }
+
+            if (section === 'instagram') {
+                updateCharCount('instagram');
+            }
+        }
+
+        function copyContent(section) {
+            const content = document.getElementById(section + 'Display').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                showToast('Copied to clipboard!');
+                const btn = event.target.closest('.btn-copy');
+                btn.classList.add('copied');
+                btn.innerHTML = 'Copied!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = 'Copy';
+                }, 2000);
+            });
+        }
+
+        function updateCharCount(section) {
+            const edit = document.getElementById(section + 'Edit');
+            const count = document.getElementById(section + 'Count');
+            if (edit && count) {
+                const len = edit.value.length;
+                const max = section === 'instagram' ? 2200 : 5000;
+                count.textContent = `${len} / ${max} characters`;
+                count.classList.toggle('warning', len > max);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        function finalizeContent() {
+            const finalContent = {
+                website: document.getElementById('websiteEdit').value || document.getElementById('websiteDisplay').textContent,
+                instagram: document.getElementById('instagramEdit').value || document.getElementById('instagramDisplay').textContent,
+                youtube: document.getElementById('youtubeEdit').value || document.getElementById('youtubeDisplay').textContent,
+                summary: document.getElementById('summaryEdit').value || document.getElementById('summaryDisplay').textContent
+            };
+
+            downloadFile('website.md', finalContent.website);
+            setTimeout(() => downloadFile('instagram.md', finalContent.instagram), 500);
+
+            if (finalContent.youtube && !finalContent.youtube.includes('{{')) {
+                setTimeout(() => downloadFile('youtube.md', finalContent.youtube), 1000);
+            }
+
+            showToast('Content files downloaded!');
+            document.getElementById('statusBadge').textContent = 'Finalized';
+            document.getElementById('statusBadge').className = 'status-badge status-final';
+        }
+
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('instagramEdit').addEventListener('input', () => updateCharCount('instagram'));
+
+        function copyAuthor() {
+            const authorText = `---
+
+**Atul Chauhan** | Adventure Athlete India
+Elite Cyclist | Trail Runner | Licensed Guide | Engineer
+
+[Instagram](https://instagram.com/adventureathlete.in) | [YouTube](https://youtube.com/@adventureathleindia) | [Strava](https://strava.com/athletes/atulchauhan)`;
+
+            navigator.clipboard.writeText(authorText).then(() => {
+                showToast('Author section copied!');
+                const btn = event.target.closest('.btn-copy');
+                btn.classList.add('copied');
+                btn.innerHTML = 'Copied!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // ==========================================
+        // Elevation Profile Chart
+        // ==========================================
+
+        // Elevation data parsed from GPX file (sampled every 25m by distance)
+        const elevationDataSets = [{"name": "Shali Tibba Trail Run", "data": [{"distance": 0, "elevation": 2210.8}, {"distance": 0.03, "elevation": 2214.4}, {"distance": 0.05, "elevation": 2221.0}, {"distance": 0.08, "elevation": 2226.6}, {"distance": 0.1, "elevation": 2233.0}, {"distance": 0.13, "elevation": 2237.6}, {"distance": 0.15, "elevation": 2241.0}, {"distance": 0.18, "elevation": 2243.6}, {"distance": 0.2, "elevation": 2244.4}, {"distance": 0.23, "elevation": 2247.4}, {"distance": 0.25, "elevation": 2250.2}, {"distance": 0.28, "elevation": 2255.8}, {"distance": 0.3, "elevation": 2257.6}, {"distance": 0.33, "elevation": 2260.8}, {"distance": 0.35, "elevation": 2268.4}, {"distance": 0.38, "elevation": 2274.2}, {"distance": 0.4, "elevation": 2277.4}, {"distance": 0.43, "elevation": 2279.2}, {"distance": 0.45, "elevation": 2286.0}, {"distance": 0.48, "elevation": 2292.4}, {"distance": 0.5, "elevation": 2299.2}, {"distance": 0.53, "elevation": 2303.6}, {"distance": 0.55, "elevation": 2306.6}, {"distance": 0.58, "elevation": 2306.6}, {"distance": 0.6, "elevation": 2308.2}, {"distance": 0.63, "elevation": 2312.0}, {"distance": 0.65, "elevation": 2315.2}, {"distance": 0.68, "elevation": 2317.8}, {"distance": 0.7, "elevation": 2320.2}, {"distance": 0.73, "elevation": 2322.8}, {"distance": 0.75, "elevation": 2323.4}, {"distance": 0.78, "elevation": 2324.6}, {"distance": 0.8, "elevation": 2327.2}, {"distance": 0.83, "elevation": 2327.0}, {"distance": 0.85, "elevation": 2327.4}, {"distance": 0.88, "elevation": 2327.8}, {"distance": 0.9, "elevation": 2327.8}, {"distance": 0.93, "elevation": 2328.8}, {"distance": 0.95, "elevation": 2332.6}, {"distance": 0.98, "elevation": 2337.0}, {"distance": 1.0, "elevation": 2342.2}, {"distance": 1.03, "elevation": 2348.0}, {"distance": 1.05, "elevation": 2351.2}, {"distance": 1.08, "elevation": 2354.4}, {"distance": 1.1, "elevation": 2361.0}, {"distance": 1.13, "elevation": 2366.0}, {"distance": 1.15, "elevation": 2370.0}, {"distance": 1.18, "elevation": 2374.0}, {"distance": 1.2, "elevation": 2378.4}, {"distance": 1.23, "elevation": 2383.6}, {"distance": 1.25, "elevation": 2387.4}, {"distance": 1.28, "elevation": 2392.6}, {"distance": 1.3, "elevation": 2402.0}, {"distance": 1.33, "elevation": 2409.4}, {"distance": 1.35, "elevation": 2416.0}, {"distance": 1.38, "elevation": 2420.2}, {"distance": 1.4, "elevation": 2426.0}, {"distance": 1.43, "elevation": 2430.8}, {"distance": 1.45, "elevation": 2433.4}, {"distance": 1.48, "elevation": 2435.2}, {"distance": 1.5, "elevation": 2435.4}, {"distance": 1.53, "elevation": 2436.6}, {"distance": 1.55, "elevation": 2438.0}, {"distance": 1.58, "elevation": 2440.2}, {"distance": 1.6, "elevation": 2442.2}, {"distance": 1.63, "elevation": 2446.6}, {"distance": 1.65, "elevation": 2453.4}, {"distance": 1.68, "elevation": 2456.6}, {"distance": 1.7, "elevation": 2459.0}, {"distance": 1.73, "elevation": 2466.4}, {"distance": 1.75, "elevation": 2473.4}, {"distance": 1.78, "elevation": 2477.0}, {"distance": 1.8, "elevation": 2480.0}, {"distance": 1.83, "elevation": 2483.8}, {"distance": 1.85, "elevation": 2486.6}, {"distance": 1.88, "elevation": 2490.0}, {"distance": 1.9, "elevation": 2491.4}, {"distance": 1.93, "elevation": 2492.2}, {"distance": 1.95, "elevation": 2492.2}, {"distance": 1.98, "elevation": 2493.2}, {"distance": 2.0, "elevation": 2495.4}, {"distance": 2.03, "elevation": 2496.6}, {"distance": 2.05, "elevation": 2499.2}, {"distance": 2.08, "elevation": 2499.8}, {"distance": 2.1, "elevation": 2500.8}, {"distance": 2.13, "elevation": 2504.0}, {"distance": 2.15, "elevation": 2509.4}, {"distance": 2.18, "elevation": 2515.8}, {"distance": 2.2, "elevation": 2523.6}, {"distance": 2.23, "elevation": 2528.2}, {"distance": 2.25, "elevation": 2531.8}, {"distance": 2.28, "elevation": 2535.8}, {"distance": 2.3, "elevation": 2541.8}, {"distance": 2.33, "elevation": 2548.8}, {"distance": 2.35, "elevation": 2556.0}, {"distance": 2.38, "elevation": 2561.4}, {"distance": 2.4, "elevation": 2566.0}, {"distance": 2.43, "elevation": 2574.4}, {"distance": 2.45, "elevation": 2578.8}, {"distance": 2.48, "elevation": 2580.2}, {"distance": 2.5, "elevation": 2582.4}, {"distance": 2.53, "elevation": 2585.8}, {"distance": 2.55, "elevation": 2588.8}, {"distance": 2.58, "elevation": 2591.6}, {"distance": 2.6, "elevation": 2595.0}, {"distance": 2.63, "elevation": 2598.4}, {"distance": 2.65, "elevation": 2603.0}, {"distance": 2.68, "elevation": 2607.0}, {"distance": 2.7, "elevation": 2610.2}, {"distance": 2.73, "elevation": 2612.2}, {"distance": 2.75, "elevation": 2614.8}, {"distance": 2.78, "elevation": 2617.6}, {"distance": 2.8, "elevation": 2620.6}, {"distance": 2.83, "elevation": 2622.6}, {"distance": 2.85, "elevation": 2625.2}, {"distance": 2.88, "elevation": 2627.2}, {"distance": 2.9, "elevation": 2629.6}, {"distance": 2.93, "elevation": 2632.6}, {"distance": 2.95, "elevation": 2635.4}, {"distance": 2.98, "elevation": 2637.8}, {"distance": 3.0, "elevation": 2640.8}, {"distance": 3.03, "elevation": 2644.2}, {"distance": 3.05, "elevation": 2647.0}, {"distance": 3.08, "elevation": 2650.0}, {"distance": 3.1, "elevation": 2653.0}, {"distance": 3.13, "elevation": 2656.8}, {"distance": 3.15, "elevation": 2659.2}, {"distance": 3.18, "elevation": 2663.6}, {"distance": 3.2, "elevation": 2667.4}, {"distance": 3.23, "elevation": 2672.0}, {"distance": 3.25, "elevation": 2675.8}, {"distance": 3.28, "elevation": 2680.4}, {"distance": 3.3, "elevation": 2685.0}, {"distance": 3.33, "elevation": 2688.2}, {"distance": 3.35, "elevation": 2693.4}, {"distance": 3.38, "elevation": 2702.8}, {"distance": 3.4, "elevation": 2711.4}, {"distance": 3.43, "elevation": 2714.4}, {"distance": 3.45, "elevation": 2719.8}, {"distance": 3.48, "elevation": 2724.8}, {"distance": 3.5, "elevation": 2726.0}, {"distance": 3.53, "elevation": 2727.8}, {"distance": 3.55, "elevation": 2728.6}, {"distance": 3.58, "elevation": 2729.6}, {"distance": 3.6, "elevation": 2732.4}, {"distance": 3.63, "elevation": 2735.2}, {"distance": 3.65, "elevation": 2739.4}, {"distance": 3.68, "elevation": 2742.2}, {"distance": 3.7, "elevation": 2745.8}, {"distance": 3.73, "elevation": 2749.0}, {"distance": 3.75, "elevation": 2750.8}, {"distance": 3.78, "elevation": 2751.8}, {"distance": 3.8, "elevation": 2751.2}, {"distance": 3.83, "elevation": 2752.0}, {"distance": 3.85, "elevation": 2755.4}, {"distance": 3.88, "elevation": 2760.8}, {"distance": 3.9, "elevation": 2767.4}, {"distance": 3.93, "elevation": 2771.0}, {"distance": 3.95, "elevation": 2773.4}, {"distance": 3.98, "elevation": 2776.0}, {"distance": 4.0, "elevation": 2779.4}, {"distance": 4.03, "elevation": 2783.6}, {"distance": 4.05, "elevation": 2789.6}, {"distance": 4.08, "elevation": 2793.0}, {"distance": 4.1, "elevation": 2798.4}, {"distance": 4.13, "elevation": 2802.0}, {"distance": 4.15, "elevation": 2805.2}, {"distance": 4.18, "elevation": 2809.4}, {"distance": 4.2, "elevation": 2812.4}, {"distance": 4.23, "elevation": 2815.0}, {"distance": 4.25, "elevation": 2817.6}, {"distance": 4.28, "elevation": 2821.2}, {"distance": 4.3, "elevation": 2824.0}, {"distance": 4.33, "elevation": 2828.0}, {"distance": 4.35, "elevation": 2830.6}, {"distance": 4.38, "elevation": 2831.4}, {"distance": 4.4, "elevation": 2834.8}, {"distance": 4.43, "elevation": 2838.0}, {"distance": 4.45, "elevation": 2840.6}, {"distance": 4.48, "elevation": 2849.2}, {"distance": 4.5, "elevation": 2860.2}, {"distance": 4.53, "elevation": 2860.6}, {"distance": 4.55, "elevation": 2861.4}, {"distance": 4.58, "elevation": 2868.6}, {"distance": 4.6, "elevation": 2871.8}, {"distance": 4.63, "elevation": 2863.4}, {"distance": 4.65, "elevation": 2853.2}, {"distance": 4.68, "elevation": 2851.8}, {"distance": 4.7, "elevation": 2847.4}, {"distance": 4.73, "elevation": 2843.6}, {"distance": 4.75, "elevation": 2841.4}, {"distance": 4.78, "elevation": 2839.4}, {"distance": 4.8, "elevation": 2835.2}, {"distance": 4.83, "elevation": 2831.8}, {"distance": 4.85, "elevation": 2828.2}, {"distance": 4.88, "elevation": 2825.0}, {"distance": 4.9, "elevation": 2821.2}, {"distance": 4.93, "elevation": 2817.8}, {"distance": 4.95, "elevation": 2813.4}, {"distance": 4.98, "elevation": 2809.2}, {"distance": 5.0, "elevation": 2798.0}, {"distance": 5.03, "elevation": 2791.6}, {"distance": 5.05, "elevation": 2787.6}, {"distance": 5.08, "elevation": 2783.4}, {"distance": 5.1, "elevation": 2775.6}, {"distance": 5.13, "elevation": 2768.0}, {"distance": 5.15, "elevation": 2764.8}, {"distance": 5.18, "elevation": 2762.8}, {"distance": 5.2, "elevation": 2763.4}, {"distance": 5.23, "elevation": 2762.4}, {"distance": 5.25, "elevation": 2760.6}, {"distance": 5.28, "elevation": 2756.4}, {"distance": 5.3, "elevation": 2752.0}, {"distance": 5.33, "elevation": 2748.8}, {"distance": 5.35, "elevation": 2745.2}, {"distance": 5.38, "elevation": 2741.8}, {"distance": 5.4, "elevation": 2740.6}, {"distance": 5.43, "elevation": 2739.4}, {"distance": 5.45, "elevation": 2738.8}, {"distance": 5.48, "elevation": 2737.0}, {"distance": 5.5, "elevation": 2731.2}, {"distance": 5.53, "elevation": 2727.0}, {"distance": 5.55, "elevation": 2718.6}, {"distance": 5.58, "elevation": 2707.4}, {"distance": 5.6, "elevation": 2700.4}, {"distance": 5.63, "elevation": 2697.8}, {"distance": 5.65, "elevation": 2693.0}, {"distance": 5.68, "elevation": 2688.8}, {"distance": 5.7, "elevation": 2683.6}, {"distance": 5.73, "elevation": 2679.0}, {"distance": 5.75, "elevation": 2673.8}, {"distance": 5.78, "elevation": 2671.0}, {"distance": 5.8, "elevation": 2667.4}, {"distance": 5.83, "elevation": 2663.6}, {"distance": 5.85, "elevation": 2659.8}, {"distance": 5.88, "elevation": 2657.2}, {"distance": 5.9, "elevation": 2653.6}, {"distance": 5.93, "elevation": 2649.2}, {"distance": 5.95, "elevation": 2645.8}, {"distance": 5.98, "elevation": 2640.0}, {"distance": 6.0, "elevation": 2636.8}, {"distance": 6.03, "elevation": 2634.2}, {"distance": 6.05, "elevation": 2631.6}, {"distance": 6.08, "elevation": 2629.0}, {"distance": 6.1, "elevation": 2626.0}, {"distance": 6.13, "elevation": 2622.6}, {"distance": 6.15, "elevation": 2619.8}, {"distance": 6.18, "elevation": 2617.4}, {"distance": 6.2, "elevation": 2614.0}, {"distance": 6.23, "elevation": 2609.8}, {"distance": 6.25, "elevation": 2605.2}, {"distance": 6.28, "elevation": 2602.6}, {"distance": 6.3, "elevation": 2599.0}, {"distance": 6.33, "elevation": 2596.2}, {"distance": 6.35, "elevation": 2594.2}, {"distance": 6.38, "elevation": 2591.4}, {"distance": 6.4, "elevation": 2588.8}, {"distance": 6.43, "elevation": 2586.4}, {"distance": 6.45, "elevation": 2582.4}, {"distance": 6.48, "elevation": 2579.2}, {"distance": 6.5, "elevation": 2576.4}, {"distance": 6.53, "elevation": 2573.0}, {"distance": 6.55, "elevation": 2570.6}, {"distance": 6.58, "elevation": 2566.4}, {"distance": 6.6, "elevation": 2563.4}, {"distance": 6.63, "elevation": 2560.4}, {"distance": 6.65, "elevation": 2556.8}, {"distance": 6.68, "elevation": 2552.8}, {"distance": 6.7, "elevation": 2549.6}, {"distance": 6.73, "elevation": 2544.4}, {"distance": 6.75, "elevation": 2541.2}, {"distance": 6.78, "elevation": 2538.2}, {"distance": 6.8, "elevation": 2535.6}, {"distance": 6.83, "elevation": 2532.2}, {"distance": 6.85, "elevation": 2527.0}, {"distance": 6.88, "elevation": 2520.8}, {"distance": 6.9, "elevation": 2516.6}, {"distance": 6.93, "elevation": 2515.0}, {"distance": 6.95, "elevation": 2514.6}, {"distance": 6.98, "elevation": 2512.4}, {"distance": 7.0, "elevation": 2510.8}, {"distance": 7.03, "elevation": 2508.8}, {"distance": 7.05, "elevation": 2507.6}, {"distance": 7.08, "elevation": 2507.4}, {"distance": 7.1, "elevation": 2506.6}, {"distance": 7.13, "elevation": 2504.2}, {"distance": 7.15, "elevation": 2499.4}, {"distance": 7.18, "elevation": 2493.0}, {"distance": 7.2, "elevation": 2481.8}, {"distance": 7.23, "elevation": 2478.4}, {"distance": 7.25, "elevation": 2475.8}, {"distance": 7.28, "elevation": 2471.8}, {"distance": 7.3, "elevation": 2469.4}, {"distance": 7.33, "elevation": 2466.8}, {"distance": 7.35, "elevation": 2464.0}, {"distance": 7.38, "elevation": 2457.8}, {"distance": 7.4, "elevation": 2452.4}, {"distance": 7.43, "elevation": 2450.2}, {"distance": 7.45, "elevation": 2447.6}, {"distance": 7.48, "elevation": 2446.4}, {"distance": 7.5, "elevation": 2445.2}, {"distance": 7.53, "elevation": 2444.6}, {"distance": 7.55, "elevation": 2441.6}, {"distance": 7.58, "elevation": 2437.4}, {"distance": 7.6, "elevation": 2430.6}, {"distance": 7.63, "elevation": 2424.6}, {"distance": 7.65, "elevation": 2417.8}, {"distance": 7.68, "elevation": 2411.0}, {"distance": 7.7, "elevation": 2402.4}, {"distance": 7.73, "elevation": 2396.4}, {"distance": 7.75, "elevation": 2392.8}, {"distance": 7.78, "elevation": 2389.0}, {"distance": 7.8, "elevation": 2384.4}, {"distance": 7.83, "elevation": 2379.6}, {"distance": 7.85, "elevation": 2374.6}, {"distance": 7.88, "elevation": 2368.4}, {"distance": 7.9, "elevation": 2363.0}, {"distance": 7.93, "elevation": 2358.6}, {"distance": 7.95, "elevation": 2352.8}, {"distance": 7.98, "elevation": 2346.4}, {"distance": 8.0, "elevation": 2342.8}, {"distance": 8.03, "elevation": 2337.2}, {"distance": 8.05, "elevation": 2338.0}, {"distance": 8.08, "elevation": 2338.4}, {"distance": 8.1, "elevation": 2339.0}, {"distance": 8.13, "elevation": 2338.6}, {"distance": 8.15, "elevation": 2339.0}, {"distance": 8.18, "elevation": 2337.4}, {"distance": 8.2, "elevation": 2335.4}, {"distance": 8.23, "elevation": 2335.4}, {"distance": 8.25, "elevation": 2332.6}, {"distance": 8.28, "elevation": 2330.2}, {"distance": 8.3, "elevation": 2327.8}, {"distance": 8.33, "elevation": 2323.6}, {"distance": 8.35, "elevation": 2321.2}, {"distance": 8.38, "elevation": 2318.2}, {"distance": 8.4, "elevation": 2315.4}, {"distance": 8.43, "elevation": 2312.6}, {"distance": 8.45, "elevation": 2308.2}, {"distance": 8.48, "elevation": 2298.8}, {"distance": 8.5, "elevation": 2290.2}, {"distance": 8.53, "elevation": 2287.8}, {"distance": 8.55, "elevation": 2284.0}, {"distance": 8.58, "elevation": 2275.8}, {"distance": 8.6, "elevation": 2266.8}, {"distance": 8.63, "elevation": 2258.8}, {"distance": 8.65, "elevation": 2252.8}, {"distance": 8.68, "elevation": 2243.4}, {"distance": 8.7, "elevation": 2231.6}, {"distance": 8.73, "elevation": 2222.8}, {"distance": 8.75, "elevation": 2218.4}, {"distance": 8.76, "elevation": 2217.8}], "stats": {"min": 2210, "max": 2872, "gain": 657, "totalDistance": 8.8}}];
+
+        let elevationCharts = {};
+        let currentGpxIndex = 0;
+
+        function initElevationCharts() {
+            const elevationContent = document.getElementById('elevationContent');
+            const gpxTabs = document.getElementById('gpxTabs');
+            const downloadBtn = document.getElementById('downloadElevationBtn');
+
+            if (!elevationDataSets || elevationDataSets.length === 0) {
+                elevationContent.innerHTML = `
+                    <div class="no-elevation-data">
+                        <p>No GPX data available</p>
+                        <p style="font-size: 13px;">Upload GPX files to generate elevation profile</p>
+                    </div>
+                `;
+                downloadBtn.style.display = 'none';
+                return;
+            }
+
+            if (elevationDataSets.length > 1) {
+                gpxTabs.style.display = 'flex';
+                gpxTabs.innerHTML = elevationDataSets.map((dataset, index) => `
+                    <button class="gpx-tab ${index === 0 ? 'active' : ''}"
+                            onclick="switchGpxTab(${index})">
+                        ${dataset.name || 'GPX ' + (index + 1)}
+                    </button>
+                `).join('');
+            }
+
+            elevationContent.innerHTML = elevationDataSets.map((dataset, index) => `
+                <div class="gpx-chart-panel ${index === 0 ? 'active' : ''}" id="gpxPanel${index}">
+                    <div class="elevation-chart-container">
+                        <div class="elevation-chart-wrapper">
+                            <canvas id="elevationChart${index}"></canvas>
+                        </div>
+                    </div>
+                    <div class="elevation-stats">
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.min || '--'}m</div>
+                            <div class="elevation-stat-label">Min Elevation</div>
+                        </div>
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.max || '--'}m</div>
+                            <div class="elevation-stat-label">Max Elevation</div>
+                        </div>
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.gain || '--'}m</div>
+                            <div class="elevation-stat-label">Total Gain</div>
+                        </div>
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.totalDistance?.toFixed(1) || '--'} km</div>
+                            <div class="elevation-stat-label">Distance</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            elevationDataSets.forEach((dataset, index) => {
+                createElevationChart(index, dataset);
+            });
+        }
+
+        function createElevationChart(index, dataset) {
+            const ctx = document.getElementById(`elevationChart${index}`);
+            if (!ctx || !dataset.data) return;
+
+            const labels = dataset.data.map(p => p.distance.toFixed(2));
+            const data = dataset.data.map(p => p.elevation);
+
+            elevationCharts[index] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Elevation (m)',
+                        data: data,
+                        fill: true,
+                        backgroundColor: 'rgba(45, 90, 61, 0.3)',
+                        borderColor: '#2D5A3D',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        pointHoverBackgroundColor: '#2D5A3D',
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: '#1A202C',
+                            titleFont: { family: "'Source Sans 3', sans-serif" },
+                            bodyFont: { family: "'Source Sans 3', sans-serif" },
+                            callbacks: {
+                                title: function(items) {
+                                    return `Distance: ${items[0].label} km`;
+                                },
+                                label: function(context) {
+                                    return `Elevation: ${context.raw.toFixed(0)}m`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Distance (km)',
+                                font: { family: "'Source Sans 3', sans-serif", size: 12 },
+                                color: '#64748b'
+                            },
+                            ticks: {
+                                font: { family: "'Source Sans 3', sans-serif", size: 11 },
+                                color: '#64748b',
+                                maxTicksLimit: 10,
+                                callback: function(value, index) {
+                                    const label = this.getLabelForValue(value);
+                                    return parseFloat(label).toFixed(1);
+                                }
+                            },
+                            grid: { display: false }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Elevation (m)',
+                                font: { family: "'Source Sans 3', sans-serif", size: 12 },
+                                color: '#64748b'
+                            },
+                            ticks: {
+                                font: { family: "'Source Sans 3', sans-serif", size: 11 },
+                                color: '#64748b'
+                            },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        }
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                }
+            });
+        }
+
+        function switchGpxTab(index) {
+            document.querySelectorAll('.gpx-tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.gpx-chart-panel').forEach((panel, i) => {
+                panel.classList.toggle('active', i === index);
+            });
+            currentGpxIndex = index;
+        }
+
+        function downloadElevationPNG() {
+            const chart = elevationCharts[currentGpxIndex];
+            if (!chart) {
+                showToast('No chart to download');
+                return;
+            }
+
+            const canvas = chart.canvas;
+            const exportCanvas = document.createElement('canvas');
+            const padding = 40;
+            exportCanvas.width = canvas.width + (padding * 2);
+            exportCanvas.height = canvas.height + (padding * 2) + 60;
+
+            const exportCtx = exportCanvas.getContext('2d');
+
+            exportCtx.fillStyle = '#FFFFFF';
+            exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+            exportCtx.fillStyle = '#1A202C';
+            exportCtx.font = "600 18px 'Source Sans 3', sans-serif";
+            exportCtx.textAlign = 'center';
+            const title = elevationDataSets[currentGpxIndex]?.name || 'Elevation Profile';
+            exportCtx.fillText(title, exportCanvas.width / 2, 35);
+
+            exportCtx.fillStyle = '#64748b';
+            exportCtx.font = "400 12px 'Source Sans 3', sans-serif";
+            exportCtx.fillText('Adventure Athlete India', exportCanvas.width / 2, 55);
+
+            exportCtx.drawImage(canvas, padding, 70);
+
+            const link = document.createElement('a');
+            const gpxName = elevationDataSets[currentGpxIndex]?.name?.replace(/[^a-z0-9]/gi, '-').toLowerCase() || 'elevation-profile';
+            link.download = `${gpxName}-elevation.png`;
+            link.href = exportCanvas.toDataURL('image/png');
+            link.click();
+
+            showToast('Elevation graph downloaded!');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            syncContent('website');
+            syncContent('instagram');
+            syncContent('youtube');
+            syncContent('summary');
+            updateCharCount('instagram');
+
+            const ytContent = document.getElementById('youtubeDisplay').textContent;
+            if (!ytContent || ytContent.includes('{{')) {
+                document.getElementById('youtubeSection').style.display = 'none';
+            }
+
+            initElevationCharts();
+        });
+    </script>
+</body>
+</html>

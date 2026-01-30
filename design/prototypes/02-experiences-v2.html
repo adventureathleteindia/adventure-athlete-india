@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences v2 (Map Toggle) | Adventure Athlete India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Logo with social handles */
+        .nav-logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .logo-socials {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .logo-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+            transition: opacity 0.2s, color 0.2s;
+            color: currentColor;
+        }
+        .logo-socials a:hover {
+            opacity: 1;
+        }
+        .logo-socials a.instagram:hover { color: #E4405F; }
+        .logo-socials a.youtube:hover { color: #FF0000; }
+        .logo-socials a.strava:hover { color: #FC4C02; }
+        .logo-socials a.facebook:hover { color: #1877F2; }
+        .logo-socials svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Shimmer button */
+        .btn-flag {
+            position: relative;
+            background: linear-gradient(90deg, #F59E0B 0%, #B45309 100%);
+            padding: 12px 24px;
+            border: none;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(180, 83, 9, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-flag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(180, 83, 9, 0.45);
+        }
+        .btn-flag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255,255,255,0.1) 20%,
+                rgba(255,255,255,0.4) 50%,
+                rgba(255,255,255,0.1) 80%,
+                transparent 100%
+            );
+            animation: flagShimmer 2.5s ease-in-out infinite;
+            transform: skewX(-20deg);
+        }
+        @keyframes flagShimmer {
+            0% { left: -100%; }
+            60%, 100% { left: 100%; }
+        }
+
+        /* Photo Pile Collage Hero */
+        .collage-hero {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .collage-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .collage-photo {
+            position: absolute;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s, z-index 0.3s, box-shadow 0.3s;
+        }
+        .collage-photo:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 100 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .collage-photo img {
+            display: block;
+            object-fit: cover;
+        }
+        .collage-photo .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 10px;
+            padding: 4px 6px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .collage-photo:hover .photo-label {
+            opacity: 1;
+        }
+        .collage-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            z-index: 50;
+            pointer-events: none;
+        }
+        .collage-overlay h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(32px, 5vw, 56px);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        .collage-overlay p {
+            font-size: 18px;
+            max-width: 500px;
+            line-height: 1.6;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Gradient buttons */
+        .btn-gradient {
+            background: linear-gradient(90deg, #F59E0B 0%, #B45309 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+        }
+
+        /* Route card meta with icons */
+        .route-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--slate);
+            margin-top: 8px;
+        }
+        .route-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .route-meta-item svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+
+        /* Footer styles */
+        .footer-social a:hover.instagram { background: #E4405F !important; }
+        .footer-social a:hover.facebook { background: #1877F2 !important; }
+        .footer-social a:hover.youtube { background: #FF0000 !important; }
+        .footer-social a:hover.strava { background: #FC4C02 !important; }
+
+        .footer-mountain-wave {
+            position: absolute;
+            top: -79px;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+        .footer {
+            position: relative;
+            overflow: hidden;
+            padding-top: 40px !important;
+            background: linear-gradient(180deg, #3a7a52 0%, #2D5A3D 40%, #1e3d29 100%) !important;
+        }
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== VIEW TOGGLE (NEW in v2) ===== */
+        .view-toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 16px;
+            margin-bottom: 32px;
+        }
+        .view-toggle-filters {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .view-toggle-buttons {
+            display: flex;
+            gap: 0;
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+        }
+        .view-toggle-btn {
+            padding: 8px 20px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            background: white;
+            color: var(--slate);
+        }
+        .view-toggle-btn.active {
+            background: var(--forest);
+            color: white;
+        }
+        .view-toggle-btn:hover:not(.active) {
+            background: var(--gray-100);
+        }
+        .view-toggle-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Map View Placeholder */
+        .map-view-container {
+            display: none;
+            margin-top: 0;
+        }
+        .map-view-container.active {
+            display: block;
+        }
+        .grid-view-container {
+            display: block;
+        }
+        .grid-view-container.hidden {
+            display: none;
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #e8f0e8 0%, #dde8dd 50%, #d4e0d4 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+        }
+        /* Grid lines to simulate map */
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(45, 90, 61, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(45, 90, 61, 0.06) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        /* Topographic lines */
+        .map-placeholder::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse 600px 300px at 40% 50%, transparent 50%, rgba(45, 90, 61, 0.04) 51%, transparent 52%),
+                radial-gradient(ellipse 500px 250px at 40% 50%, transparent 50%, rgba(45, 90, 61, 0.04) 51%, transparent 52%),
+                radial-gradient(ellipse 400px 200px at 40% 50%, transparent 50%, rgba(45, 90, 61, 0.04) 51%, transparent 52%),
+                radial-gradient(ellipse 700px 350px at 60% 40%, transparent 50%, rgba(45, 90, 61, 0.03) 51%, transparent 52%),
+                radial-gradient(ellipse 550px 275px at 60% 40%, transparent 50%, rgba(45, 90, 61, 0.03) 51%, transparent 52%);
+        }
+        .map-center-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 5;
+        }
+        .map-center-label svg {
+            width: 48px;
+            height: 48px;
+            color: var(--forest);
+            opacity: 0.4;
+            margin-bottom: 12px;
+        }
+        .map-center-label .map-label-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            color: var(--forest);
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+        .map-center-label .map-label-sub {
+            font-size: 13px;
+            color: var(--slate);
+            opacity: 0.7;
+        }
+        /* Map pin markers */
+        .map-pin {
+            position: absolute;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .map-pin:hover {
+            transform: scale(1.15);
+            z-index: 20;
+        }
+        .map-pin-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--forest);
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .map-pin-label {
+            margin-top: 4px;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--dark);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            white-space: nowrap;
+        }
+        .map-pin.active .map-pin-dot {
+            background: var(--amber);
+        }
+        .map-pin.active .map-pin-label {
+            background: var(--amber);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (Solid) -->
+    <nav class="nav nav-solid">
+        <div class="nav-container">
+            <div class="nav-logo-wrapper">
+                <a href="01-home.html" class="nav-logo">Adventure Athlete India</a>
+                <span class="logo-socials">
+                    <a href="https://instagram.com/adventure.athlete.india" class="instagram" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@adventureathleteindia" class="youtube" title="YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://strava.com/athletes/adventureathleteindia" class="strava" title="Strava">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </a>
+                    <a href="https://facebook.com/adventureathleteindia" class="facebook" title="Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="02-experiences.html" class="active">Experiences</a></li>
+                <li><a href="#">Tours & Programs</a></li>
+                <li><a href="#">Rentals</a></li>
+                <li><a href="04-about.html">About</a></li>
+                <li><a href="07-contact.html">Contact</a></li>
+            </ul>
+            <a href="08-plan.html" class="btn-flag">Plan Your Adventure</a>
+            <button class="nav-mobile">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Photo Pile Collage Hero -->
+    <section class="collage-hero">
+        <div class="collage-container">
+            <!-- Photo 1 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 180px; top: 5%; left: 5%; transform: rotate(-8deg); z-index: 10;">
+                <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80" alt="Kuppar Peak" style="width: 100%; height: 120px;">
+                <span class="photo-label">Kuppar Peak Loop</span>
+            </a>
+            <!-- Photo 2 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 140px; top: 8%; left: 20%; transform: rotate(5deg); z-index: 12;">
+                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80" alt="Shali Tibba" style="width: 100%; height: 100px;">
+                <span class="photo-label">Shali Tibba Summit</span>
+            </a>
+            <!-- Photo 3 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 200px; top: 2%; left: 35%; transform: rotate(-3deg); z-index: 8;">
+                <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=400&q=80" alt="Hatu Peak" style="width: 100%; height: 140px;">
+                <span class="photo-label">Hatu Peak Trail</span>
+            </a>
+            <!-- Photo 4 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 150px; top: 10%; left: 55%; transform: rotate(7deg); z-index: 14;">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80" alt="Churdhar" style="width: 100%; height: 110px;">
+                <span class="photo-label">Churdhar Trek</span>
+            </a>
+            <!-- Photo 5 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 170px; top: 5%; left: 72%; transform: rotate(-6deg); z-index: 9;">
+                <img src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80" alt="Jakhu Temple" style="width: 100%; height: 120px;">
+                <span class="photo-label">Jakhu Temple Walk</span>
+            </a>
+            <!-- Photo 6 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 130px; top: 3%; right: 5%; transform: rotate(4deg); z-index: 11;">
+                <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=400&q=80" alt="Fagu" style="width: 100%; height: 90px;">
+                <span class="photo-label">Shimla to Fagu</span>
+            </a>
+            <!-- Photo 7 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 160px; top: 40%; left: 2%; transform: rotate(6deg); z-index: 13;">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80" alt="Mountain View" style="width: 100%; height: 110px;">
+                <span class="photo-label">Himalayan Vista</span>
+            </a>
+            <!-- Photo 8 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 190px; top: 45%; left: 18%; transform: rotate(-4deg); z-index: 7;">
+                <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=400&q=80" alt="Snow Peak" style="width: 100%; height: 130px;">
+                <span class="photo-label">Snow Peak Ride</span>
+            </a>
+            <!-- Photo 9 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 145px; top: 50%; left: 40%; transform: rotate(8deg); z-index: 15;">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80" alt="Night Trail" style="width: 100%; height: 100px;">
+                <span class="photo-label">Starlight Trail</span>
+            </a>
+            <!-- Photo 10 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 175px; top: 42%; left: 58%; transform: rotate(-7deg); z-index: 10;">
+                <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=400&q=80" alt="Summit" style="width: 100%; height: 120px;">
+                <span class="photo-label">Summit Push</span>
+            </a>
+            <!-- Photo 11 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 155px; top: 48%; left: 78%; transform: rotate(5deg); z-index: 12;">
+                <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?w=400&q=80" alt="Forest Trail" style="width: 100%; height: 105px;">
+                <span class="photo-label">Forest Loop</span>
+            </a>
+            <!-- Photo 12 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 140px; top: 70%; left: 8%; transform: rotate(-5deg); z-index: 11;">
+                <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=400&q=80" alt="Gravel Path" style="width: 100%; height: 95px;">
+                <span class="photo-label">Gravel Adventure</span>
+            </a>
+            <!-- Photo 13 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 165px; top: 72%; left: 25%; transform: rotate(6deg); z-index: 9;">
+                <img src="https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=400&q=80" alt="Road Climb" style="width: 100%; height: 115px;">
+                <span class="photo-label">Epic Road Climb</span>
+            </a>
+            <!-- Photo 14 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 185px; top: 68%; left: 45%; transform: rotate(-3deg); z-index: 14;">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80" alt="Nature Walk" style="width: 100%; height: 125px;">
+                <span class="photo-label">Morning Walk</span>
+            </a>
+            <!-- Photo 15 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 150px; top: 75%; left: 68%; transform: rotate(4deg); z-index: 8;">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80" alt="Valley View" style="width: 100%; height: 100px;">
+                <span class="photo-label">Valley Descent</span>
+            </a>
+            <!-- Photo 16 -->
+            <a href="03-experience-detail.html" class="collage-photo" style="width: 135px; top: 65%; right: 3%; transform: rotate(-8deg); z-index: 13;">
+                <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=400&q=80" alt="Alpine" style="width: 100%; height: 90px;">
+                <span class="photo-label">Alpine Route</span>
+            </a>
+        </div>
+        <!-- Overlay with title -->
+        <div class="collage-overlay">
+            <h1>Explore the Himalayas</h1>
+            <p>These trails changed me. Maybe they'll change you too.</p>
+        </div>
+    </section>
+
+    <!-- Experiences Grid -->
+    <section>
+        <div class="container">
+            <!-- Filters -->
+            <div class="filter-pills">
+                <button class="filter-pill active">All</button>
+                <button class="filter-pill">Mountain Biking</button>
+                <button class="filter-pill">Road Cycling</button>
+                <button class="filter-pill">Trail Running</button>
+                <button class="filter-pill">Hiking</button>
+                <button class="filter-pill">Nature Walk</button>
+                <button class="filter-pill">FKT</button>
+            </div>
+
+            <!-- ===== VIEW TOGGLE ROW (NEW in v2) ===== -->
+            <div class="view-toggle-row">
+                <div class="view-toggle-filters">
+                    <select class="form-select" style="width: auto; min-width: 150px;">
+                        <option value="">Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <select class="form-select" style="width: auto; min-width: 150px;">
+                        <option value="">Duration</option>
+                        <option value="half-day">Half Day (2-4 hrs)</option>
+                        <option value="full-day">Full Day (4-8 hrs)</option>
+                        <option value="multi-day">Multi-Day</option>
+                    </select>
+                </div>
+                <div class="view-toggle-buttons">
+                    <button class="view-toggle-btn active" id="gridToggle" onclick="switchView('grid')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" rx="1"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1"/>
+                        </svg>
+                        Grid
+                    </button>
+                    <button class="view-toggle-btn" id="mapToggle" onclick="switchView('map')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                        </svg>
+                        Map
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== GRID VIEW ===== -->
+            <div id="gridView" class="grid-view-container">
+                <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                    <!-- Route Card 1 -->
+                    <a href="03-experience-detail.html" class="route-card">
+                        <div class="route-card-image">
+                            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80" alt="Kuppar Peak">
+                        </div>
+                        <div class="route-card-category">Mountain Biking</div>
+                        <h3 class="route-card-title">Kuppar Peak Loop</h3>
+                        <div class="route-meta">
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                32 km
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+                                1200m
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                Hard
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                4-5 hrs
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Route Card 2 -->
+                    <a href="03-experience-detail.html" class="route-card">
+                        <div class="route-card-image">
+                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80" alt="Shali Tibba">
+                        </div>
+                        <div class="route-card-category">Trail Running</div>
+                        <h3 class="route-card-title">Shali Tibba Summit</h3>
+                        <div class="route-meta">
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                18 km
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+                                900m
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                Moderate
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                3-4 hrs
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Route Card 3 -->
+                    <a href="03-experience-detail.html" class="route-card">
+                        <div class="route-card-image">
+                            <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80" alt="Hatu Peak">
+                        </div>
+                        <div class="route-card-category">Hiking</div>
+                        <h3 class="route-card-title">Hatu Peak Trail</h3>
+                        <div class="route-meta">
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                12 km
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+                                600m
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                Moderate
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                4-5 hrs
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Route Card 4 -->
+                    <a href="03-experience-detail.html" class="route-card">
+                        <div class="route-card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Churdhar">
+                        </div>
+                        <div class="route-card-category">Trekking</div>
+                        <h3 class="route-card-title">Churdhar Trek</h3>
+                        <div class="route-meta">
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                24 km
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+                                1800m
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                Hard
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                2 days
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Route Card 5 -->
+                    <a href="03-experience-detail.html" class="route-card">
+                        <div class="route-card-image">
+                            <img src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80" alt="Jakhu Temple">
+                        </div>
+                        <div class="route-card-category">Nature Walk</div>
+                        <h3 class="route-card-title">Jakhu Temple Walk</h3>
+                        <div class="route-meta">
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                4 km
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+                                200m
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                Easy
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                1-2 hrs
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Route Card 6 -->
+                    <a href="03-experience-detail.html" class="route-card">
+                        <div class="route-card-image">
+                            <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=800&q=80" alt="Fagu">
+                        </div>
+                        <div class="route-card-category">Road Cycling</div>
+                        <h3 class="route-card-title">Shimla to Fagu</h3>
+                        <div class="route-meta">
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                22 km
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+                                800m
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                Moderate
+                            </span>
+                            <span class="route-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                2-3 hrs
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Load More -->
+                <div class="text-center mt-12">
+                    <button class="btn-outline-dark" style="padding: 14px 40px; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; border: 2px solid var(--slate-light); color: var(--slate-dark); background: transparent; border-radius: 4px; cursor: pointer; transition: all 0.2s;">
+                        Load More Experiences
+                    </button>
+                    <p style="margin-top: 12px; font-size: 13px; color: var(--slate);">Showing 6 of 12 experiences</p>
+                </div>
+            </div>
+
+            <!-- ===== MAP VIEW (NEW in v2) ===== -->
+            <div id="mapView" class="map-view-container">
+                <div class="map-placeholder">
+                    <!-- Center label -->
+                    <div class="map-center-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                        </svg>
+                        <div class="map-label-title">Interactive Map</div>
+                        <div class="map-label-sub">Leaflet + OpenStreetMap</div>
+                    </div>
+
+                    <!-- Pin markers -->
+                    <div class="map-pin active" style="top: 28%; left: 35%;">
+                        <div class="map-pin-dot"></div>
+                        <div class="map-pin-label">Kuppar Peak Loop</div>
+                    </div>
+                    <div class="map-pin" style="top: 22%; left: 52%;">
+                        <div class="map-pin-dot"></div>
+                        <div class="map-pin-label">Shali Tibba Summit</div>
+                    </div>
+                    <div class="map-pin" style="top: 15%; left: 68%;">
+                        <div class="map-pin-dot"></div>
+                        <div class="map-pin-label">Hatu Peak Trail</div>
+                    </div>
+                    <div class="map-pin" style="top: 55%; left: 25%;">
+                        <div class="map-pin-dot"></div>
+                        <div class="map-pin-label">Churdhar Trek</div>
+                    </div>
+                    <div class="map-pin" style="top: 40%; left: 42%;">
+                        <div class="map-pin-dot"></div>
+                        <div class="map-pin-label">Jakhu Temple Walk</div>
+                    </div>
+                    <div class="map-pin" style="top: 35%; left: 60%;">
+                        <div class="map-pin-dot"></div>
+                        <div class="map-pin-label">Shimla to Fagu</div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--slate);">
+                    Click a pin to view experience details. Map powered by Leaflet + OpenStreetMap.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function switchView(view) {
+            var gridView = document.getElementById('gridView');
+            var mapView = document.getElementById('mapView');
+            var gridToggle = document.getElementById('gridToggle');
+            var mapToggle = document.getElementById('mapToggle');
+
+            if (view === 'grid') {
+                gridView.classList.remove('hidden');
+                mapView.classList.remove('active');
+                gridToggle.classList.add('active');
+                mapToggle.classList.remove('active');
+            } else {
+                gridView.classList.add('hidden');
+                mapView.classList.add('active');
+                gridToggle.classList.remove('active');
+                mapToggle.classList.add('active');
+            }
+        }
+    </script>
+
+    <!-- CTA -->
+    <section class="cta-section" style="background: var(--gray-50);">
+        <h2 class="section-title">Can't find what you're looking for?</h2>
+        <p class="section-text mx-auto text-center">
+            I can design a custom adventure based on your fitness, interests, and time.
+        </p>
+        <a href="08-plan.html" class="btn-gradient">Plan Custom Adventure</a>
+    </section>
+
+    <!-- Footer with Mountain Wave -->
+    <footer class="footer">
+        <!-- Mountain Silhouette Wave -->
+        <div class="footer-mountain-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="width: 100%; height: 80px; display: block;">
+                <path fill="#3a7a52" d="M0,120 L0,80 Q60,60 120,70 L200,50 L280,75 L320,45 L400,65 L480,35 L560,55 L640,25 L720,50 L800,20 L880,45 L960,15 L1040,40 L1120,10 L1200,35 L1280,5 L1360,30 L1440,0 L1440,120 Z"/>
+            </svg>
+        </div>
+        <!-- Decorative dots pattern -->
+        <div style="position: absolute; top: 100px; right: 40px; opacity: 0.08; z-index: 1;">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="2" fill="white"/>
+                </pattern>
+                <rect width="120" height="120" fill="url(#dots)"/>
+            </svg>
+        </div>
+        <!-- Decorative mountain icon -->
+        <div style="position: absolute; bottom: 80px; left: 40px; opacity: 0.06; z-index: 1;">
+            <svg width="150" height="100" viewBox="0 0 150 100" fill="white">
+                <path d="M75 10 L120 80 L100 80 L85 55 L70 80 L30 80 Z"/>
+                <path d="M40 30 L70 80 L10 80 Z"/>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="nav-logo" style="margin-bottom: 16px; color: white;">Adventure Athlete India</div>
+                <p>Experience the raw Himalayas.</p>
+                <p style="margin-top: 24px;">
+                    Shimla, HP, India<br>
+                    +91-9459033240<br>
+                    adventureathleteindia@gmail.com
+                </p>
+                <div class="footer-social" style="display: flex; gap: 12px; margin-top: 20px;">
+                    <a href="https://instagram.com/adventure.athlete.india" class="instagram" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://facebook.com/adventureathleteindia" class="facebook" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@adventureathleteindia" class="youtube" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="YouTube">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://strava.com/athletes/adventureathleteindia" class="strava" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Strava">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Experiences</h4>
+                <ul>
+                    <li><a href="02-experiences.html">Mountain Biking</a></li>
+                    <li><a href="02-experiences.html">Road Cycling</a></li>
+                    <li><a href="02-experiences.html">Trail Running</a></li>
+                    <li><a href="02-experiences.html">Hiking</a></li>
+                    <li><a href="02-experiences.html">Nature Walks</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="04-about.html">About Me</a></li>
+                    <li><a href="06-why-aai.html">Why Us</a></li>
+                    <li><a href="07-contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="09-faq.html">FAQ</a></li>
+                    <li><a href="10-terms.html">Terms</a></li>
+                    <li><a href="11-privacy.html">Privacy</a></li>
+                    <li><a href="12-safety.html">Safety</a></li>
+                    <li><a href="13-cancellation.html">Cancellation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Adventure Athlete India <span class="pipe">|</span> Atul Chauhan</span>
+            <span>Licensed HP Tourism Guide (Reg: 080724 42383)</span>
+        </div>
+    </footer>
+</body>
+</html>

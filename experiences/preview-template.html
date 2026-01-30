@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Preview | Adventure Athlete India</title>
+    <!-- Brand Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Chart.js for elevation profile -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        /*
+         * Adventure Athlete India - Preview Template
+         * Design System Reference: /design/prototypes/styles.css
+         *
+         * BRAND COLORS (use these ONLY):
+         * --forest: #2D5A3D (primary)
+         * --forest-dark: #1E3D2A
+         * --amber: #D97706 (accent/CTA)
+         * --amber-light: #F59E0B
+         * --dark: #1A202C (text)
+         * --slate: #64748b (secondary text)
+         * --slate-dark: #475569
+         * --white: #FFFFFF
+         * --gray-50: #F9FAFB (backgrounds)
+         * --gray-100: #F3F4F6
+         * --gray-200: #E5E7EB
+         *
+         * FONTS:
+         * Headings: 'Oswald', sans-serif
+         * Body: 'Source Sans 3', sans-serif
+         */
+
+        :root {
+            --forest: #2D5A3D;
+            --forest-dark: #1E3D2A;
+            --amber: #D97706;
+            --amber-light: #F59E0B;
+            --dark: #1A202C;
+            --slate: #64748b;
+            --slate-dark: #475569;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--gray-50);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Header - Forest Green */
+        header {
+            background: var(--forest);
+            color: var(--white);
+            padding: 40px 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        header .experience-meta {
+            font-size: 14px;
+            opacity: 0.85;
+            letter-spacing: 0.5px;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: var(--white);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .status-draft {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .status-review {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+        .status-final {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--white);
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--gray-100);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Buttons - Amber for primary actions */
+        .btn {
+            padding: 10px 18px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-copy {
+            background: var(--forest);
+            color: var(--white);
+        }
+
+        .btn-copy:hover {
+            background: var(--forest-dark);
+        }
+
+        .btn-copy.copied {
+            background: var(--amber);
+        }
+
+        .btn-edit {
+            background: var(--slate);
+            color: var(--white);
+        }
+
+        .btn-edit:hover {
+            background: var(--slate-dark);
+        }
+
+        .btn-primary {
+            background: var(--amber);
+            color: var(--white);
+            padding: 14px 28px;
+            font-size: 15px;
+        }
+
+        .btn-primary:hover {
+            background: var(--amber-light);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .content-display {
+            white-space: pre-wrap;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--slate-dark);
+        }
+
+        .content-edit {
+            display: none;
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.8;
+            border: 2px solid var(--forest);
+            resize: vertical;
+        }
+
+        .content-edit:focus {
+            outline: none;
+            border-color: var(--amber);
+        }
+
+        .editing .content-display {
+            display: none;
+        }
+
+        .editing .content-edit {
+            display: block;
+        }
+
+        .editing .btn-edit {
+            background: var(--amber);
+        }
+
+        /* Quick Facts Grid */
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            padding: 24px;
+            background: var(--gray-50);
+        }
+
+        .fact-item {
+            text-align: center;
+            padding: 12px;
+        }
+
+        .fact-value {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--forest);
+            margin-bottom: 4px;
+        }
+
+        .fact-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+
+        /* Platform Previews */
+        .instagram-preview {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 3px;
+        }
+
+        .instagram-preview-inner {
+            background: var(--white);
+            padding: 20px;
+        }
+
+        .youtube-preview {
+            background: #FF0000;
+            padding: 3px;
+        }
+
+        .youtube-preview-inner {
+            background: var(--white);
+            padding: 20px;
+        }
+
+        /* Source Info */
+        .source-info {
+            background: var(--white);
+            border-left: 4px solid var(--amber);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .source-info h4 {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 8px;
+        }
+
+        /* Checklist Section */
+        .checklist-section {
+            background: var(--white);
+            border-left: 4px solid var(--forest);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .checklist-section h3 {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--forest);
+            margin-bottom: 16px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 14px;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .checklist-status.done {
+            background: var(--forest);
+            color: var(--white);
+        }
+
+        .checklist-status.missing {
+            background: #EF4444;
+            color: var(--white);
+        }
+
+        .checklist-status.warning {
+            background: var(--amber);
+            color: var(--white);
+        }
+
+        /* Finalize Section */
+        .finalize-section {
+            background: var(--white);
+            padding: 40px;
+            text-align: center;
+            margin-top: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .finalize-section h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .finalize-section p {
+            color: var(--slate);
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        /* Author Section */
+        .author-box {
+            text-align: center;
+            padding: 28px;
+        }
+
+        .author-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .author-brand {
+            color: var(--slate);
+            font-weight: 400;
+        }
+
+        .author-credentials {
+            color: var(--slate);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .author-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .author-links a {
+            color: var(--forest);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .author-links a:hover {
+            color: var(--amber);
+        }
+
+        /* Character Count */
+        .char-count {
+            font-size: 12px;
+            color: var(--slate);
+            text-align: right;
+            margin-top: 8px;
+        }
+
+        .char-count.warning {
+            color: #EF4444;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--dark);
+            color: var(--white);
+            padding: 14px 24px;
+            font-size: 14px;
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Elevation Profile Section */
+        .elevation-section {
+            background: var(--white);
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .elevation-chart-container {
+            padding: 20px;
+            position: relative;
+        }
+
+        .elevation-chart-wrapper {
+            position: relative;
+            height: 250px;
+            margin-bottom: 16px;
+        }
+
+        .elevation-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .elevation-stat {
+            text-align: center;
+        }
+
+        .elevation-stat-value {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--forest);
+        }
+
+        .elevation-stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+
+        .btn-download {
+            background: var(--forest);
+            color: var(--white);
+        }
+
+        .btn-download:hover {
+            background: var(--forest-dark);
+        }
+
+        .no-elevation-data {
+            padding: 40px;
+            text-align: center;
+            color: var(--slate);
+        }
+
+        .no-elevation-data p {
+            margin-bottom: 8px;
+        }
+
+        /* Multiple GPX support */
+        .gpx-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .gpx-tab {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .gpx-tab:hover {
+            border-color: var(--forest);
+        }
+
+        .gpx-tab.active {
+            background: var(--forest);
+            color: var(--white);
+            border-color: var(--forest);
+        }
+
+        .gpx-chart-panel {
+            display: none;
+        }
+
+        .gpx-chart-panel.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .quick-facts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="experienceTitle">{{TITLE}}</h1>
+            <div class="experience-meta" id="experienceMeta">{{CATEGORY}} | {{DIFFICULTY}} | {{DATE}}</div>
+        </header>
+
+        <div class="status-bar">
+            <div>
+                <span class="status-badge status-review" id="statusBadge">Ready for Review</span>
+            </div>
+            <div style="font-size: 13px; color: #64748b;">
+                <span id="lastUpdated">Generated just now</span>
+            </div>
+        </div>
+
+        <!-- Source Info -->
+        <div class="source-info">
+            <h4>Content Generated From</h4>
+            <div id="sourceInfo">
+                <strong>Route:</strong> {{START_POINT}} to {{END_POINT}}<br>
+                <strong>Your notes:</strong> {{SOURCE_NOTES}}
+            </div>
+        </div>
+
+        <!-- Website Migration Checklist -->
+        <div class="checklist-section">
+            <h3>Website Migration Checklist</h3>
+            <!-- Checklist items will be populated by Claude -->
+            {{CHECKLIST_ITEMS}}
+        </div>
+
+        <!-- Quick Facts -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>Quick Facts</h2>
+            </div>
+            <div class="quick-facts" id="quickFacts">
+                <div class="fact-item">
+                    <div class="fact-value" id="factDistance">{{DISTANCE}}</div>
+                    <div class="fact-label">Distance</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value" id="factElevation">{{ELEVATION}}</div>
+                    <div class="fact-label">Elevation</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value" id="factDuration">{{DURATION}}</div>
+                    <div class="fact-label">Duration</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value" id="factDifficulty">{{DIFFICULTY}}</div>
+                    <div class="fact-label">Difficulty</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elevation Profile -->
+        <div class="content-section elevation-section" id="elevationSection">
+            <div class="section-header">
+                <h2>Elevation Profile</h2>
+                <div class="section-actions">
+                    <button class="btn btn-download" onclick="downloadElevationPNG()" id="downloadElevationBtn">
+                        Download PNG
+                    </button>
+                </div>
+            </div>
+            <!-- GPX Tabs (only shown if multiple GPX files) -->
+            <div class="gpx-tabs" id="gpxTabs" style="display: none;">
+                <!-- Tabs populated by JavaScript -->
+            </div>
+            <div id="elevationContent">
+                <!-- Content populated by JavaScript based on elevation data -->
+            </div>
+        </div>
+
+        <!-- Website Description -->
+        <div class="content-section" id="websiteSection">
+            <div class="section-header">
+                <h2>Website Description</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('website')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('website')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="content-display" id="websiteDisplay">{{WEBSITE_CONTENT}}</div>
+                <textarea class="content-edit" id="websiteEdit"></textarea>
+                <div class="char-count" id="websiteCount"></div>
+            </div>
+        </div>
+
+        <!-- Instagram Caption -->
+        <div class="content-section" id="instagramSection">
+            <div class="section-header">
+                <h2>Instagram Caption</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('instagram')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('instagram')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="instagram-preview">
+                    <div class="instagram-preview-inner">
+                        <div class="content-display" id="instagramDisplay">{{INSTAGRAM_CONTENT}}</div>
+                        <textarea class="content-edit" id="instagramEdit"></textarea>
+                        <div class="char-count" id="instagramCount">0 / 2200 characters</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YouTube Description -->
+        <div class="content-section" id="youtubeSection">
+            <div class="section-header">
+                <h2>YouTube Description</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('youtube')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('youtube')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="youtube-preview">
+                    <div class="youtube-preview-inner">
+                        <div class="content-display" id="youtubeDisplay">{{YOUTUBE_CONTENT}}</div>
+                        <textarea class="content-edit" id="youtubeEdit"></textarea>
+                        <div class="char-count" id="youtubeCount"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Short Summary -->
+        <div class="content-section" id="summarySection">
+            <div class="section-header">
+                <h2>Short Summary</h2>
+                <div class="section-actions">
+                    <button class="btn btn-edit" onclick="toggleEdit('summary')">Edit</button>
+                    <button class="btn btn-copy" onclick="copyContent('summary')">Copy</button>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="content-display" id="summaryDisplay">{{SUMMARY_CONTENT}}</div>
+                <textarea class="content-edit" id="summaryEdit" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Author Section -->
+        <div class="content-section" id="authorSection">
+            <div class="section-header">
+                <h2>Author Section</h2>
+                <div class="section-actions">
+                    <button class="btn btn-copy" onclick="copyAuthor()">Copy</button>
+                </div>
+            </div>
+            <div class="author-box">
+                <div class="author-name">Atul Chauhan <span class="author-brand">| Adventure Athlete India</span></div>
+                <div class="author-credentials">Elite Cyclist | Trail Runner | Licensed Guide | Engineer</div>
+                <div class="author-links">
+                    <a href="https://instagram.com/adventureathlete.in" target="_blank">Instagram</a>
+                    <a href="https://youtube.com/@adventureathleindia" target="_blank">YouTube</a>
+                    <a href="https://strava.com/athletes/atulchauhan" target="_blank">Strava</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finalize -->
+        <div class="finalize-section">
+            <h3>Ready to Finalize?</h3>
+            <p>Review all content above. Edit if needed. Then click finalize to save.</p>
+            <button class="btn btn-primary" onclick="finalizeContent()">
+                Finalize & Save Content
+            </button>
+            <p style="margin-top: 16px; font-size: 13px; color: #64748b;">
+                This will download all content files. Move them to the experience's <code>content/</code> folder.
+            </p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        function syncContent(section) {
+            const display = document.getElementById(section + 'Display');
+            const edit = document.getElementById(section + 'Edit');
+            if (display && edit) {
+                edit.value = display.textContent;
+            }
+        }
+
+        function toggleEdit(section) {
+            const sectionEl = document.getElementById(section + 'Section');
+            const display = document.getElementById(section + 'Display');
+            const edit = document.getElementById(section + 'Edit');
+
+            if (sectionEl.classList.contains('editing')) {
+                display.textContent = edit.value;
+                sectionEl.classList.remove('editing');
+            } else {
+                sectionEl.classList.add('editing');
+                edit.focus();
+            }
+
+            if (section === 'instagram') {
+                updateCharCount('instagram');
+            }
+        }
+
+        function copyContent(section) {
+            const content = document.getElementById(section + 'Display').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                showToast('Copied to clipboard!');
+                const btn = event.target.closest('.btn-copy');
+                btn.classList.add('copied');
+                btn.innerHTML = 'Copied!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = 'Copy';
+                }, 2000);
+            });
+        }
+
+        function updateCharCount(section) {
+            const edit = document.getElementById(section + 'Edit');
+            const count = document.getElementById(section + 'Count');
+            if (edit && count) {
+                const len = edit.value.length;
+                const max = section === 'instagram' ? 2200 : 5000;
+                count.textContent = `${len} / ${max} characters`;
+                count.classList.toggle('warning', len > max);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        function finalizeContent() {
+            const finalContent = {
+                website: document.getElementById('websiteEdit').value || document.getElementById('websiteDisplay').textContent,
+                instagram: document.getElementById('instagramEdit').value || document.getElementById('instagramDisplay').textContent,
+                youtube: document.getElementById('youtubeEdit').value || document.getElementById('youtubeDisplay').textContent,
+                summary: document.getElementById('summaryEdit').value || document.getElementById('summaryDisplay').textContent
+            };
+
+            downloadFile('website.md', finalContent.website);
+            setTimeout(() => downloadFile('instagram.md', finalContent.instagram), 500);
+
+            if (finalContent.youtube && !finalContent.youtube.includes('{{')) {
+                setTimeout(() => downloadFile('youtube.md', finalContent.youtube), 1000);
+            }
+
+            showToast('Content files downloaded!');
+            document.getElementById('statusBadge').textContent = 'Finalized';
+            document.getElementById('statusBadge').className = 'status-badge status-final';
+        }
+
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('instagramEdit').addEventListener('input', () => updateCharCount('instagram'));
+
+        function copyAuthor() {
+            const authorText = `---
+
+**Atul Chauhan** | Adventure Athlete India
+Elite Cyclist | Trail Runner | Licensed Guide | Engineer
+
+[Instagram](https://instagram.com/adventureathlete.in) | [YouTube](https://youtube.com/@adventureathleindia) | [Strava](https://strava.com/athletes/atulchauhan)`;
+
+            navigator.clipboard.writeText(authorText).then(() => {
+                showToast('Author section copied!');
+                const btn = event.target.closest('.btn-copy');
+                btn.classList.add('copied');
+                btn.innerHTML = 'Copied!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // ==========================================
+        // Elevation Profile Chart
+        // ==========================================
+
+        // Elevation data will be embedded by Claude when generating preview
+        // Format: Array of objects with { name, data: [{ distance, elevation }], stats: { min, max, gain, totalDistance } }
+        const elevationDataSets = {{ELEVATION_DATA}};
+
+        let elevationCharts = {};
+        let currentGpxIndex = 0;
+
+        function initElevationCharts() {
+            const elevationSection = document.getElementById('elevationSection');
+            const elevationContent = document.getElementById('elevationContent');
+            const gpxTabs = document.getElementById('gpxTabs');
+            const downloadBtn = document.getElementById('downloadElevationBtn');
+
+            // Check if elevation data exists and is valid
+            if (!elevationDataSets || elevationDataSets.length === 0 ||
+                (typeof elevationDataSets === 'string' && elevationDataSets.includes('{{'))) {
+                // No elevation data - show message
+                elevationContent.innerHTML = `
+                    <div class="no-elevation-data">
+                        <p>No GPX data available</p>
+                        <p style="font-size: 13px;">Upload GPX files to generate elevation profile</p>
+                    </div>
+                `;
+                downloadBtn.style.display = 'none';
+                return;
+            }
+
+            // Show tabs if multiple GPX files
+            if (elevationDataSets.length > 1) {
+                gpxTabs.style.display = 'flex';
+                gpxTabs.innerHTML = elevationDataSets.map((dataset, index) => `
+                    <button class="gpx-tab ${index === 0 ? 'active' : ''}"
+                            onclick="switchGpxTab(${index})">
+                        ${dataset.name || 'GPX ' + (index + 1)}
+                    </button>
+                `).join('');
+            }
+
+            // Create chart panels for each GPX file
+            elevationContent.innerHTML = elevationDataSets.map((dataset, index) => `
+                <div class="gpx-chart-panel ${index === 0 ? 'active' : ''}" id="gpxPanel${index}">
+                    <div class="elevation-chart-container">
+                        <div class="elevation-chart-wrapper">
+                            <canvas id="elevationChart${index}"></canvas>
+                        </div>
+                    </div>
+                    <div class="elevation-stats">
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.min || '--'}m</div>
+                            <div class="elevation-stat-label">Min Elevation</div>
+                        </div>
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.max || '--'}m</div>
+                            <div class="elevation-stat-label">Max Elevation</div>
+                        </div>
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.gain || '--'}m</div>
+                            <div class="elevation-stat-label">Total Gain</div>
+                        </div>
+                        <div class="elevation-stat">
+                            <div class="elevation-stat-value">${dataset.stats?.totalDistance?.toFixed(1) || '--'} km</div>
+                            <div class="elevation-stat-label">Distance</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Initialize charts
+            elevationDataSets.forEach((dataset, index) => {
+                createElevationChart(index, dataset);
+            });
+        }
+
+        function createElevationChart(index, dataset) {
+            const ctx = document.getElementById(`elevationChart${index}`);
+            if (!ctx || !dataset.data) return;
+
+            const labels = dataset.data.map(p => p.distance.toFixed(2));
+            const data = dataset.data.map(p => p.elevation);
+
+            elevationCharts[index] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Elevation (m)',
+                        data: data,
+                        fill: true,
+                        backgroundColor: 'rgba(45, 90, 61, 0.3)',
+                        borderColor: '#2D5A3D',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        pointHoverBackgroundColor: '#2D5A3D',
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: '#1A202C',
+                            titleFont: { family: "'Source Sans 3', sans-serif" },
+                            bodyFont: { family: "'Source Sans 3', sans-serif" },
+                            callbacks: {
+                                title: function(items) {
+                                    return `Distance: ${items[0].label} km`;
+                                },
+                                label: function(context) {
+                                    return `Elevation: ${context.raw.toFixed(0)}m`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Distance (km)',
+                                font: { family: "'Source Sans 3', sans-serif", size: 12 },
+                                color: '#64748b'
+                            },
+                            ticks: {
+                                font: { family: "'Source Sans 3', sans-serif", size: 11 },
+                                color: '#64748b',
+                                maxTicksLimit: 10,
+                                callback: function(value, index) {
+                                    // Show fewer labels for readability
+                                    const label = this.getLabelForValue(value);
+                                    return parseFloat(label).toFixed(1);
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Elevation (m)',
+                                font: { family: "'Source Sans 3', sans-serif", size: 12 },
+                                color: '#64748b'
+                            },
+                            ticks: {
+                                font: { family: "'Source Sans 3', sans-serif", size: 11 },
+                                color: '#64748b'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+
+        function switchGpxTab(index) {
+            // Update tabs
+            document.querySelectorAll('.gpx-tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+
+            // Update panels
+            document.querySelectorAll('.gpx-chart-panel').forEach((panel, i) => {
+                panel.classList.toggle('active', i === index);
+            });
+
+            currentGpxIndex = index;
+        }
+
+        function downloadElevationPNG() {
+            const chart = elevationCharts[currentGpxIndex];
+            if (!chart) {
+                showToast('No chart to download');
+                return;
+            }
+
+            const canvas = chart.canvas;
+
+            // Create a new canvas with white background and padding
+            const exportCanvas = document.createElement('canvas');
+            const padding = 40;
+            exportCanvas.width = canvas.width + (padding * 2);
+            exportCanvas.height = canvas.height + (padding * 2) + 60; // Extra space for title
+
+            const exportCtx = exportCanvas.getContext('2d');
+
+            // White background
+            exportCtx.fillStyle = '#FFFFFF';
+            exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+            // Add title
+            exportCtx.fillStyle = '#1A202C';
+            exportCtx.font = "600 18px 'Source Sans 3', sans-serif";
+            exportCtx.textAlign = 'center';
+            const title = elevationDataSets[currentGpxIndex]?.name || 'Elevation Profile';
+            exportCtx.fillText(title, exportCanvas.width / 2, 35);
+
+            // Add branding
+            exportCtx.fillStyle = '#64748b';
+            exportCtx.font = "400 12px 'Source Sans 3', sans-serif";
+            exportCtx.fillText('Adventure Athlete India', exportCanvas.width / 2, 55);
+
+            // Draw the chart
+            exportCtx.drawImage(canvas, padding, 70);
+
+            // Download
+            const link = document.createElement('a');
+            const gpxName = elevationDataSets[currentGpxIndex]?.name?.replace(/[^a-z0-9]/gi, '-').toLowerCase() || 'elevation-profile';
+            link.download = `${gpxName}-elevation.png`;
+            link.href = exportCanvas.toDataURL('image/png');
+            link.click();
+
+            showToast('Elevation graph downloaded!');
+        }
+
+        // Initialize elevation charts on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Existing init code...
+            syncContent('website');
+            syncContent('instagram');
+            syncContent('youtube');
+            syncContent('summary');
+            updateCharCount('instagram');
+
+            // Hide YouTube section if no content
+            const ytContent = document.getElementById('youtubeDisplay').textContent;
+            if (!ytContent || ytContent.includes('{{')) {
+                document.getElementById('youtubeSection').style.display = 'none';
+            }
+
+            // Initialize elevation charts
+            initElevationCharts();
+        });
+    </script>
+</body>
+</html>

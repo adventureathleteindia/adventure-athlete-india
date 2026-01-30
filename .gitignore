@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+
+# Large media folders - not for git
+Images for website/
+experiences/**/media/videos/
+experiences/**/media/photos/*.heic
+
+# Environment files
+.env*
+!.env.example
+
+# Node
+node_modules/
+
+# Claude Code
+.claude/

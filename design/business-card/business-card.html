@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Card — Adventure Athlete India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset ───────────────────────────────────── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #EDEEF0;
+    color: #1A202C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 48px 24px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Page chrome ─────────────────────────────── */
+  .page-heading {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .card-set {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .card-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #94A3B8;
+  }
+
+  .size-note {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    color: #94A3B8;
+    margin-top: 2px;
+  }
+
+  /* ── Card base ───────────────────────────────── */
+  .card {
+    width: 336px;
+    height: 192px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ═══════════════════════════════════════════════
+     FRONT SIDE
+     ═══════════════════════════════════════════════ */
+  .card-front {
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 14px 16px 12px 16px;
+  }
+
+  /* Amber top accent stripe */
+  .card-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #D97706, #F59E0B);
+    z-index: 2;
+  }
+
+  /* Mountain silhouette (subtle, bottom-right) */
+  .mountain-front {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 180px;
+    height: 56px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  /* -- Front: top section -- */
+  .front-top {
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 8.5px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #2D5A3D;
+    line-height: 1;
+  }
+
+  .person-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    color: #1A202C;
+    line-height: 1;
+    margin-top: 6px;
+  }
+
+  .person-role {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 7px;
+    font-weight: 600;
+    color: #2D5A3D;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    line-height: 1;
+  }
+
+  /* -- Front: credentials -- */
+  .front-credentials {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cred-line {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 6px;
+    font-weight: 400;
+    color: #64748B;
+    letter-spacing: 0.15px;
+    line-height: 1.6;
+  }
+
+  .cred-line .sep {
+    color: #D97706;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+
+  /* -- Front: amber divider -- */
+  .front-accent {
+    width: 24px;
+    height: 1.5px;
+    background: #D97706;
+    border-radius: 1px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* -- Front: contact -- */
+  .front-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .contact-row svg {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+  }
+
+  .contact-row span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 6.2px;
+    font-weight: 400;
+    color: #475569;
+    letter-spacing: 0.1px;
+    line-height: 1;
+  }
+
+  /* ═══════════════════════════════════════════════
+     BACK SIDE
+     ═══════════════════════════════════════════════ */
+  .card-back {
+    background: #2D5A3D;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  /* Amber bottom accent stripe */
+  .card-back::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #F59E0B, #D97706);
+    z-index: 2;
+  }
+
+  /* Mountain silhouette (back, bottom) */
+  .mountain-back {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  /* -- Back: left column (QR) -- */
+  .back-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 14px 14px 18px;
+    gap: 5px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .qr-frame {
+    width: 78px;
+    height: 78px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  }
+
+  .qr-frame img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .qr-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 5.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1;
+  }
+
+  /* -- Back: vertical divider -- */
+  .back-divider {
+    width: 1px;
+    align-self: stretch;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+  }
+
+  /* -- Back: right column -- */
+  .back-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 14px 16px 14px 14px;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    gap: 3.5px;
+  }
+
+  .back-brand {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 6px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 3px;
+    line-height: 1;
+  }
+
+  .social-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    line-height: 1;
+  }
+
+  .social-row svg {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    opacity: 0.55;
+  }
+
+  .social-row span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 6.2px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.1px;
+  }
+
+  .back-tagline {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 7.5px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 8px;
+    line-height: 1;
+  }
+
+  .back-tagline .tpipe {
+    color: #F59E0B;
+    margin: 0 1px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     PRINT STYLES
+     ═══════════════════════════════════════════════ */
+  @media print {
+    body {
+      background: white;
+      padding: 12mm;
+    }
+
+    .page-heading,
+    .card-label,
+    .size-note {
+      display: none;
+    }
+
+    .card-set {
+      gap: 10mm;
+    }
+
+    .card {
+      box-shadow: none;
+      border: 0.5px solid #ccc;
+      width: 3.5in;
+      height: 2in;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .card-front::before,
+    .card-back::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .card-back {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="page-heading">Business Card Preview</div>
+
+  <div class="card-set">
+
+    <!-- ═══ FRONT ═══════════════════════════════════ -->
+    <div class="card-wrap">
+      <span class="card-label">Front</span>
+
+      <div class="card card-front">
+
+        <!-- Mountain silhouette -->
+        <svg class="mountain-front" viewBox="0 0 360 112" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0 112 L50 52 L80 72 L120 24 L155 56 L185 30 L215 54 L255 8 L290 42 L320 20 L360 35 L360 112 Z" fill="#2D5A3D"/>
+        </svg>
+
+        <!-- Top: brand + identity -->
+        <div class="front-top">
+          <div class="brand-name">Adventure Athlete India</div>
+          <div class="person-name">Atul Chauhan</div>
+          <div class="person-role">Founder &amp; Lead Guide</div>
+        </div>
+
+        <!-- Credentials -->
+        <div class="front-credentials">
+          <div class="cred-line">Engineer<span class="sep">|</span>Mountain Biker<span class="sep">|</span>Trail Runner<span class="sep">|</span>National Level Athlete</div>
+          <div class="cred-line">Licensed HP Tourism Guide<span class="sep">|</span>ITRA 555</div>
+        </div>
+
+        <!-- Accent + Contact -->
+        <div style="position:relative; z-index:1;">
+          <div class="front-accent"></div>
+          <div class="front-contact" style="margin-top: 6px;">
+
+            <!-- Phone -->
+            <div class="contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D5A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              <span>+91-9459033240</span>
+            </div>
+
+            <!-- Email -->
+            <div class="contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D5A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M22 7l-10 7L2 7"/>
+              </svg>
+              <span>adventureathleteindia@gmail.com</span>
+            </div>
+
+            <!-- Website -->
+            <div class="contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D5A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              </svg>
+              <span>adventureathleteindia.com</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <span class="size-note">Actual size: 3.5 &times; 2 inches (89 &times; 51 mm)</span>
+    </div>
+
+    <!-- ═══ BACK ════════════════════════════════════ -->
+    <div class="card-wrap">
+      <span class="card-label">Back</span>
+
+      <div class="card card-back">
+
+        <!-- Mountain silhouette -->
+        <svg class="mountain-back" viewBox="0 0 672 72" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0 72 L30 42 L70 56 L120 22 L160 44 L200 16 L250 38 L300 6 L350 32 L400 14 L450 34 L490 10 L530 30 L580 18 L620 40 L660 28 L672 36 L672 72 Z" fill="#FFFFFF"/>
+        </svg>
+
+        <!-- Left: QR -->
+        <div class="back-left">
+          <div class="qr-frame">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://adventureathleteindia.com&color=2D5A3D&bgcolor=FFFFFF"
+              alt="QR code — adventureathleteindia.com"
+              width="68"
+              height="68"
+              loading="lazy"
+            />
+          </div>
+          <span class="qr-label">Scan to explore</span>
+        </div>
+
+        <!-- Divider -->
+        <div class="back-divider"></div>
+
+        <!-- Right: socials + tagline -->
+        <div class="back-right">
+          <div class="back-brand">Adventure Athlete India</div>
+
+          <!-- Instagram -->
+          <div class="social-row">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
+              <circle cx="12" cy="12" r="5" stroke="white" stroke-width="2"/>
+              <circle cx="18" cy="6" r="1.5" fill="white"/>
+            </svg>
+            <span>@adventureathlete.in</span>
+          </div>
+
+          <!-- YouTube -->
+          <div class="social-row">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="5" width="22" height="14" rx="4" stroke="white" stroke-width="1.8"/>
+              <path d="M10 8.5L15.5 12L10 15.5Z" fill="white"/>
+            </svg>
+            <span>@adventureathleindia</span>
+          </div>
+
+          <!-- Facebook -->
+          <div class="social-row">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.8"/>
+              <path d="M15.5 5.5H14C12.343 5.5 11 6.843 11 8.5V10.5H9V13H11V19H13.5V13H15.5L16 10.5H13.5V8.5C13.5 8.224 13.724 8 14 8H15.5V5.5Z" fill="white"/>
+            </svg>
+            <span>Adventure Athlete India</span>
+          </div>
+
+          <!-- Strava -->
+          <div class="social-row">
+            <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+            </svg>
+            <span>Atul Chauhan &#x1F1EE;&#x1F1F3;</span>
+          </div>
+
+          <!-- Tagline -->
+          <div class="back-tagline">Ride <span class="tpipe">|</span> Run <span class="tpipe">|</span> Explore <span class="tpipe">|</span> Himalayas</div>
+        </div>
+
+      </div>
+
+      <span class="size-note">Actual size: 3.5 &times; 2 inches (89 &times; 51 mm)</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "route_id": "001",
+    "slug": "shali-tibba-trail-run",
+    "folder_name": "001-shali-tibba-trail-run",
+    "status": "review",
+    "created_date": "2026-01-14",
+    "polished": true,
+    "hasContent": true
+  },
+  "basic_info": {
+    "title": "Shali Tibba Trail Run",
+    "intro": "360° Himalayan views from one of the best short trails near Shimla",
+    "category": "Trail Running",
+    "categoryValue": "trail",
+    "difficulty": "Easy",
+    "difficultyLevel": 1,
+    "date": "2026-01-11",
+    "tags": ["hike", "sunrise", "360-view", "temple", "solo-friendly", "shimla"]
+  },
+  "location": {
+    "start_point": "Khatnol",
+    "end_point": "Shali Tibba Summit",
+    "route": "Khatnol → Shali Tibba Summit → Khatnol (Out & Back)",
+    "district": "Shimla District",
+    "state": "Himachal Pradesh",
+    "location": "Shimla District, Himachal Pradesh",
+    "how_to_reach": "Bus from Shimla ISBT to Khatnol (3 hours), then 3 km offroad to the trail head. Or drive, around 2-2.5 hours one way from Shimla. Can also take a cab."
+  },
+  "metrics": {
+    "strava_link": "https://www.strava.com/activities/17012112435",
+    "strava_activity_id": "17012112435",
+    "strava_distance_km": 8.8,
+    "strava_elevation_m": 657,
+    "distance_km": 8.8,
+    "distance": "8.8 km",
+    "elevation_gain_m": 657,
+    "elevation": "657m",
+    "duration": "2-2.5 hrs",
+    "max_altitude_m": 2872,
+    "start_altitude_m": 2210
+  },
+  "website_extras": {
+    "best_season": "Skip monsoon (mid-June to September end)",
+    "gear": "Trail shoes · Poles recommended",
+    "what_to_bring": [
+      "Trail running shoes (rocky terrain)",
+      "1L water (also available at top)",
+      "Trekking pole (helps on descent)",
+      "Energy bar or snack",
+      "Extra layer for summit"
+    ]
+  },
+  "notes": {
+    "raw_description": "So the raw description about the Shali hike, I just went on a Sunday run taking my car from Dhalli to Khatnol and then 3 km beyond towards the trail head. It was January 11 so it was a winter day. The sun was quite bright, a short sunny day of winters - usually it is snowy in this month but this year due to the dry weather, the trail was dry and there was no snow. I took trail shoes with 1L of water, a pole because the route is very rocky and a pole helps while coming downhill so that we don't tumble our foot. I just took one energy bar with me. Started the journey quite late - I started my run around 1 PM and also shooting all the way, it took me around 50-55 minutes to the top. The most memorable part was the top from where you have a 360° view. Lessons learned is one should start early to enjoy the most out of the day. It was a solo run and would have been fun if there was company. We also get water on the top so no need to worry about water but if it's off-season you must carry some food otherwise there'll be less chances that you get anything on the top. There is a Pujari on the top and you can also put your tent and maybe stay on the top if you have permission from the Pujari.",
+    "notes_from_file": "",
+    "media_info": "Have around 12-14 photos (HEIC + JPG), 1 voice memo (m4a), GPX file, and YouTube video uploaded."
+  },
+  "media": {
+    "hero_image": null,
+    "card_image": null,
+    "photos": null,
+    "youtube_url": "https://www.youtube.com/watch?v=gB8VA90piM0",
+    "youtube_id": "gB8VA90piM0",
+    "video_thumbnail": null,
+    "photos_count": 14,
+    "videos_count": 1,
+    "audio_count": 1,
+    "has_gpx": true
+  },
+  "polished_content": {
+    "website_description": "One of the most rewarding short trail runs near Shimla. The summit gives you a complete 360 degree panorama of the Himalayan ranges.",
+    "opening_paragraph": "I took this trail on a January afternoon, starting from Khatnol village. It was one of those bright sunny winter days, short but perfect for a run.",
+    "content": "Generated - see preview.html for full content",
+    "instagram_caption": "Generated - see preview.html for full caption",
+    "youtube_description": "Generated - see preview.html for full description",
+    "short_summary": "360 degree Himalayan views from this easy summit near Shimla. Rocky trail, about 50 minutes up. Great for a short trail run or hike."
+  },
+  "checklist": {
+    "basic_info_complete": true,
+    "location_complete": true,
+    "metrics_available": true,
+    "notes_added": true,
+    "media_added": true,
+    "polished": true,
+    "published": false
+  }
+}

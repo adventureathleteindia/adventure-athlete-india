@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Adventure Athlete India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Logo with social handles */
+        .nav-logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .logo-socials {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .logo-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+            transition: opacity 0.2s, color 0.2s;
+            color: var(--slate);
+        }
+        .logo-socials a:hover {
+            opacity: 1;
+        }
+        .logo-socials a.instagram:hover { color: #E4405F; }
+        .logo-socials a.youtube:hover { color: #FF0000; }
+        .logo-socials a.strava:hover { color: #FC4C02; }
+        .logo-socials a.facebook:hover { color: #1877F2; }
+        .logo-socials svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Hero with large image */
+        .about-hero {
+            padding: 120px 0 80px;
+        }
+        .about-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+        @media (max-width: 968px) {
+            .about-hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        .about-hero-image {
+            position: relative;
+        }
+        .about-hero-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .about-hero-image::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 80%;
+            height: 80%;
+            border: 3px solid var(--amber);
+            border-radius: 12px;
+            z-index: -1;
+        }
+        .about-intro h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .about-intro .lead {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--slate-dark);
+            margin-bottom: 32px;
+        }
+
+        /* Social row - minimal style */
+        .social-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .social-row a {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--slate);
+            transition: all 0.2s;
+        }
+        .social-row a:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+        .social-row a[title="Instagram"]:hover { background: #E4405F; }
+        .social-row a[title="YouTube"]:hover { background: #FF0000; }
+        .social-row a[title="Strava"]:hover { background: #FC4C02; }
+        .social-row a[title="Facebook"]:hover { background: #1877F2; }
+        .social-row a[title="ITRA Profile"]:hover { background: var(--forest); }
+        .social-row a svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Profile Dashboard */
+        .profile-dashboard {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin: 60px auto 0;
+            max-width: 1000px;
+            overflow: hidden;
+        }
+        .dashboard-primary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        @media (max-width: 768px) {
+            .dashboard-primary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .dash-box {
+            padding: 28px 20px;
+            text-align: center;
+            border-right: 1px solid var(--gray-100);
+        }
+        .dash-box:last-child {
+            border-right: none;
+        }
+        @media (max-width: 768px) {
+            .dash-box:nth-child(2) {
+                border-right: none;
+            }
+            .dash-box:nth-child(1), .dash-box:nth-child(2) {
+                border-bottom: 1px solid var(--gray-100);
+            }
+        }
+        .dash-box:hover {
+            background: var(--gray-50);
+        }
+        .dash-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            background: rgba(45, 90, 61, 0.08);
+            color: var(--forest);
+            transition: background 0.2s;
+        }
+        .dash-box:hover .dash-icon {
+            background: rgba(45, 90, 61, 0.15);
+        }
+        .dash-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        .dash-value {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+        .dash-label {
+            font-size: 12px;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .dashboard-secondary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 20px;
+            gap: 16px;
+            background: var(--gray-50);
+        }
+        @media (max-width: 768px) {
+            .dashboard-secondary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .dash-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .dash-item:hover {
+            background: rgba(45, 90, 61, 0.05);
+        }
+        .dash-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(45, 90, 61, 0.08);
+            color: var(--forest);
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .dash-item:hover .dash-item-icon {
+            background: rgba(45, 90, 61, 0.15);
+        }
+        .dash-item-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+        .dash-item-content {
+            flex: 1;
+        }
+        .dash-item-label {
+            font-size: 11px;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .dash-item-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+            line-height: 1.4;
+        }
+        .dash-item-value small {
+            display: block;
+            font-weight: 400;
+            color: var(--slate);
+            font-size: 12px;
+        }
+
+        /* Editorial section */
+        .editorial-section {
+            padding: 80px 0;
+        }
+        .editorial-section.alt {
+            background: var(--gray-50);
+        }
+
+        /* Story timeline - editorial style */
+        .story-section {
+            max-width: 700px;
+        }
+        .story-block {
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-left: 2px solid var(--gray-200);
+            position: relative;
+        }
+        .story-block::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+        }
+        .story-year {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--amber);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .story-text {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--slate-dark);
+        }
+
+        /* Summit cards - with images */
+        .summit-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .summit-card-image {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+        .summit-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .summit-card-image .altitude {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            font-family: var(--font-heading);
+            font-size: 24px;
+            color: white;
+            background: rgba(0,0,0,0.6);
+            padding: 6px 12px;
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
+        }
+        .summit-card-content {
+            padding: 20px;
+        }
+        .summit-card-content h4 {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        .summit-card-content p {
+            font-size: 14px;
+            color: var(--slate);
+        }
+
+        /* Race results - clean table */
+        .race-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 32px;
+        }
+        .race-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate);
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .race-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 15px;
+            color: var(--slate-dark);
+        }
+        .race-table tr:last-child td {
+            border-bottom: none;
+        }
+        .race-table tr:hover {
+            background: var(--gray-50);
+        }
+        .race-result {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .race-result.gold { color: #D97706; }
+        .race-result.silver { color: #6B7280; }
+        .race-result.bronze { color: #B45309; }
+
+        /* Expandable table rows */
+        .race-table tbody tr.hidden-row {
+            display: none;
+        }
+        .race-table tbody.expanded tr.hidden-row {
+            display: table-row;
+        }
+        .view-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 12px 24px;
+            background: var(--forest);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .view-more-btn:hover {
+            background: var(--forest-dark);
+        }
+        .view-more-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+        .view-more-btn.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* Certificate thumbnail */
+        .cert-thumb {
+            width: 50px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid var(--gray-200);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cert-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .cert-placeholder {
+            width: 50px;
+            height: 36px;
+            border-radius: 4px;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--slate);
+        }
+        .cert-placeholder svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.4;
+        }
+
+        /* Lightbox modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .lightbox-close:hover {
+            transform: scale(1.1);
+        }
+        .lightbox-close svg {
+            width: 20px;
+            height: 20px;
+        }
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            margin-top: 16px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Quote block */
+        .quote-block {
+            padding: 60px;
+            background: var(--gray-100);
+            color: var(--charcoal);
+            border-radius: 16px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quote-block blockquote {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            color: var(--slate-dark);
+        }
+        .quote-block cite {
+            font-size: 14px;
+            color: var(--slate);
+        }
+
+        /* CTA section - grey card feel */
+        .cta-section {
+            padding: 60px 0 80px;
+        }
+        .cta-card {
+            text-align: center;
+            padding: 60px 40px;
+            background: var(--gray-100);
+            border-radius: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .cta-card h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 12px;
+        }
+        .cta-card p {
+            font-size: 17px;
+            color: var(--slate-dark);
+            margin-bottom: 28px;
+        }
+
+        /* Photo Pile Gallery */
+        .photo-pile-section {
+            padding: 60px 0 0;
+        }
+        .photo-pile-container {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            margin-top: 40px;
+        }
+        .photo-pile {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .pile-photo {
+            position: absolute;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s, z-index 0.3s, box-shadow 0.3s;
+        }
+        .pile-photo:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 100 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .pile-photo img {
+            display: block;
+            object-fit: cover;
+        }
+        .pile-photo .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 10px;
+            padding: 4px 6px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .pile-photo:hover .photo-label {
+            opacity: 1;
+        }
+
+        /* Flag button */
+        .btn-flag {
+            position: relative;
+            background: linear-gradient(90deg, #F59E0B 0%, #B45309 100%);
+            padding: 12px 24px;
+            border: none;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(180, 83, 9, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-flag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(180, 83, 9, 0.45);
+        }
+        .btn-flag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.1) 80%, transparent 100%);
+            animation: flagShimmer 2.5s ease-in-out infinite;
+            transform: skewX(-20deg);
+        }
+        @keyframes flagShimmer {
+            0% { left: -100%; }
+            60%, 100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav nav-solid">
+        <div class="nav-container">
+            <div class="nav-logo-wrapper">
+                <a href="01-home.html" class="nav-logo">Adventure Athlete India</a>
+                <span class="logo-socials">
+                    <a href="https://instagram.com/adventure.athlete.india" class="instagram" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@adventureathleteindia" class="youtube" title="YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://strava.com/athletes/adventureathleteindia" class="strava" title="Strava">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </a>
+                    <a href="https://facebook.com/adventureathleteindia" class="facebook" title="Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="02-experiences.html">Experiences</a></li>
+                <li><a href="04-about.html" class="active">About</a></li>
+                <li><a href="07-contact.html">Contact</a></li>
+            </ul>
+            <a href="08-plan.html" class="btn-flag">Plan Your Adventure</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-grid">
+                <div class="about-hero-image">
+                    <img src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=800&q=80" alt="Atul Chauhan">
+                </div>
+                <div class="about-intro">
+                    <span class="section-label">About</span>
+                    <h1>I'm Atul.<br>I ride, I run, I explore.</h1>
+                    <p class="lead">
+                        Based in Shimla, I've spent a decade discovering trails that most maps don't show. These mountains are my home, my training ground, and my passion.
+                    </p>
+                    <p class="lead">
+                        Adventure Athlete India isn't a tour company - it's me sharing the Himalayas I know and love.
+                    </p>
+                    <div class="social-row">
+                        <a href="https://instagram.com/adventure.athlete.india" target="_blank" title="Instagram">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://youtube.com/@adventureathleteindia" target="_blank" title="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://www.strava.com/athletes/atulchauhan" target="_blank" title="Strava">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                        </a>
+                        <a href="https://facebook.com/adventureathleteindia" target="_blank" title="Facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://itra.run/RunnerSpace/Atul.Chauhan" target="_blank" title="ITRA Profile">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Profile Dashboard -->
+        <div class="profile-dashboard">
+            <div class="dashboard-primary">
+                <div class="dash-box">
+                    <div class="dash-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="dash-value">555</div>
+                    <div class="dash-label">ITRA Score</div>
+                </div>
+                <div class="dash-box">
+                    <div class="dash-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <div class="dash-value">290W</div>
+                    <div class="dash-label">FTP Power</div>
+                </div>
+                <div class="dash-box">
+                    <div class="dash-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    </div>
+                    <div class="dash-value">54 min</div>
+                    <div class="dash-label">VK PR</div>
+                </div>
+                <div class="dash-box">
+                    <div class="dash-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                    </div>
+                    <div class="dash-value">5x</div>
+                    <div class="dash-label">National Championships</div>
+                </div>
+            </div>
+            <div class="dashboard-secondary">
+                <div class="dash-item">
+                    <div class="dash-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <div class="dash-item-content">
+                        <div class="dash-item-label">Guide License</div>
+                        <div class="dash-item-value">HP Tourism<small>Reg: 080724 42383</small></div>
+                    </div>
+                </div>
+                <div class="dash-item">
+                    <div class="dash-item-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </div>
+                    <div class="dash-item-content">
+                        <div class="dash-item-label">Strava Stats</div>
+                        <div class="dash-item-value">Cycling 30,000+ kms<br>Running 3,000+ kms</div>
+                    </div>
+                </div>
+                <div class="dash-item">
+                    <div class="dash-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    </div>
+                    <div class="dash-item-content">
+                        <div class="dash-item-label">Education</div>
+                        <div class="dash-item-value">MBA - HPU<br>B.Tech Honors - LPU</div>
+                    </div>
+                </div>
+                <div class="dash-item">
+                    <div class="dash-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <div class="dash-item-content">
+                        <div class="dash-item-label">Career</div>
+                        <div class="dash-item-value">Business Analyst<small>Tech funds the adventures</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Journey -->
+    <section class="editorial-section">
+        <div class="container">
+            <div class="two-col" style="gap: 80px; align-items: start;">
+                <div class="story-section">
+                    <span class="section-label">The Journey</span>
+                    <h2 class="section-title">How I Got Here</h2>
+
+                    <div style="margin-top: 40px;">
+                        <div class="story-block">
+                            <div class="story-year">The Dream</div>
+                            <p class="story-text">Wanted to race motorsports. Couldn't afford it. Found bikes instead.</p>
+                        </div>
+                        <div class="story-block">
+                            <div class="story-year">2015 - The Accident</div>
+                            <p class="story-text">4 months bed rest. Doctor said I'd never run again. I had other plans.</p>
+                        </div>
+                        <div class="story-block">
+                            <div class="story-year">2016 - The Comeback</div>
+                            <p class="story-text">Started cycling against family's wishes. Dad gifted my first bike anyway. One month later — 22nd overall at Hero MTB Himalaya.</p>
+                        </div>
+                        <div class="story-block">
+                            <div class="story-year">2017-2021</div>
+                            <p class="story-text">5 National Championships. Multiple podiums. First MTB summits no one had done before.</p>
+                        </div>
+                        <div class="story-block">
+                            <div class="story-year">Now</div>
+                            <p class="story-text">Less racing, more exploring. Meeting riders from around the world. Showing them my Himalayas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="section-label">First Ascents</span>
+                    <h2 class="section-title">Peaks No One Had Biked</h2>
+                    <p class="section-text" style="margin-bottom: 32px;">Summits I've taken a mountain bike to that no one else had before.</p>
+
+                    <div style="display: grid; gap: 20px;">
+                        <div class="summit-card">
+                            <div class="summit-card-image">
+                                <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=500&q=80" alt="Chandernahan Lake">
+                                <span class="altitude">4,000m</span>
+                            </div>
+                            <div class="summit-card-content">
+                                <h4>Chandernahan Lake</h4>
+                                <p>First MTB to the sacred lake, 2019</p>
+                            </div>
+                        </div>
+                        <div class="summit-card">
+                            <div class="summit-card-image">
+                                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&q=80" alt="Nochi Top">
+                                <span class="altitude">3,500m</span>
+                            </div>
+                            <div class="summit-card-content">
+                                <h4>Nochi Top</h4>
+                                <p>First MTB ascent, Winter 2020</p>
+                            </div>
+                        </div>
+                        <div class="summit-card">
+                            <div class="summit-card-image">
+                                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&q=80" alt="Kuppar Peak">
+                                <span class="altitude">3,350m</span>
+                            </div>
+                            <div class="summit-card-content">
+                                <h4>Kuppar Peak</h4>
+                                <p>First MTB summit from Shimla side</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Race Results -->
+    <section class="editorial-section alt">
+        <div class="container max-w-4xl">
+            <span class="section-label">Race Results</span>
+            <h2 class="section-title">On the Podium</h2>
+
+            <table class="race-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Event</th>
+                        <th>Type</th>
+                        <th>Result</th>
+                        <th>Cert</th>
+                    </tr>
+                </thead>
+                <tbody id="raceTableBody">
+                    <!-- First 5 rows visible by default -->
+                    <tr>
+                        <td>2021</td>
+                        <td>HP State MTB Championship</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result gold">🥇 1st</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'HP State MTB Championship 2021')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>Shimla Trail Half Marathon</td>
+                        <td>Trail Running</td>
+                        <td><span class="race-result gold">🥇 1st</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'Shimla Trail Half Marathon 2021')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2020</td>
+                        <td>HP State Road Cycling Championship</td>
+                        <td>Road Cycling</td>
+                        <td><span class="race-result gold">🥇 1st</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'HP State Road Cycling 2020')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2019</td>
+                        <td>National MTB Championship</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result silver">🥈 2nd</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'National MTB Championship 2019')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2019</td>
+                        <td>HP State MTB Championship</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result gold">🥇 1st</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'HP State MTB Championship 2019')">
+                        </td>
+                    </tr>
+                    <!-- Hidden rows - shown when "View More" is clicked -->
+                    <tr class="hidden-row">
+                        <td>2018</td>
+                        <td>Hero MTB Himalaya</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result bronze">🥉 3rd</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'Hero MTB Himalaya 2018')">
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2018</td>
+                        <td>HP State Road Championship</td>
+                        <td>Road Cycling</td>
+                        <td><span class="race-result gold">🥇 1st</span></td>
+                        <td>
+                            <div class="cert-placeholder" title="Certificate pending">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2018</td>
+                        <td>Shimla Ultra Trail 50K</td>
+                        <td>Trail Running</td>
+                        <td><span class="race-result silver">🥈 2nd</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'Shimla Ultra Trail 50K 2018')">
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2017</td>
+                        <td>National MTB Championship</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result bronze">🥉 3rd</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'National MTB Championship 2017')">
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2017</td>
+                        <td>HP State MTB Championship</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result gold">🥇 1st</span></td>
+                        <td>
+                            <div class="cert-placeholder" title="Certificate pending">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2017</td>
+                        <td>Hero MTB Himalaya</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result">5th</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'Hero MTB Himalaya 2017')">
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2016</td>
+                        <td>HP State MTB Championship</td>
+                        <td>Mountain Biking</td>
+                        <td><span class="race-result silver">🥈 2nd</span></td>
+                        <td>
+                            <div class="cert-placeholder" title="Certificate pending">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hidden-row">
+                        <td>2016</td>
+                        <td>Hero MTB Himalaya</td>
+                        <td>Open</td>
+                        <td><span class="race-result">8th</span></td>
+                        <td>
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=60" alt="Certificate" class="cert-thumb" onclick="openLightbox(this.src.replace('w=100', 'w=1200'), 'Hero MTB Himalaya 2016')">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="text-align: center;">
+                <button class="view-more-btn" id="viewMoreBtn" onclick="toggleRaceTable()">
+                    <span id="viewMoreText">View More Races</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+            </div>
+
+            <p style="margin-top: 24px; text-align: center;">
+                <a href="https://itra.run/RunnerSpace/Atul.Chauhan" target="_blank" style="color: var(--amber); font-weight: 500;">View full race history on ITRA →</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Photo Pile Gallery -->
+    <section class="photo-pile-section">
+        <div class="container text-center">
+            <span class="section-label">Gallery</span>
+            <h2 class="section-title">Moments from the Trail</h2>
+        </div>
+        <div class="photo-pile-container">
+            <div class="photo-pile">
+                <!-- Row 1 -->
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 180px; top: 5%; left: 3%; transform: rotate(-8deg); z-index: 10;">
+                    <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=400&q=80" alt="MTB Ride" style="width: 100%; height: 120px;">
+                    <span class="photo-label">Kuppar Peak Loop</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 140px; top: 8%; left: 18%; transform: rotate(5deg); z-index: 12;">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80" alt="Hiking" style="width: 100%; height: 100px;">
+                    <span class="photo-label">Shali Tibba Summit</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 200px; top: 2%; left: 32%; transform: rotate(-3deg); z-index: 8;">
+                    <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=400&q=80" alt="Mountains" style="width: 100%; height: 140px;">
+                    <span class="photo-label">Hatu Peak Trail</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 150px; top: 10%; left: 52%; transform: rotate(7deg); z-index: 14;">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80" alt="Trek" style="width: 100%; height: 110px;">
+                    <span class="photo-label">Churdhar Trek</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 170px; top: 5%; left: 68%; transform: rotate(-6deg); z-index: 9;">
+                    <img src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80" alt="Trail" style="width: 100%; height: 120px;">
+                    <span class="photo-label">Jakhu Temple Walk</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 130px; top: 3%; right: 3%; transform: rotate(4deg); z-index: 11;">
+                    <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=80" alt="Running" style="width: 100%; height: 90px;">
+                    <span class="photo-label">Trail Run</span>
+                </a>
+                <!-- Row 2 -->
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 160px; top: 40%; left: 2%; transform: rotate(6deg); z-index: 13;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80" alt="Vista" style="width: 100%; height: 110px;">
+                    <span class="photo-label">Himalayan Vista</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 190px; top: 45%; left: 16%; transform: rotate(-4deg); z-index: 7;">
+                    <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=400&q=80" alt="Snow" style="width: 100%; height: 130px;">
+                    <span class="photo-label">Snow Peak Ride</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 145px; top: 50%; left: 38%; transform: rotate(8deg); z-index: 15;">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80" alt="Night" style="width: 100%; height: 100px;">
+                    <span class="photo-label">Starlight Trail</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 175px; top: 42%; left: 55%; transform: rotate(-7deg); z-index: 10;">
+                    <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=400&q=80" alt="Summit" style="width: 100%; height: 120px;">
+                    <span class="photo-label">Summit Push</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 155px; top: 48%; left: 75%; transform: rotate(5deg); z-index: 12;">
+                    <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?w=400&q=80" alt="Forest" style="width: 100%; height: 105px;">
+                    <span class="photo-label">Forest Loop</span>
+                </a>
+                <!-- Row 3 -->
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 140px; top: 72%; left: 5%; transform: rotate(-5deg); z-index: 11;">
+                    <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=400&q=80" alt="Gravel" style="width: 100%; height: 95px;">
+                    <span class="photo-label">Gravel Adventure</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 165px; top: 74%; left: 22%; transform: rotate(6deg); z-index: 9;">
+                    <img src="https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=400&q=80" alt="Climb" style="width: 100%; height: 115px;">
+                    <span class="photo-label">Epic Road Climb</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 185px; top: 70%; left: 42%; transform: rotate(-3deg); z-index: 14;">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80" alt="Nature" style="width: 100%; height: 125px;">
+                    <span class="photo-label">Morning Walk</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 150px; top: 75%; left: 65%; transform: rotate(4deg); z-index: 8;">
+                    <img src="https://images.unsplash.com/photo-1486218119243-13883505764c?w=400&q=80" alt="Valley" style="width: 100%; height: 100px;">
+                    <span class="photo-label">Valley Descent</span>
+                </a>
+                <a href="03-experience-detail.html" class="pile-photo" style="width: 135px; top: 68%; right: 3%; transform: rotate(-8deg); z-index: 13;">
+                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80" alt="Alpine" style="width: 100%; height: 90px;">
+                    <span class="photo-label">Alpine Route</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="editorial-section alt">
+        <div class="container">
+            <div class="quote-block">
+                <blockquote>
+                    "When you ride or run with me, you're not getting a tour guide. You're getting a training partner who happens to know every trail, every chai stop, and every shortcut in these hills."
+                </blockquote>
+                <cite>- Atul</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <style>
+        .footer-social a:hover.instagram { background: #E4405F !important; }
+        .footer-social a:hover.facebook { background: #1877F2 !important; }
+        .footer-social a:hover.youtube { background: #FF0000 !important; }
+        .footer-social a:hover.strava { background: #FC4C02 !important; }
+        .footer-mountain-wave {
+            position: absolute;
+            top: -79px;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+        .footer {
+            padding-top: 40px !important;
+            background: linear-gradient(180deg, #3a7a52 0%, #2D5A3D 40%, #1e3d29 100%) !important;
+        }
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+    <footer class="footer" style="position: relative; overflow: hidden;">
+        <div class="footer-mountain-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="width: 100%; height: 80px; display: block;">
+                <path fill="#2D5A3D" d="M0,120 L0,80 Q60,60 120,70 L200,50 L280,75 L320,45 L400,65 L480,35 L560,55 L640,25 L720,50 L800,20 L880,45 L960,15 L1040,40 L1120,10 L1200,35 L1280,5 L1360,30 L1440,0 L1440,120 Z"/>
+            </svg>
+        </div>
+        <div style="position: absolute; top: 100px; right: 40px; opacity: 0.08;">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <pattern id="dots2" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="2" fill="white"/>
+                </pattern>
+                <rect width="120" height="120" fill="url(#dots2)"/>
+            </svg>
+        </div>
+        <div style="position: absolute; bottom: 80px; left: 40px; opacity: 0.06;">
+            <svg width="150" height="100" viewBox="0 0 150 100" fill="white">
+                <path d="M75 10 L120 80 L100 80 L85 55 L70 80 L30 80 Z"/>
+                <path d="M40 30 L70 80 L10 80 Z"/>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="nav-logo" style="margin-bottom: 16px;">Adventure Athlete India</div>
+                <p>Experience the raw Himalayas.</p>
+                <p style="margin-top: 24px;">
+                    Shimla, HP, India<br>
+                    +91-9459033240<br>
+                    adventureathleteindia@gmail.com
+                </p>
+                <div class="footer-social" style="display: flex; gap: 12px; margin-top: 20px;">
+                    <a href="https://instagram.com/adventure.athlete.india" class="instagram" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://facebook.com/adventureathleteindia" class="facebook" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@adventureathleteindia" class="youtube" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="YouTube">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="#" class="strava" style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; transition: background 0.2s;" title="Strava">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Experiences</h4>
+                <ul>
+                    <li><a href="02-experiences.html">Mountain Biking</a></li>
+                    <li><a href="02-experiences.html">Road Cycling</a></li>
+                    <li><a href="02-experiences.html">Trail Running</a></li>
+                    <li><a href="02-experiences.html">Hiking</a></li>
+                    <li><a href="02-experiences.html">Nature Walks</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="04-about.html">About Me</a></li>
+                    <li><a href="06-why-aai.html">Why Us</a></li>
+                    <li><a href="07-contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="09-faq.html">FAQ</a></li>
+                    <li><a href="10-terms.html">Terms</a></li>
+                    <li><a href="11-privacy.html">Privacy</a></li>
+                    <li><a href="12-safety.html">Safety</a></li>
+                    <li><a href="13-cancellation.html">Cancellation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Adventure Athlete India <span class="pipe">|</span> Atul Chauhan</span>
+            <span>Licensed HP Tourism Guide (Reg: 080724 42383)</span>
+        </div>
+    </footer>
+
+    <!-- Certificate Lightbox Modal -->
+    <div class="lightbox" id="certLightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <img id="lightboxImg" src="" alt="Certificate">
+            <p class="lightbox-caption" id="lightboxCaption"></p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle race table expansion
+        function toggleRaceTable() {
+            const tbody = document.getElementById('raceTableBody');
+            const btn = document.getElementById('viewMoreBtn');
+            const text = document.getElementById('viewMoreText');
+
+            tbody.classList.toggle('expanded');
+            btn.classList.toggle('expanded');
+
+            if (tbody.classList.contains('expanded')) {
+                text.textContent = 'Show Less';
+            } else {
+                text.textContent = 'View More Races';
+            }
+        }
+
+        // Open lightbox with certificate image
+        function openLightbox(src, caption) {
+            const lightbox = document.getElementById('certLightbox');
+            const img = document.getElementById('lightboxImg');
+            const captionEl = document.getElementById('lightboxCaption');
+
+            img.src = src;
+            captionEl.textContent = caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close lightbox
+        function closeLightbox(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const lightbox = document.getElementById('certLightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

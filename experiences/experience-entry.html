@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Experience Entry | Adventure Athlete India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Adventure Athlete India - Design System */
+        :root {
+            --forest: #2D5A3D;
+            --forest-dark: #1E3D2A;
+            --amber: #D97706;
+            --amber-light: #F59E0B;
+            --dark: #1A202C;
+            --slate: #64748b;
+            --slate-dark: #475569;
+            --slate-light: #94a3b8;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --red: #EF4444;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--gray-50);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+            color: var(--white);
+            padding: 40px 24px;
+            text-align: center;
+            margin-bottom: 32px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: headerShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes headerShimmer {
+            0% { left: -100%; }
+            60%, 100% { left: 100%; }
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+        }
+
+        /* Section Labels */
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 8px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .form-section h2 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--forest);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: auto;
+        }
+
+        .badge-required {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+        }
+
+        .badge-optional {
+            background: rgba(100, 116, 139, 0.1);
+            color: var(--slate);
+        }
+
+        .badge-auto {
+            background: rgba(45, 90, 61, 0.1);
+            color: var(--forest);
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+
+        label .required {
+            color: var(--red);
+            margin-left: 2px;
+        }
+
+        .hint {
+            font-size: 13px;
+            color: var(--slate);
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        /* Inputs */
+        input[type="text"],
+        input[type="url"],
+        input[type="number"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: var(--font-body);
+            font-size: 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--white);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--forest);
+            box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+        }
+
+        input:disabled,
+        input[readonly] {
+            background: var(--gray-100);
+            color: var(--slate-dark);
+            cursor: not-allowed;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        textarea.large {
+            min-height: 180px;
+        }
+
+        /* Select styling */
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        /* Range slider */
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--gray-200);
+            appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--forest);
+            cursor: pointer;
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .slider-value {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--forest);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        /* File Input */
+        .file-input-wrapper {
+            position: relative;
+            border: 2px dashed var(--gray-200);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper:hover {
+            border-color: var(--forest);
+            background: rgba(45, 90, 61, 0.02);
+        }
+
+        .file-input-wrapper.has-file {
+            border-color: var(--forest);
+            background: rgba(45, 90, 61, 0.05);
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .file-input-text {
+            font-size: 14px;
+            color: var(--slate);
+        }
+
+        .file-input-name {
+            font-weight: 600;
+            color: var(--forest);
+            margin-top: 8px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(45, 90, 61, 0.05);
+            border-left: 3px solid var(--forest);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: var(--slate-dark);
+            margin: 0;
+        }
+
+        .info-box strong {
+            color: var(--forest);
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: rgba(217, 119, 6, 0.08);
+            border-left: 3px solid var(--amber);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+
+        .warning-box p {
+            font-size: 14px;
+            color: var(--slate-dark);
+            margin: 0;
+        }
+
+        /* Auto-calculated fields */
+        .auto-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+
+        .auto-field {
+            text-align: center;
+        }
+
+        .auto-field-value {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            color: var(--forest);
+        }
+
+        .auto-field-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate);
+            margin-top: 4px;
+        }
+
+        /* Or Divider */
+        .or-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .or-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        .or-divider span {
+            position: relative;
+            background: var(--white);
+            padding: 0 16px;
+            color: var(--slate);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
+            color: var(--white);
+            width: 100%;
+            padding: 16px 32px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 20px rgba(217, 119, 6, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--forest);
+            color: var(--white);
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(45, 90, 61, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+
+        .success-message h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--forest);
+            margin-bottom: 12px;
+        }
+
+        .success-message code {
+            display: inline-block;
+            background: var(--gray-100);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--forest);
+        }
+
+        .folder-structure {
+            background: var(--dark);
+            color: var(--gray-200);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 13px;
+            text-align: left;
+            margin: 20px 0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .next-steps {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .next-steps h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+
+        .next-steps ol {
+            margin-left: 20px;
+            color: var(--slate-dark);
+        }
+
+        .next-steps li {
+            margin-bottom: 8px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: rgba(217, 119, 6, 0.08);
+            border-left: 3px solid var(--amber);
+            padding: 12px 16px;
+            margin-top: 8px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box strong {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--amber);
+        }
+
+        .example-box p {
+            font-size: 14px;
+            color: var(--slate-dark);
+            margin-top: 4px;
+        }
+
+        /* Collapsible Section */
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .collapsible-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--slate);
+            transition: transform 0.2s;
+        }
+
+        .form-section.expanded .collapsible-header::after {
+            content: '−';
+        }
+
+        .collapsible-content {
+            display: none;
+            padding-top: 20px;
+        }
+
+        .form-section.expanded .collapsible-content {
+            display: block;
+        }
+
+        /* Browser Note */
+        .browser-note {
+            background: var(--gray-100);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--slate-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+
+            header {
+                padding: 32px 20px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-section {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .auto-fields {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>New Experience Entry</h1>
+            <p>Document your adventure. Single source of truth for website + social.</p>
+        </header>
+
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h3>Experience Folder Created!</h3>
+            <p>Created: <code id="createdFolder">experiences/001-experience-name/</code></p>
+
+            <div class="folder-structure" id="folderStructure"></div>
+
+            <div class="next-steps">
+                <h4>Next Steps:</h4>
+                <ol>
+                    <li>Open the folder above</li>
+                    <li>Add your photos to <code>media/photos/</code></li>
+                    <li>Add videos to <code>media/videos/</code></li>
+                    <li>When ready: <em>"Claude, polish experience [name]"</em></li>
+                </ol>
+            </div>
+
+            <button class="btn btn-secondary" onclick="resetForm()" style="margin-top: 24px;">
+                + Add Another Experience
+            </button>
+        </div>
+
+        <form id="routeForm">
+            <!-- SECTION 1: QUICK CAPTURE (Required) -->
+            <div class="form-section">
+                <h2>
+                    Basic Info
+                    <span class="section-badge badge-required">Required</span>
+                </h2>
+
+                <div class="form-group">
+                    <label>Title <span class="required">*</span></label>
+                    <input type="text" id="title" name="title" required placeholder="e.g., Shali Tibba Trail Run">
+                    <div class="hint">The main name for this experience</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Intro Hook <span class="required">*</span></label>
+                    <input type="text" id="intro" name="intro" required placeholder="e.g., 360° Himalayan views from one of the best short trails near Shimla">
+                    <div class="hint">One compelling line that captures the essence (used on cards & detail page)</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category <span class="required">*</span></label>
+                        <select id="category" name="category" required onchange="updateCategoryValue()">
+                            <option value="">Select...</option>
+                            <option value="mountain-biking" data-value="mtb" data-display="Mountain Biking">Mountain Biking</option>
+                            <option value="road-cycling" data-value="road" data-display="Road Cycling">Road Cycling</option>
+                            <option value="gravel-cycling" data-value="gravel" data-display="Gravel Cycling">Gravel Cycling</option>
+                            <option value="trail-running" data-value="trail" data-display="Trail Running">Trail Running</option>
+                            <option value="road-running" data-value="road-run" data-display="Road Running">Road Running</option>
+                            <option value="trekking" data-value="hiking" data-display="Trekking">Trekking</option>
+                            <option value="hiking" data-value="hiking" data-display="Hiking">Hiking</option>
+                            <option value="nature-walk" data-value="nature" data-display="Nature Walk">Nature Walk</option>
+                            <option value="fkt" data-value="fkt" data-display="FKT">FKT Attempt</option>
+                        </select>
+                        <input type="hidden" id="categoryValue" name="categoryValue">
+                        <input type="hidden" id="categoryDisplay" name="categoryDisplay">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Difficulty <span class="required">*</span></label>
+                        <select id="difficulty" name="difficulty" required onchange="updateDifficultyLevel()">
+                            <option value="">Select...</option>
+                            <option value="Easy" data-level="2">Easy - Beginners welcome</option>
+                            <option value="Moderate" data-level="3">Moderate - Some fitness needed</option>
+                            <option value="Hard" data-level="4">Hard - Good fitness required</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date <span class="required">*</span></label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Difficulty Level (1-5)</label>
+                    <div class="slider-group">
+                        <input type="range" id="difficultyLevel" name="difficultyLevel" min="1" max="5" value="2">
+                        <div class="slider-value" id="difficultyLevelDisplay">2</div>
+                    </div>
+                    <div class="hint">Fine-tune the difficulty: 1 = Very Easy, 5 = Expert Only</div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LOCATION -->
+            <div class="form-section">
+                <h2>
+                    Location
+                    <span class="section-badge badge-required">Required</span>
+                </h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Start Point <span class="required">*</span></label>
+                        <input type="text" id="startPoint" name="startPoint" required placeholder="e.g., Khatnol Village">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Point <span class="required">*</span></label>
+                        <input type="text" id="endPoint" name="endPoint" required placeholder="e.g., Shali Tibba Summit">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>District <span class="required">*</span></label>
+                        <input type="text" id="district" name="district" required placeholder="e.g., Shimla District">
+                    </div>
+
+                    <div class="form-group">
+                        <label>State</label>
+                        <select id="state" name="state">
+                            <option value="Himachal Pradesh" selected>Himachal Pradesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                            <option value="Ladakh">Ladakh</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Route Description</label>
+                    <input type="text" id="routeFormat" name="routeFormat" placeholder="e.g., Khatnol → Shali Tibba → Khatnol (Loop)">
+                    <div class="hint">How to describe the experience: Start → End or Start → Via → End (Loop/Out-Back)</div>
+                </div>
+
+                <div class="form-group">
+                    <label>How to Reach</label>
+                    <textarea id="howToReach" name="howToReach" rows="3" placeholder="e.g., Bus from Shimla ISBT to Khatnol (2-2.5 hrs), then 3 km offroad to trail head..."></textarea>
+                    <div class="hint">Directions to the start point</div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: METRICS (GPX or Manual) -->
+            <div class="form-section">
+                <h2>
+                    Metrics
+                    <span class="section-badge badge-auto">Auto from GPX</span>
+                </h2>
+
+                <div class="info-box">
+                    <p><strong>Upload GPX</strong> to auto-calculate distance, elevation, duration, and max altitude. Or enter manually below.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>GPX File</label>
+                    <div class="file-input-wrapper" id="gpxWrapper">
+                        <input type="file" id="gpxFile" name="gpxFile" accept=".gpx" onchange="parseGPX(this)">
+                        <div class="file-input-icon">📍</div>
+                        <div class="file-input-text">Drop GPX file here or click to browse</div>
+                        <div class="file-input-name" id="gpxFileName"></div>
+                    </div>
+                </div>
+
+                <div class="auto-fields" id="autoFields" style="display: none;">
+                    <div class="auto-field">
+                        <div class="auto-field-value" id="autoDistance">--</div>
+                        <div class="auto-field-label">Distance (km)</div>
+                    </div>
+                    <div class="auto-field">
+                        <div class="auto-field-value" id="autoElevation">--</div>
+                        <div class="auto-field-label">Elevation (m)</div>
+                    </div>
+                    <div class="auto-field">
+                        <div class="auto-field-value" id="autoDuration">--</div>
+                        <div class="auto-field-label">Duration</div>
+                    </div>
+                    <div class="auto-field">
+                        <div class="auto-field-value" id="autoMaxAlt">--</div>
+                        <div class="auto-field-label">Max Altitude (m)</div>
+                    </div>
+                </div>
+
+                <div class="or-divider"><span>OR enter manually</span></div>
+
+                <div class="form-group">
+                    <label>Strava Activity Link</label>
+                    <input type="url" id="stravaLink" name="stravaLink" placeholder="https://www.strava.com/activities/...">
+                    <div class="hint">Paste your Strava activity URL for reference</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Strava Distance (km)</label>
+                        <input type="number" id="stravaDistance" name="stravaDistance" step="0.1" placeholder="e.g., 8.8">
+                        <div class="hint">Copy from Strava activity (source of truth)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Strava Elevation (m)</label>
+                        <input type="number" id="stravaElevation" name="stravaElevation" placeholder="e.g., 657">
+                        <div class="hint">Copy from Strava activity (source of truth)</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Distance (km)</label>
+                        <input type="number" id="distance" name="distance" step="0.1" placeholder="e.g., 8.5">
+                        <div class="hint">From GPX or manual entry</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Elevation Gain (m)</label>
+                        <input type="number" id="elevation" name="elevation" placeholder="e.g., 650">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" id="duration" name="duration" placeholder="e.g., 1.5-2 hrs">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Max Altitude (m)</label>
+                        <input type="number" id="maxAltitude" name="maxAltitude" placeholder="e.g., 2800">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Altitude (m)</label>
+                        <input type="number" id="startAltitude" name="startAltitude" placeholder="e.g., 2200">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: WEBSITE EXTRAS -->
+            <div class="form-section expanded">
+                <div class="collapsible-header" onclick="toggleSection(this)">
+                    <h2 style="border: none; padding: 0; margin: 0;">
+                        Website Details
+                        <span class="section-badge badge-optional">Optional</span>
+                    </h2>
+                </div>
+                <div class="collapsible-content">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Best Season</label>
+                            <input type="text" id="bestSeason" name="bestSeason" placeholder="e.g., Mar-Jun, Sep-Nov">
+                            <div class="hint">When is this route best enjoyed?</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Recommended Gear</label>
+                            <input type="text" id="gear" name="gear" placeholder="e.g., Trail shoes · Poles recommended">
+                            <div class="hint">Key gear for this experience</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>What to Bring (one per line)</label>
+                        <textarea id="whatToBring" name="whatToBring" rows="4" placeholder="Trail running shoes&#10;1L water&#10;Trekking pole&#10;Energy bar&#10;Extra layer for summit"></textarea>
+                        <div class="hint">List of items to bring, one per line</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <input type="text" id="tags" name="tags" placeholder="e.g., sunrise, 360-view, temple, solo-friendly">
+                        <div class="hint">Comma-separated tags for search & filtering</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: YOUR NOTES -->
+            <div class="form-section">
+                <h2>
+                    Your Notes
+                    <span class="section-badge badge-required">Required</span>
+                </h2>
+
+                <div class="form-group">
+                    <label>Raw Description <span class="required">*</span></label>
+                    <textarea id="rawDescription" name="rawDescription" class="large" required placeholder="Write freely - conditions, gear you took, memorable moments, lessons learned, tips for others..."></textarea>
+                    <div class="example-box">
+                        <strong>Example:</strong>
+                        <p>"Started 1pm from Khatnol. January but no snow due to dry weather. Trail was rocky, brought poles for descent. Took 50-55 min to summit while shooting. 360° view at top, could see Churdhar. There's a Pujari at the temple, water available. Next time start earlier for better light..."</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Notes (from voice memo or phone notes)</label>
+                    <textarea id="notesFromFile" name="notesFromFile" rows="4" placeholder="Paste any transcribed voice notes or additional thoughts here..."></textarea>
+                </div>
+            </div>
+
+            <!-- SECTION 6: MEDIA -->
+            <div class="form-section expanded">
+                <div class="collapsible-header" onclick="toggleSection(this)">
+                    <h2 style="border: none; padding: 0; margin: 0;">
+                        Media Links
+                        <span class="section-badge badge-optional">Add Later</span>
+                    </h2>
+                </div>
+                <div class="collapsible-content">
+                    <div class="warning-box">
+                        <p>Image URLs are optional for now. You can add them later when photos are hosted online.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>YouTube Video URL</label>
+                        <input type="url" id="youtubeUrl" name="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+                        <div class="hint">If you have a YouTube video for this experience</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Video Thumbnail URL</label>
+                        <input type="url" id="videoThumbnail" name="videoThumbnail" placeholder="https://...">
+                        <div class="hint">Thumbnail image for the video section</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hero Image URL</label>
+                        <input type="url" id="heroImageUrl" name="heroImageUrl" placeholder="https://...">
+                        <div class="hint">Main banner image for the detail page (high-res)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Card Image URL</label>
+                        <input type="url" id="cardImageUrl" name="cardImageUrl" placeholder="https://...">
+                        <div class="hint">Thumbnail for route cards (can be same as hero)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gallery Photo URLs (one per line)</label>
+                        <textarea id="photoUrls" name="photoUrls" rows="4" placeholder="https://...&#10;https://...&#10;https://..."></textarea>
+                        <div class="hint">4-8 photos recommended for the gallery</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Media Notes</label>
+                        <input type="text" id="mediaInfo" name="mediaInfo" placeholder="e.g., Have 12 photos, 1 GoPro video, 1 voice memo">
+                        <div class="hint">Quick note about what media you have (for your reference)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="form-section" style="text-align: center; background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%); color: var(--white);">
+                <div class="browser-note" id="browserNote" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9);">
+                    <strong>Chrome/Edge:</strong> Creates folder directly. <strong>Safari/Firefox:</strong> Downloads JSON file.
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Create Experience Folder & Save
+                </button>
+                <p style="margin-top: 16px; font-size: 14px; opacity: 0.8;">
+                    Creates folder structure with experience-data.json. Add media files after.
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // ==========================================
+        // HELPERS
+        // ==========================================
+
+        // Check if File System Access API is available
+        const hasFileSystemAccess = 'showDirectoryPicker' in window;
+
+        // Generate slug from title
+        function generateSlug(title) {
+            return title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+        }
+
+        // Get next experience number from localStorage
+        function getNextExperienceNumber() {
+            const saved = localStorage.getItem('experienceCount') || '0';
+            const next = parseInt(saved) + 1;
+            localStorage.setItem('experienceCount', next.toString());
+            return next.toString().padStart(3, '0');
+        }
+
+        // Extract YouTube video ID from URL
+        function extractYouTubeId(url) {
+            if (!url) return null;
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
+        }
+
+        // Extract Strava activity ID from URL
+        function extractStravaId(url) {
+            if (!url) return null;
+            const match = url.match(/strava\.com\/activities\/(\d+)/);
+            return match ? match[1] : null;
+        }
+
+        // Update category value when selection changes
+        function updateCategoryValue() {
+            const select = document.getElementById('category');
+            const option = select.options[select.selectedIndex];
+            document.getElementById('categoryValue').value = option.dataset.value || '';
+            document.getElementById('categoryDisplay').value = option.dataset.display || '';
+        }
+
+        // Update difficulty level when selection changes
+        function updateDifficultyLevel() {
+            const select = document.getElementById('difficulty');
+            const option = select.options[select.selectedIndex];
+            const level = option.dataset.level || 2;
+            document.getElementById('difficultyLevel').value = level;
+            document.getElementById('difficultyLevelDisplay').textContent = level;
+        }
+
+        // Update difficulty level display
+        document.getElementById('difficultyLevel').addEventListener('input', function() {
+            document.getElementById('difficultyLevelDisplay').textContent = this.value;
+        });
+
+        // Toggle collapsible section
+        function toggleSection(header) {
+            const section = header.closest('.form-section');
+            section.classList.toggle('expanded');
+        }
+
+        // ==========================================
+        // GPX PARSER
+        // ==========================================
+
+        function parseGPX(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            document.getElementById('gpxFileName').textContent = file.name;
+            document.getElementById('gpxWrapper').classList.add('has-file');
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(e.target.result, 'text/xml');
+                const trackPoints = xml.querySelectorAll('trkpt');
+
+                if (trackPoints.length === 0) {
+                    alert('No track points found in GPX file');
+                    return;
+                }
+
+                let totalDistance = 0;
+                let totalElevationGain = 0;
+                let maxAltitude = -Infinity;
+                let minAltitude = Infinity;
+                let prevLat = null, prevLon = null, prevEle = null;
+                let startTime = null, endTime = null;
+
+                trackPoints.forEach((point, index) => {
+                    const lat = parseFloat(point.getAttribute('lat'));
+                    const lon = parseFloat(point.getAttribute('lon'));
+                    const eleNode = point.querySelector('ele');
+                    const timeNode = point.querySelector('time');
+
+                    const ele = eleNode ? parseFloat(eleNode.textContent) : 0;
+
+                    if (timeNode) {
+                        const time = new Date(timeNode.textContent);
+                        if (!startTime) startTime = time;
+                        endTime = time;
+                    }
+
+                    if (ele > maxAltitude) maxAltitude = ele;
+                    if (ele < minAltitude) minAltitude = ele;
+
+                    if (prevLat !== null && prevLon !== null) {
+                        // Haversine distance calculation
+                        const R = 6371; // km
+                        const dLat = (lat - prevLat) * Math.PI / 180;
+                        const dLon = (lon - prevLon) * Math.PI / 180;
+                        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                                  Math.cos(prevLat * Math.PI / 180) * Math.cos(lat * Math.PI / 180) *
+                                  Math.sin(dLon/2) * Math.sin(dLon/2);
+                        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                        totalDistance += R * c;
+
+                        // Elevation gain
+                        if (prevEle !== null && ele > prevEle) {
+                            totalElevationGain += (ele - prevEle);
+                        }
+                    }
+
+                    prevLat = lat;
+                    prevLon = lon;
+                    prevEle = ele;
+                });
+
+                // Calculate duration
+                let durationStr = '--';
+                if (startTime && endTime) {
+                    const durationMs = endTime - startTime;
+                    const hours = Math.floor(durationMs / (1000 * 60 * 60));
+                    const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+                    if (hours > 0) {
+                        durationStr = `${hours}h ${minutes}m`;
+                    } else {
+                        durationStr = `${minutes}m`;
+                    }
+                }
+
+                // Display auto-calculated values
+                document.getElementById('autoFields').style.display = 'grid';
+                document.getElementById('autoDistance').textContent = totalDistance.toFixed(1);
+                document.getElementById('autoElevation').textContent = Math.round(totalElevationGain);
+                document.getElementById('autoDuration').textContent = durationStr;
+                document.getElementById('autoMaxAlt').textContent = Math.round(maxAltitude);
+
+                // Fill form fields
+                document.getElementById('distance').value = totalDistance.toFixed(1);
+                document.getElementById('elevation').value = Math.round(totalElevationGain);
+                document.getElementById('maxAltitude').value = Math.round(maxAltitude);
+                document.getElementById('startAltitude').value = Math.round(minAltitude);
+
+                // Format duration for form
+                if (startTime && endTime) {
+                    const durationMs = endTime - startTime;
+                    const hours = durationMs / (1000 * 60 * 60);
+                    if (hours >= 1) {
+                        document.getElementById('duration').value = `${hours.toFixed(1)} hrs`;
+                    } else {
+                        const mins = Math.round(durationMs / (1000 * 60));
+                        document.getElementById('duration').value = `${mins} min`;
+                    }
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // ==========================================
+        // BUILD EXPERIENCE DATA
+        // ==========================================
+
+        function buildExperienceData(experienceNumber, slug, folderName) {
+            const whatToBringText = document.getElementById('whatToBring').value;
+            const whatToBringArray = whatToBringText
+                .split('\n')
+                .map(item => item.trim())
+                .filter(item => item.length > 0);
+
+            const photoUrlsText = document.getElementById('photoUrls').value;
+            const photoUrlsArray = photoUrlsText
+                .split('\n')
+                .map(url => url.trim())
+                .filter(url => url.length > 0);
+
+            const tagsText = document.getElementById('tags').value;
+            const tagsArray = tagsText
+                .split(',')
+                .map(tag => tag.trim())
+                .filter(tag => tag.length > 0);
+
+            return {
+                meta: {
+                    route_id: experienceNumber,
+                    slug: slug,
+                    folder_name: folderName,
+                    status: "draft",
+                    created_date: new Date().toISOString().split('T')[0],
+                    polished: false,
+                    hasContent: false
+                },
+                basic_info: {
+                    title: document.getElementById('title').value,
+                    intro: document.getElementById('intro').value,
+                    category: document.getElementById('categoryDisplay').value || document.getElementById('category').options[document.getElementById('category').selectedIndex].text,
+                    categoryValue: document.getElementById('categoryValue').value,
+                    difficulty: document.getElementById('difficulty').value,
+                    difficultyLevel: parseInt(document.getElementById('difficultyLevel').value),
+                    date: document.getElementById('date').value,
+                    tags: tagsArray
+                },
+                location: {
+                    start_point: document.getElementById('startPoint').value,
+                    end_point: document.getElementById('endPoint').value,
+                    route: document.getElementById('routeFormat').value,
+                    district: document.getElementById('district').value,
+                    state: document.getElementById('state').value,
+                    location: `${document.getElementById('district').value}, ${document.getElementById('state').value}`,
+                    how_to_reach: document.getElementById('howToReach').value
+                },
+                metrics: {
+                    strava_link: document.getElementById('stravaLink').value,
+                    strava_activity_id: extractStravaId(document.getElementById('stravaLink').value),
+                    strava_distance_km: document.getElementById('stravaDistance').value ? parseFloat(document.getElementById('stravaDistance').value) : null,
+                    strava_elevation_m: document.getElementById('stravaElevation').value ? parseInt(document.getElementById('stravaElevation').value) : null,
+                    distance_km: document.getElementById('distance').value ? parseFloat(document.getElementById('distance').value) : null,
+                    distance: document.getElementById('distance').value ? `${document.getElementById('distance').value} km` : null,
+                    elevation_gain_m: document.getElementById('elevation').value ? parseInt(document.getElementById('elevation').value) : null,
+                    elevation: document.getElementById('elevation').value ? `${document.getElementById('elevation').value}m` : null,
+                    duration: document.getElementById('duration').value,
+                    max_altitude_m: document.getElementById('maxAltitude').value ? parseInt(document.getElementById('maxAltitude').value) : null,
+                    start_altitude_m: document.getElementById('startAltitude').value ? parseInt(document.getElementById('startAltitude').value) : null
+                },
+                website_extras: {
+                    best_season: document.getElementById('bestSeason').value,
+                    gear: document.getElementById('gear').value,
+                    what_to_bring: whatToBringArray
+                },
+                notes: {
+                    raw_description: document.getElementById('rawDescription').value,
+                    notes_from_file: document.getElementById('notesFromFile').value,
+                    media_info: document.getElementById('mediaInfo').value
+                },
+                media: {
+                    hero_image: document.getElementById('heroImageUrl').value || null,
+                    card_image: document.getElementById('cardImageUrl').value || null,
+                    photos: photoUrlsArray.length > 0 ? photoUrlsArray : null,
+                    youtube_url: document.getElementById('youtubeUrl').value || null,
+                    youtube_id: extractYouTubeId(document.getElementById('youtubeUrl').value),
+                    video_thumbnail: document.getElementById('videoThumbnail').value || null,
+                    photos_count: 0,
+                    videos_count: 0,
+                    audio_count: 0,
+                    has_gpx: document.getElementById('gpxFile').files.length > 0
+                },
+                polished_content: {
+                    website_description: null,
+                    opening_paragraph: null,
+                    content: null,
+                    instagram_caption: null,
+                    youtube_description: null,
+                    short_summary: null
+                },
+                checklist: {
+                    basic_info_complete: true,
+                    location_complete: true,
+                    metrics_available: !!(document.getElementById('stravaLink').value || document.getElementById('distance').value),
+                    notes_added: !!document.getElementById('rawDescription').value,
+                    media_added: false,
+                    polished: false,
+                    published: false
+                }
+            };
+        }
+
+        // ==========================================
+        // FORM SUBMISSION
+        // ==========================================
+
+        // Validate form
+        function validateForm() {
+            const stravaLink = document.getElementById('stravaLink').value;
+            const distance = document.getElementById('distance').value;
+            const elevation = document.getElementById('elevation').value;
+            const gpxFile = document.getElementById('gpxFile').files.length > 0;
+
+            if (!stravaLink && !gpxFile && (!distance || !elevation)) {
+                alert('Please provide either:\n• A Strava link\n• A GPX file\n• Distance AND Elevation manually');
+                return false;
+            }
+            return true;
+        }
+
+        // Create folder using File System Access API
+        async function createFolderWithAPI(experienceData, folderName) {
+            try {
+                const routesDir = await window.showDirectoryPicker({
+                    mode: 'readwrite',
+                    startIn: 'documents'
+                });
+
+                const experienceFolder = await routesDir.getDirectoryHandle(folderName, { create: true });
+
+                // Create subfolders
+                const mediaFolder = await experienceFolder.getDirectoryHandle('media', { create: true });
+                await mediaFolder.getDirectoryHandle('photos', { create: true });
+                await mediaFolder.getDirectoryHandle('videos', { create: true });
+                await mediaFolder.getDirectoryHandle('audio', { create: true });
+                await mediaFolder.getDirectoryHandle('gpx', { create: true });
+                await experienceFolder.getDirectoryHandle('content', { create: true });
+
+                // Write experience-data.json
+                const jsonFile = await experienceFolder.getFileHandle('experience-data.json', { create: true });
+                const writable = await jsonFile.createWritable();
+                await writable.write(JSON.stringify(experienceData, null, 2));
+                await writable.close();
+
+                return { success: true, path: `${routesDir.name}/${folderName}/` };
+            } catch (err) {
+                console.error('File System API error:', err);
+                return { success: false, error: err.message };
+            }
+        }
+
+        // Fallback: Download JSON
+        function downloadJSON(experienceData, folderName) {
+            const dataStr = JSON.stringify(experienceData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${folderName}-experience-data.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            return folderName;
+        }
+
+        // Show success message
+        function showSuccess(folderName, usedAPI) {
+            document.getElementById('createdFolder').textContent = folderName;
+
+            const structure = `${folderName}/
+├── experience-data.json ✓ Created
+├── content/             Ready for polished content
+└── media/
+    ├── photos/          Add your photos here
+    ├── videos/          Add your videos here
+    ├── audio/           Add voice notes here
+    └── gpx/             Add GPX file here`;
+
+            document.getElementById('folderStructure').textContent = structure;
+
+            if (!usedAPI) {
+                document.getElementById('createdFolder').textContent += ' (create folder manually)';
+            }
+
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('routeForm').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('routeForm').reset();
+            document.getElementById('routeForm').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('autoFields').style.display = 'none';
+            document.getElementById('gpxFileName').textContent = '';
+            document.getElementById('gpxWrapper').classList.remove('has-file');
+            document.getElementById('date').valueAsDate = new Date();
+            document.getElementById('difficultyLevelDisplay').textContent = '2';
+        }
+
+        // Form submission handler
+        document.getElementById('routeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (!validateForm()) return;
+
+            const experienceNumber = getNextExperienceNumber();
+            const title = document.getElementById('title').value;
+            const slug = generateSlug(title);
+            const folderName = `${experienceNumber}-${slug}`;
+
+            const experienceData = buildExperienceData(experienceNumber, slug, folderName);
+
+            if (hasFileSystemAccess) {
+                const result = await createFolderWithAPI(experienceData, folderName);
+                if (result.success) {
+                    showSuccess(result.path, true);
+                } else {
+                    downloadJSON(experienceData, folderName);
+                    showSuccess(folderName, false);
+                }
+            } else {
+                downloadJSON(experienceData, folderName);
+                showSuccess(folderName, false);
+            }
+        });
+
+        // Initialize
+        document.getElementById('date').valueAsDate = new Date();
+
+        if (!hasFileSystemAccess) {
+            document.getElementById('browserNote').innerHTML =
+                '<strong>Your browser:</strong> Will download JSON file. Create the folder manually and move the file there.';
+        }
+    </script>
+</body>
+</html>
