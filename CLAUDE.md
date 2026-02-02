@@ -46,6 +46,124 @@ Local Mac → GitHub (main) → Vercel (auto-deploy) → Live site
 
 ---
 
+## Infrastructure & Accounts
+
+| Service | URL / Detail |
+|---------|-------------|
+| **Live site** | https://adventure-athlete-india.vercel.app |
+| **GitHub repo** | https://github.com/adventureathleteindia/adventure-athlete-india |
+| **Vercel project** | Linked to GitHub, auto-deploys on push to `main` |
+| **Supabase project** | Project ref: `nfwnuwhunlznyaalgnmt` |
+| **Supabase URL** | https://nfwnuwhunlznyaalgnmt.supabase.co |
+| **Admin panel** | https://adventure-athlete-india.vercel.app/admin |
+
+### Vercel Configuration
+
+- **Root Directory**: `website` (set in Vercel Settings → General → Build)
+- **Framework**: Next.js (explicitly set via `website/vercel.json`)
+- **Environment Variables**: 3 vars configured in Vercel dashboard (same as `.env.local`)
+
+### Environment Variables (`.env.local`)
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://nfwnuwhunlznyaalgnmt.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon public key from Supabase Settings → API>
+SUPABASE_SERVICE_ROLE_KEY=<service role key from Supabase Settings → API>
+```
+
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — safe to expose in browser (RLS enforced)
+- `SUPABASE_SERVICE_ROLE_KEY` — server-only, bypasses RLS, never expose to client
+- `.env.local` is gitignored — must be created manually on each machine and in Vercel dashboard
+
+---
+
+## Architecture Overview
+
+```
+Website (Next.js App Router)
+├── Public pages: /, /experiences, /about, /contact, /plan, /plan-tour, /tours-programs, /rentals, /faq, /terms, /privacy, /safety, /cancellation
+├── Experience detail: /experience/[slug]
+├── Admin panel: /admin (auth-protected)
+│   ├── /admin — Dashboard (stats, charts, recent activity)
+│   ├── /admin/leads — Lead management (search, filter, status, notes, follow-up)
+│   ├── /admin/marketing — Pre-launch checklist, recurring tasks, hotel partners
+│   └── /admin/settings — Contact info, social links, notifications, password
+├── API: /api/leads (POST — receives form submissions)
+└── Auth: Supabase email/password (admin login)
+
+Supabase (PostgreSQL)
+├── leads — Form submissions from Contact, Plan, Plan Tour pages
+├── marketing_tasks — Pre-launch + recurring marketing checklist
+├── hotel_partners — Hotel partnership tracking
+├── settings — Key-value config (contact info, social links, notifications)
+├── RLS — Authenticated: full CRUD on all tables; Anonymous: INSERT only on leads
+└── Triggers — Auto-update `updated_at` on leads, hotel_partners, settings
+```
+
+### Form Submission Flow
+
+1. User fills form on `/contact`, `/plan`, or `/plan-tour`
+2. Form POSTs to `/api/leads` with `source_form` identifier
+3. API uses Supabase service role client to INSERT into `leads` table
+4. Core fields: `name`, `email`, `phone`, `nationality`, `source_form`
+5. Extra fields stored as JSONB in `form_data` column
+6. Admin views/manages leads at `/admin/leads`
+
+### Database Schema
+
+Full schema is at `website/lib/supabase/schema.sql`. Includes tables, RLS policies, triggers, and seed data. Run in Supabase SQL Editor to set up from scratch.
+
+---
+
+## What's Been Built & Deployed
+
+### Website Pages (all live)
+
+- Home, Experiences, Experience Detail, About, Contact, Plan Your Adventure, Plan Tour, Tours & Programs, Equipment Rentals, FAQ, Terms, Privacy, Safety, Cancellation
+
+### Forms Wired Up
+
+| Form | Page | `source_form` | Fields |
+|------|------|--------------|--------|
+| Contact | `/contact` | `contact` | name, email, message |
+| Plan Your Adventure | `/plan` | `plan` | name, email, phone, nationality, activities, difficulty, people, dates, description, referral |
+| Plan Tour | `/plan-tour` | `plan_tour` | name, email, phone, nationality, city, program, activities, experience_level, dates, group_size, flexibility, duration, budget, accommodation, pickup, dietary, medical, excitement, referral |
+
+### Admin Panel (fully functional)
+
+- Dashboard with real stats and charts
+- Lead management with search, filter, sort, detail panel, status/notes/follow-up editing
+- Marketing checklist (pre-launch + recurring tasks)
+- Hotel partner tracking
+- Settings management
+
+---
+
+## Known Issues & Pending Tasks
+
+### Pending
+
+- [ ] **Strava link**: Currently `strava.com/athletes/atulchauhan` — user will share correct URL later
+- [ ] **Custom domain**: User will purchase later, then configure in Vercel
+- [ ] **Jest config**: Never committed to git — tests can't run. Not blocking (build + lint are primary checks)
+- [ ] **Test the form → database flow**: User needs to submit a test form and verify row appears in Supabase
+
+### Lint Warnings (non-blocking, 0 errors)
+
+- `additionalRoutes` unused in `experiences/page.tsx`
+- `linkClasses` and `activeLinkClasses` unused in `Navigation.tsx`
+- `progress` unused in `AudioPlayer.tsx`
+
+### Resolved Issues (for context)
+
+- Vercel 404: Fixed by setting Root Directory to `website`, adding `vercel.json`, and configuring env vars
+- Edge Runtime middleware error: Fixed by deleting `middleware.ts` (Next.js 16 deprecated it)
+- Instagram link: Fixed from `adventure.athlete.india` → `adventureathlete.in` across 6 files
+- Nav overflow at tablet widths: Fixed by changing desktop breakpoint from `md` (768px) to `lg` (1024px)
+- Supabase tables: Dropped and recreated cleanly with full schema
+
+---
+
 ## Prototype-First Development
 
 Prototypes in `/design/prototypes/` are the **source of truth**.
