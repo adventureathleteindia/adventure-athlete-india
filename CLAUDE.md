@@ -143,8 +143,7 @@ Full schema is at `website/lib/supabase/schema.sql`. Includes tables, RLS polici
 
 ### Bugs
 
-- [ ] **Hamburger menu not working on /tours-programs (mobile)**: User can click the hamburger icon but the menu doesn't open. Works on other pages. Needs investigation.
-- [ ] **Nav CTA button overflow at ~50% browser width**: "PLAN YOUR ADVENTURE" button overflows and covers "Contact" link at intermediate widths (~900-1024px). Nav should collapse to hamburger earlier or button should shrink/hide.
+(No current bugs)
 
 ### Pending
 
@@ -166,6 +165,10 @@ Full schema is at `website/lib/supabase/schema.sql`. Includes tables, RLS polici
 - Instagram link: Fixed from `adventure.athlete.india` → `adventureathlete.in` across 6 files
 - Nav overflow at tablet widths: Fixed by changing desktop breakpoint from `md` (768px) to `lg` (1024px)
 - Supabase tables: Dropped and recreated cleanly with full schema
+- Nav CTA button overflow at intermediate widths: Fixed by making button responsive ("Plan" at lg, full text at xl)
+- Hamburger menu not working on /tours-programs: Fixed using React Portal to render menu at document.body level
+- Z-index layering on /experiences hamburger menu: Fixed with same portal solution (z-index 9999)
+- No current page indicator on mobile: Added centered page title in nav (amber color, mobile only)
 
 ---
 
