@@ -53,14 +53,15 @@ const programs = [
   },
   {
     title: "Train with a Pro",
-    image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80",
     duration: "Custom",
-    type: "Coaching",
+    type: "MTB · Trail Running · Skiing",
     description:
-      "Get coached by professional athletes in cycling or trail running. Custom programs based on your experience level, goals, and schedule. We\u2019ve partnered with elite riders and runners to bring you world-class training in the Himalayas.",
+      "Learn from professional athletes in three disciplines. Whether you want to master mountain biking trails, improve your trail running technique, or carve through Himalayan snow \u2014 our partnered pros will coach you based on your level and goals.",
     difficulty: "All Levels",
     days: "Custom (3\u201314 days)",
     season: "Year Round",
+    sports: ["Mountain Biking", "Trail Running", "Skiing"],
   },
 ];
 
