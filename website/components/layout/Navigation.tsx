@@ -94,26 +94,70 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
     <>
     <nav className={navClasses}>
       <div className="max-w-[var(--max-width-container)] mx-auto flex justify-between items-center relative">
-        {/* Logo with social icons */}
-        <div className="flex flex-col items-start">
-          <Link
-            href="/"
-            className={`font-[family-name:var(--font-heading)] text-[11px] lg:text-sm font-medium tracking-[1.5px] lg:tracking-[var(--tracking-widest)] uppercase whitespace-nowrap ${logoClasses}`}
+        {/* Left section: Mobile social icons + Logo */}
+        <div className="flex items-center gap-3">
+          {/* Mobile Social Icons - vertical strip on left */}
+          <div
+            className="flex flex-col gap-1 lg:hidden"
+            style={{ marginRight: '8px' }}
           >
-            Adventure Athlete India
-          </Link>
-          {/* Mobile: Show current page title | Desktop: Show social icons */}
-          {/* On mobile, page title helps user know where they are */}
-          {currentPageTitle && (
-            <span
-              className="lg:hidden text-[10px] font-semibold uppercase tracking-wider mt-0.5"
-              style={{ color: 'var(--color-amber)' }}
+            <a
+              href="https://instagram.com/adventureathlete.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#E4405F', opacity: 0.7 }}
+              title="Instagram"
             >
-              {currentPageTitle}
-            </span>
-          )}
-          {/* Social Icons - hidden on mobile, shown on desktop */}
-          <div className="hidden lg:flex gap-2 mt-1">
+              <InstagramIcon />
+            </a>
+            <a
+              href="https://youtube.com/@adventureathleteindia"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#FF0000', opacity: 0.7 }}
+              title="YouTube"
+            >
+              <YouTubeIcon />
+            </a>
+            <a
+              href="https://strava.com/athletes/atulchauhan"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#FC4C02', opacity: 0.7 }}
+              title="Strava"
+            >
+              <StravaIcon />
+            </a>
+            <a
+              href="https://facebook.com/adventureathleteindia"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#1877F2', opacity: 0.7 }}
+              title="Facebook"
+            >
+              <FacebookIcon />
+            </a>
+          </div>
+
+          {/* Logo with page title */}
+          <div className="flex flex-col items-start">
+            <Link
+              href="/"
+              className={`font-[family-name:var(--font-heading)] text-[11px] lg:text-sm font-medium tracking-[1.5px] lg:tracking-[var(--tracking-widest)] uppercase whitespace-nowrap ${logoClasses}`}
+            >
+              Adventure Athlete India
+            </Link>
+            {/* Mobile: Show current page title */}
+            {currentPageTitle && (
+              <span
+                className="lg:hidden text-[10px] font-semibold uppercase tracking-wider mt-0.5"
+                style={{ color: 'var(--color-amber)' }}
+              >
+                {currentPageTitle}
+              </span>
+            )}
+            {/* Desktop: Social Icons below logo */}
+            <div className="hidden lg:flex gap-2 mt-1">
             <a
               href="https://instagram.com/adventureathlete.in"
               target="_blank"
@@ -175,6 +219,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
               <FacebookIcon />
             </a>
           </div>
+        </div>
         </div>
 
         {/* Desktop Links - per prototype: 5 nav links, hover bg white/10 for transparent, black/5 for solid */}
@@ -247,23 +292,42 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
 
     {/* Mobile Menu Overlay - rendered via Portal to document.body for proper stacking */}
     {mounted && isMenuOpen && createPortal(
-      <div className="fixed inset-0 lg:hidden" style={{ zIndex: 9999 }}>
+      <div
+        className="lg:hidden"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 9999
+        }}
+      >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/50"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)'
+          }}
           onClick={() => setIsMenuOpen(false)}
         />
 
-        {/* Menu Panel - using fixed positioning directly for reliable placement */}
+        {/* Menu Panel - fixed positioning with explicit right edge */}
         <div
-          className="bg-white shadow-xl"
           style={{
             position: 'fixed',
             top: 0,
             right: 0,
-            height: '100%',
-            width: '280px',
-            zIndex: 10000
+            bottom: 0,
+            width: 'min(280px, 80vw)',
+            backgroundColor: 'white',
+            boxShadow: '-4px 0 20px rgba(0, 0, 0, 0.15)',
+            zIndex: 10000,
+            overflowY: 'auto'
           }}
         >
           {/* Close Button */}
