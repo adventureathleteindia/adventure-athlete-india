@@ -104,19 +104,19 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
               {currentPageTitle}
             </span>
           )}
-          {/* Mobile: Show social icons only on homepage (grey color like desktop) */}
+          {/* Mobile: Show social icons only on homepage (brand colors for visibility) */}
           {!currentPageTitle && (
             <div className="lg:hidden flex gap-2 mt-1">
-              <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-slate)', opacity: 0.5 }} title="Instagram">
+              <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" style={{ color: '#E4405F' }} title="Instagram">
                 <InstagramIcon />
               </a>
-              <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-slate)', opacity: 0.5 }} title="YouTube">
+              <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: '#FF0000' }} title="YouTube">
                 <YouTubeIcon />
               </a>
-              <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-slate)', opacity: 0.5 }} title="Strava">
+              <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" style={{ color: '#FC4C02' }} title="Strava">
                 <StravaIcon />
               </a>
-              <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-slate)', opacity: 0.5 }} title="Facebook">
+              <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: '#1877F2' }} title="Facebook">
                 <FacebookIcon />
               </a>
             </div>
@@ -341,18 +341,18 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
               </Link>
             </div>
 
-            {/* Social Icons - brand colors by default */}
-            <div className="flex gap-4 mt-8 justify-center">
-              <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" className="text-[#E4405F] hover:opacity-70 transition-opacity">
+            {/* Social Icons - brand colors */}
+            <div style={{ display: 'flex', gap: '16px', marginTop: '32px', justifyContent: 'center' }}>
+              <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" style={{ color: '#E4405F' }}>
                 <InstagramIcon />
               </a>
-              <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" className="text-[#FF0000] hover:opacity-70 transition-opacity">
+              <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: '#FF0000' }}>
                 <YouTubeIcon />
               </a>
-              <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" className="text-[#FC4C02] hover:opacity-70 transition-opacity">
+              <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" style={{ color: '#FC4C02' }}>
                 <StravaIcon />
               </a>
-              <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" className="text-[#1877F2] hover:opacity-70 transition-opacity">
+              <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: '#1877F2' }}>
                 <FacebookIcon />
               </a>
             </div>
