@@ -46,6 +46,31 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
 
   const isActive = (path: string) => pathname === path;
 
+  // Page title mapping for mobile indicator
+  const getPageTitle = (path: string): string | null => {
+    const titles: Record<string, string> = {
+      "/experiences": "Experiences",
+      "/tours-programs": "Tours & Programs",
+      "/rentals": "Rentals",
+      "/about": "About",
+      "/contact": "Contact",
+      "/plan": "Plan",
+      "/plan-tour": "Plan Tour",
+      "/faq": "FAQ",
+      "/terms": "Terms",
+      "/privacy": "Privacy",
+      "/safety": "Safety",
+      "/cancellation": "Cancellation",
+    };
+    // Handle experience detail pages
+    if (path.startsWith("/experience/")) {
+      return "Experience";
+    }
+    return titles[path] || null;
+  };
+
+  const currentPageTitle = getPageTitle(pathname);
+
   const navClasses = variant === "transparent"
     ? "absolute top-0 left-0 right-0 z-50 py-5 px-10"
     : "relative z-50 bg-white shadow-sm py-5 px-10";
@@ -68,7 +93,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
   return (
     <>
     <nav className={navClasses}>
-      <div className="max-w-[var(--max-width-container)] mx-auto flex justify-between items-center">
+      <div className="max-w-[var(--max-width-container)] mx-auto flex justify-between items-center relative">
         {/* Logo with social icons */}
         <div className="flex flex-col items-start">
           <Link
@@ -175,6 +200,18 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
           <span className="xl:hidden">Plan</span>
           <span className="hidden xl:inline">Plan Your Adventure</span>
         </Link>
+
+        {/* Mobile only: Current page indicator */}
+        {currentPageTitle && (
+          <div className="lg:hidden absolute left-1/2 -translate-x-1/2">
+            <span
+              className="text-xs font-semibold uppercase tracking-wider"
+              style={{ color: 'var(--color-amber)' }}
+            >
+              {currentPageTitle}
+            </span>
+          </div>
+        )}
 
         {/* Mobile only: Small CTA + Hamburger */}
         <div className="flex items-center gap-3 lg:!hidden">
