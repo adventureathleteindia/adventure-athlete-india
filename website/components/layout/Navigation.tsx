@@ -94,70 +94,25 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
     <>
     <nav className={navClasses}>
       <div className="max-w-[var(--max-width-container)] mx-auto flex justify-between items-center relative">
-        {/* Left section: Mobile social icons + Logo */}
-        <div className="flex items-center gap-3">
-          {/* Mobile Social Icons - vertical strip on left */}
-          <div
-            className="flex flex-col gap-1 lg:hidden"
-            style={{ marginRight: '8px' }}
+        {/* Logo with page title and social icons */}
+        <div className="flex flex-col items-start">
+          <Link
+            href="/"
+            className={`font-[family-name:var(--font-heading)] text-[11px] lg:text-sm font-medium tracking-[1.5px] lg:tracking-[var(--tracking-widest)] uppercase whitespace-nowrap ${logoClasses}`}
           >
-            <a
-              href="https://instagram.com/adventureathlete.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: '#E4405F', opacity: 0.7 }}
-              title="Instagram"
+            Adventure Athlete India
+          </Link>
+          {/* Mobile: Show current page title */}
+          {currentPageTitle && (
+            <span
+              className="lg:hidden text-[10px] font-semibold uppercase tracking-wider mt-0.5"
+              style={{ color: 'var(--color-amber)' }}
             >
-              <InstagramIcon />
-            </a>
-            <a
-              href="https://youtube.com/@adventureathleteindia"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: '#FF0000', opacity: 0.7 }}
-              title="YouTube"
-            >
-              <YouTubeIcon />
-            </a>
-            <a
-              href="https://strava.com/athletes/atulchauhan"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: '#FC4C02', opacity: 0.7 }}
-              title="Strava"
-            >
-              <StravaIcon />
-            </a>
-            <a
-              href="https://facebook.com/adventureathleteindia"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: '#1877F2', opacity: 0.7 }}
-              title="Facebook"
-            >
-              <FacebookIcon />
-            </a>
-          </div>
-
-          {/* Logo with page title */}
-          <div className="flex flex-col items-start">
-            <Link
-              href="/"
-              className={`font-[family-name:var(--font-heading)] text-[11px] lg:text-sm font-medium tracking-[1.5px] lg:tracking-[var(--tracking-widest)] uppercase whitespace-nowrap ${logoClasses}`}
-            >
-              Adventure Athlete India
-            </Link>
-            {/* Mobile: Show current page title */}
-            {currentPageTitle && (
-              <span
-                className="lg:hidden text-[10px] font-semibold uppercase tracking-wider mt-0.5"
-                style={{ color: 'var(--color-amber)' }}
-              >
-                {currentPageTitle}
-              </span>
-            )}
-            {/* Desktop: Social Icons below logo */}
-            <div className="hidden lg:flex gap-2 mt-1">
+              {currentPageTitle}
+            </span>
+          )}
+          {/* Desktop: Social Icons below logo */}
+          <div className="hidden lg:flex gap-2 mt-1">
             <a
               href="https://instagram.com/adventureathlete.in"
               target="_blank"
@@ -219,7 +174,6 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
               <FacebookIcon />
             </a>
           </div>
-        </div>
         </div>
 
         {/* Desktop Links - per prototype: 5 nav links, hover bg white/10 for transparent, black/5 for solid */}

@@ -172,14 +172,14 @@ export default function ToursProgramsPage() {
           </h1>
           <p
             style={{
-              whiteSpace: 'nowrap',
-              fontSize: '20px',
+              fontSize: 'clamp(14px, 3vw, 20px)',
               fontWeight: 300,
               opacity: 0.95,
               maxWidth: '600px',
               color: 'white',
               margin: 0,
               fontFamily: 'var(--font-body)',
+              lineHeight: 1.6,
             }}
           >
             Multi-day adventures
