@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<!--
+  ╔═══════════════════════════════════════════════════════════════════════════╗
+  ║  TODO: BEFORE FINALIZING THIS PROFILE                                     ║
+  ║  ─────────────────────────────────────────────────────────────────────────║
+  ║  • Add personal photos of Atul (action shots, podium, training)           ║
+  ║  • Replace placeholder images in PHOTO BREAK section                       ║
+  ║  • This profile will be shared with sponsors - photos are important!      ║
+  ║                                                                            ║
+  ║  Last updated: Feb 2026                                                    ║
+  ╚═══════════════════════════════════════════════════════════════════════════╝
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -690,6 +701,11 @@
 
   /* ── PRINT STYLES ── */
   @media print {
+    @page {
+      size: A4;
+      margin: 15mm 10mm;
+    }
+
     body {
       background: #FFF;
     }
@@ -700,7 +716,7 @@
     }
 
     .hero {
-      min-height: 320px;
+      min-height: 280px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -711,10 +727,20 @@
       background: transparent;
     }
 
+    /* Page break controls */
     .photo-break {
+      page-break-before: always;
       height: 120px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+    }
+
+    .page-break-before {
+      page-break-before: always;
+    }
+
+    .page-break-after {
+      page-break-after: always;
     }
 
     .first-card {
@@ -723,16 +749,29 @@
     }
 
     .contact-footer {
+      page-break-inside: avoid;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
     .section {
       break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     .achievement-category {
       break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* Keep credentials and education together */
+    .cred-grid {
+      page-break-inside: avoid;
+    }
+
+    /* Sponsorship section starts new page */
+    .sponsor-section {
+      page-break-before: always;
     }
 
     .medal {
@@ -1308,7 +1347,7 @@
   </section>
 
   <!-- ════════════════════════════ SPONSORSHIP VALUE ════════════════════════════ -->
-  <section class="section" style="background: var(--light-bg);">
+  <section class="section sponsor-section" style="background: var(--light-bg);">
     <div class="section-label">Partnership</div>
     <h2 class="section-title">What a Sponsor Gets</h2>
     <div class="section-divider"></div>
