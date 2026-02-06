@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 
 // Small social icons for nav
 const InstagramIcon = () => (
@@ -37,12 +36,6 @@ interface NavigationProps {
 export default function Navigation({ variant = "solid" }: NavigationProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  // Track mount state for portal (SSR compatibility)
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const isActive = (path: string) => pathname === path;
 
@@ -244,43 +237,44 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
 
     </nav>
 
-    {/* Mobile Menu Overlay - rendered via Portal to document.body for proper stacking */}
-    {mounted && isMenuOpen && createPortal(
+    {/* Mobile Menu Overlay - rendered directly without portal for reliability */}
+    {isMenuOpen && (
       <div
         className="lg:hidden"
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 9999
+          width: '100vw',
+          height: '100vh',
+          zIndex: 99999
         }}
       >
         {/* Backdrop */}
         <div
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             left: 0,
-            right: 0,
-            bottom: 0,
+            width: '100vw',
+            height: '100vh',
             backgroundColor: 'rgba(0, 0, 0, 0.5)'
           }}
           onClick={() => setIsMenuOpen(false)}
         />
 
-        {/* Menu Panel - fixed positioning with explicit right edge */}
+        {/* Menu Panel */}
         <div
           style={{
             position: 'fixed',
             top: 0,
             right: 0,
-            bottom: 0,
-            width: 'min(280px, 80vw)',
+            width: '280px',
+            maxWidth: '80vw',
+            height: '100vh',
             backgroundColor: 'white',
             boxShadow: '-4px 0 20px rgba(0, 0, 0, 0.15)',
-            zIndex: 10000,
+            zIndex: 100000,
             overflowY: 'auto'
           }}
         >
@@ -347,8 +341,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
             </div>
           </nav>
         </div>
-      </div>,
-      document.body
+      </div>
     )}
     </>
   );

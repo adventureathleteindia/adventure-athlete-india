@@ -126,7 +126,7 @@ export default function ToursProgramsPage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   return (
-    <>
+    <div style={{ overflowX: 'hidden', width: '100%' }}>
       <Navigation variant="solid" />
 
       {/* Hero Section */}
@@ -170,7 +170,7 @@ export default function ToursProgramsPage() {
           >
             Tours &amp; Programs
           </h1>
-          <p
+          <div
             style={{
               fontSize: 'clamp(14px, 3vw, 20px)',
               fontWeight: 300,
@@ -179,17 +179,20 @@ export default function ToursProgramsPage() {
               color: 'white',
               margin: 0,
               fontFamily: 'var(--font-body)',
-              lineHeight: 1.6,
+              lineHeight: 1.8,
             }}
           >
-            Multi-day adventures
-            <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
-            Village experiences
-            <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
-            Wellness retreats
-            <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
-            <span className="silver-shimmer">Designed around you.</span>
-          </p>
+            <div>
+              Multi-day adventures
+              <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
+              Village experiences
+            </div>
+            <div>
+              Wellness retreats
+              <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
+              <span className="silver-shimmer">Designed around you.</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -500,6 +503,6 @@ export default function ToursProgramsPage() {
       `}</style>
 
       <Footer />
-    </>
+    </div>
   );
 }
