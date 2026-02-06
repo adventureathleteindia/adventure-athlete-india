@@ -95,14 +95,30 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
           >
             Adventure Athlete India
           </Link>
-          {/* Mobile: Show current page title */}
+          {/* Mobile: Show current page title + social icons */}
           {currentPageTitle && (
-            <span
-              className="lg:hidden text-[10px] font-semibold uppercase tracking-wider mt-0.5"
-              style={{ color: 'var(--color-amber)' }}
-            >
-              {currentPageTitle}
-            </span>
+            <div className="lg:hidden flex items-center gap-3 mt-0.5">
+              <span
+                className="text-[10px] font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--color-amber)' }}
+              >
+                {currentPageTitle}
+              </span>
+              <div className="flex gap-1.5">
+                <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" style={{ color: '#E4405F', opacity: 0.8 }} title="Instagram">
+                  <InstagramIcon />
+                </a>
+                <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: '#FF0000', opacity: 0.8 }} title="YouTube">
+                  <YouTubeIcon />
+                </a>
+                <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" style={{ color: '#FC4C02', opacity: 0.8 }} title="Strava">
+                  <StravaIcon />
+                </a>
+                <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" style={{ color: '#1877F2', opacity: 0.8 }} title="Facebook">
+                  <FacebookIcon />
+                </a>
+              </div>
+            </div>
           )}
           {/* Desktop: Social Icons below logo */}
           <div className="hidden lg:flex gap-2 mt-1">
