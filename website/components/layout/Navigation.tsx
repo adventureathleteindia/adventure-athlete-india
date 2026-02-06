@@ -41,7 +41,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
 
   const navClasses = variant === "transparent"
     ? "absolute top-0 left-0 right-0 z-50 py-5 px-10"
-    : "relative bg-white shadow-sm py-5 px-10";
+    : "relative z-50 bg-white shadow-sm py-5 px-10";
 
   const logoClasses = variant === "transparent"
     ? "!text-white"
@@ -162,9 +162,10 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
           ))}
         </ul>
 
-        {/* CTA Button - Desktop only (hidden on mobile) */}
-        <Link href="/plan" className="btn-flag !hidden lg:!inline-block">
-          Plan Your Adventure
+        {/* CTA Button - Desktop only, responsive: "Plan" at lg, full text at xl */}
+        <Link href="/plan" className="btn-flag !hidden lg:!inline-block lg:!py-2 lg:!px-4 xl:!py-3 xl:!px-6">
+          <span className="xl:hidden">Plan</span>
+          <span className="hidden xl:inline">Plan Your Adventure</span>
         </Link>
 
         {/* Mobile only: Small CTA + Hamburger */}

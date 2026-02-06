@@ -141,6 +141,11 @@ Full schema is at `website/lib/supabase/schema.sql`. Includes tables, RLS polici
 
 ## Known Issues & Pending Tasks
 
+### Bugs
+
+- [ ] **Hamburger menu not working on /tours-programs (mobile)**: User can click the hamburger icon but the menu doesn't open. Works on other pages. Needs investigation.
+- [ ] **Nav CTA button overflow at ~50% browser width**: "PLAN YOUR ADVENTURE" button overflows and covers "Contact" link at intermediate widths (~900-1024px). Nav should collapse to hamburger earlier or button should shrink/hide.
+
 ### Pending
 
 - [ ] **Strava link**: Currently `strava.com/athletes/atulchauhan` — user will share correct URL later
