@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 // Small social icons for nav
 const InstagramIcon = () => (
@@ -36,6 +37,12 @@ interface NavigationProps {
 export default function Navigation({ variant = "solid" }: NavigationProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Track mount state for portal (SSR compatibility)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (path: string) => pathname === path;
 
@@ -59,6 +66,7 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
   // They have 50% opacity by default and full opacity + brand color on hover
 
   return (
+    <>
     <nav className={navClasses}>
       <div className="max-w-[var(--max-width-container)] mx-auto flex justify-between items-center">
         {/* Logo with social icons */}
@@ -201,82 +209,85 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setIsMenuOpen(false)}
-          />
+    </nav>
 
-          {/* Menu Panel */}
-          <div className="absolute top-0 right-0 h-full w-[280px] bg-white shadow-xl">
-            {/* Close Button */}
-            <div className="flex justify-end p-4">
-              <button
+    {/* Mobile Menu Overlay - rendered via Portal to document.body for proper stacking */}
+    {mounted && isMenuOpen && createPortal(
+      <div className="fixed inset-0 lg:hidden" style={{ zIndex: 9999 }}>
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/50"
+          onClick={() => setIsMenuOpen(false)}
+        />
+
+        {/* Menu Panel */}
+        <div className="absolute top-0 right-0 h-full w-[280px] bg-white shadow-xl">
+          {/* Close Button */}
+          <div className="flex justify-end p-4">
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 text-[var(--color-dark)]"
+              aria-label="Close menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Menu Links */}
+          <nav className="px-6 py-4">
+            <ul className="space-y-4">
+              {[
+                { href: "/experiences", label: "Experiences" },
+                { href: "/tours-programs", label: "Tours & Programs" },
+                { href: "/rentals", label: "Rentals" },
+                { href: "/about", label: "About" },
+                { href: "/contact", label: "Contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`block text-lg font-medium py-2 px-3 rounded-md transition-all hover:bg-black/5 ${isActive(link.href) ? "text-[var(--color-amber)]" : "text-[var(--color-dark)]"}`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA Button */}
+            <div className="mt-8">
+              <Link
+                href="/plan"
+                className="btn-gradient w-full text-center block"
                 onClick={() => setIsMenuOpen(false)}
-                className="p-2 text-[var(--color-dark)]"
-                aria-label="Close menu"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+                Plan Your Adventure
+              </Link>
             </div>
 
-            {/* Menu Links */}
-            <nav className="px-6 py-4">
-              <ul className="space-y-4">
-                {[
-                  { href: "/experiences", label: "Experiences" },
-                  { href: "/tours-programs", label: "Tours & Programs" },
-                  { href: "/rentals", label: "Rentals" },
-                  { href: "/about", label: "About" },
-                  { href: "/contact", label: "Contact" },
-                ].map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`block text-lg font-medium py-2 px-3 rounded-md transition-all hover:bg-black/5 ${isActive(link.href) ? "text-[var(--color-amber)]" : "text-[var(--color-dark)]"}`}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <div className="mt-8">
-                <Link
-                  href="/plan"
-                  className="btn-gradient w-full text-center block"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Plan Your Adventure
-                </Link>
-              </div>
-
-              {/* Social Icons - brand colors by default */}
-              <div className="flex gap-4 mt-8 justify-center">
-                <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" className="text-[#E4405F] hover:opacity-70 transition-opacity">
-                  <InstagramIcon />
-                </a>
-                <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" className="text-[#FF0000] hover:opacity-70 transition-opacity">
-                  <YouTubeIcon />
-                </a>
-                <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" className="text-[#FC4C02] hover:opacity-70 transition-opacity">
-                  <StravaIcon />
-                </a>
-                <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" className="text-[#1877F2] hover:opacity-70 transition-opacity">
-                  <FacebookIcon />
-                </a>
-              </div>
-            </nav>
-          </div>
+            {/* Social Icons - brand colors by default */}
+            <div className="flex gap-4 mt-8 justify-center">
+              <a href="https://instagram.com/adventureathlete.in" target="_blank" rel="noopener noreferrer" className="text-[#E4405F] hover:opacity-70 transition-opacity">
+                <InstagramIcon />
+              </a>
+              <a href="https://youtube.com/@adventureathleteindia" target="_blank" rel="noopener noreferrer" className="text-[#FF0000] hover:opacity-70 transition-opacity">
+                <YouTubeIcon />
+              </a>
+              <a href="https://strava.com/athletes/atulchauhan" target="_blank" rel="noopener noreferrer" className="text-[#FC4C02] hover:opacity-70 transition-opacity">
+                <StravaIcon />
+              </a>
+              <a href="https://facebook.com/adventureathleteindia" target="_blank" rel="noopener noreferrer" className="text-[#1877F2] hover:opacity-70 transition-opacity">
+                <FacebookIcon />
+              </a>
+            </div>
+          </nav>
         </div>
-      )}
-    </nav>
+      </div>,
+      document.body
+    )}
+    </>
   );
 }
