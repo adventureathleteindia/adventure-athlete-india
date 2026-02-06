@@ -171,7 +171,7 @@ export default function ToursProgramsPage() {
           >
             Tours &amp; Programs
           </h1>
-          <div
+          <p
             style={{
               fontSize: 'clamp(14px, 3vw, 20px)',
               fontWeight: 300,
@@ -183,17 +183,26 @@ export default function ToursProgramsPage() {
               lineHeight: 1.8,
             }}
           >
-            <div>
+            <span className="block sm:inline">
+              <span className="text-[var(--color-amber)] mr-2 sm:hidden">|</span>
               Multi-day adventures
-              <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
+            </span>
+            <span className="hidden sm:inline text-[var(--color-amber)] mx-3">|</span>
+            <span className="block sm:inline">
+              <span className="text-[var(--color-amber)] mr-2 sm:hidden">|</span>
               Village experiences
-            </div>
-            <div>
+            </span>
+            <span className="hidden sm:inline text-[var(--color-amber)] mx-3">|</span>
+            <span className="block sm:inline">
+              <span className="text-[var(--color-amber)] mr-2 sm:hidden">|</span>
               Wellness retreats
-              <span style={{ color: '#F59E0B', margin: '0 8px', fontWeight: 300 }}>|</span>
+            </span>
+            <span className="hidden sm:inline text-[var(--color-amber)] mx-3">|</span>
+            <span className="block sm:inline">
+              <span className="text-[var(--color-amber)] mr-2 sm:hidden">|</span>
               <span className="silver-shimmer">Designed around you.</span>
-            </div>
-          </div>
+            </span>
+          </p>
         </div>
       </section>
 
