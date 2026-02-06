@@ -102,9 +102,18 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
           >
             Adventure Athlete India
           </Link>
-          {/* Social Icons - shown on ALL pages per user preference */}
-          {/* Per prototype: ALL nav social icons have opacity: 0.5, hover to full opacity */}
-          <div className="flex gap-2 mt-1">
+          {/* Mobile: Show current page title | Desktop: Show social icons */}
+          {/* On mobile, page title helps user know where they are */}
+          {currentPageTitle && (
+            <span
+              className="lg:hidden text-[10px] font-semibold uppercase tracking-wider mt-0.5"
+              style={{ color: 'var(--color-amber)' }}
+            >
+              {currentPageTitle}
+            </span>
+          )}
+          {/* Social Icons - hidden on mobile, shown on desktop */}
+          <div className="hidden lg:flex gap-2 mt-1">
             <a
               href="https://instagram.com/adventureathlete.in"
               target="_blank"
@@ -201,18 +210,6 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
           <span className="hidden xl:inline">Plan Your Adventure</span>
         </Link>
 
-        {/* Mobile only: Current page indicator */}
-        {currentPageTitle && (
-          <div className="lg:hidden absolute left-1/2 -translate-x-1/2">
-            <span
-              className="text-xs font-semibold uppercase tracking-wider"
-              style={{ color: 'var(--color-amber)' }}
-            >
-              {currentPageTitle}
-            </span>
-          </div>
-        )}
-
         {/* Mobile only: Small CTA + Hamburger */}
         <div className="flex items-center gap-3 lg:!hidden">
           {/* Mobile CTA - smaller version */}
@@ -257,8 +254,18 @@ export default function Navigation({ variant = "solid" }: NavigationProps) {
           onClick={() => setIsMenuOpen(false)}
         />
 
-        {/* Menu Panel */}
-        <div className="absolute top-0 right-0 h-full w-[280px] bg-white shadow-xl">
+        {/* Menu Panel - using fixed positioning directly for reliable placement */}
+        <div
+          className="bg-white shadow-xl"
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            height: '100%',
+            width: '280px',
+            zIndex: 10000
+          }}
+        >
           {/* Close Button */}
           <div className="flex justify-end p-4">
             <button
