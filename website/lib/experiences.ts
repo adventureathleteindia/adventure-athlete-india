@@ -24,7 +24,7 @@ export interface Author {
 
 export const defaultAuthor: Author = {
   name: "Atul Chauhan",
-  image: "https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=200&q=80", // TODO: Replace with actual author photo
+  image: "/images/atul-profile.jpg",
   credentials: "Elite Cyclist | Trail Runner | Licensed Guide | Engineer",
   socials: {
     instagram: "https://instagram.com/adventureathlete.in",
@@ -102,204 +102,385 @@ export interface Experience {
  * When content is ready: change hasContent to true and add detail in experienceDetails
  */
 export const experiences: Experience[] = [
-  // Featured / Content Ready
+  // === CONTENT READY ===
   {
-    slug: "kuppar-peak-loop",
-    title: "Kuppar Peak Loop",
-    category: "Mountain Biking",
-    categoryValue: "mtb",
+    slug: "shali-tibba",
+    title: "Shali Tibba - Trail Run",
+    category: "Trail Running",
+    categoryValue: "trail",
     location: "Shimla District, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80",
-    distance: "32 km",
-    elevation: "1200m",
-    difficulty: "Hard",
-    difficultyLevel: 4,
-    duration: "4-5 hrs",
+    image: "/images/experiences/shali-tibba-temple.jpg",
+    distance: "8.8 km",
+    elevation: "657m",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    duration: "2-2.5 hrs",
     hasContent: true,
 
-    // === ADDITIONAL STATS ===
-    route: "Shimla → Kuppar Peak → Shimla (Loop)",
-    bestSeason: "Mar-Jun, Sep-Nov",
-    gear: "MTB · Full-sus recommended",
+    route: "Khatnol \u2192 Shali Tibba Summit \u2192 Khatnol (Out & Back)",
+    bestSeason: "Skip monsoon (mid-June to September end)",
+    gear: "Trail shoes \u00B7 Poles recommended",
 
     // === IMAGES ===
-    heroImage: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1920&q=80",
     photos: [
-      "https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=800&q=80",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
-      "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=600&q=80",
-      "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=600&q=80",
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
-      "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=600&q=80",
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&q=80",
-      "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=600&q=80",
+      "/images/experiences/shali-tibba-gallery/1.jpg",
+      "/images/experiences/shali-tibba-gallery/2.jpg",
+      "/images/experiences/shali-tibba-gallery/3.jpg",
+      "/images/experiences/shali-tibba-gallery/4.jpg",
+      "/images/experiences/shali-tibba-gallery/5.jpg",
+      "/images/experiences/shali-tibba-gallery/6.jpg",
+      "/images/experiences/shali-tibba-gallery/7.jpg",
+      "/images/experiences/shali-tibba-gallery/8.jpg",
+      "/images/experiences/shali-tibba-gallery/9.jpg",
+      "/images/experiences/shali-tibba-gallery/10.jpg",
+      "/images/experiences/shali-tibba-gallery/11.jpg",
+      "/images/experiences/shali-tibba-gallery/12.jpg",
+      "/images/experiences/shali-tibba-gallery/13.jpg",
     ],
 
     // === CONTENT ===
     intro:
-      "The Kuppar Peak loop is one of my favorite rides in the Shimla region. It has everything — steep climbs, technical descents, ridge riding, and views that make you forget you're suffering.",
+      "360\u00B0 Himalayan views from one of the best short trails near Shimla. The summit gives you a complete panorama of the Himalayan ranges.",
     openingParagraph:
-      'I first discovered this route in 2019 while exploring unmapped trails behind Mashobra. What started as a random "let\'s see where this goes" turned into what I now consider the definitive Shimla MTB experience.',
-    content: `You start from Shimla town, climbing steadily through the forest roads toward Mashobra. The first 8 km are on tarmac — use this to warm up because things get real after that.
+      "I took this trail on a January afternoon, starting from Khatnol village. It was one of those bright sunny winter days, short but perfect for a run.",
+    content: `The trail was dry despite it being winter. Usually there\u2019s snow this time of year, but the dry weather meant good running conditions. The path is rocky throughout, so I brought a pole for the descent. Took me about 50-55 minutes to reach the top, including stops to shoot some video.
 
-Once you hit the Mashobra junction, take the dirt track heading northeast. This is where the climb begins in earnest. The gradient kicks up to 12-15% in places, and the loose gravel makes traction tricky. I usually shift to my granny gear and just grind.
-
-The ridge section from kilometer 15-22 is pure magic. You're riding along a knife-edge with valleys dropping away on both sides. On clear days, you can see all the way to the Dhauladhar range. Stop here. Take photos. Breathe it in.
-
-The descent from Kuppar Peak is technical — loose rocks, tight switchbacks, and some exposure. Keep your weight back and let the bike do the work. If you're not comfortable with technical descents, walk the sketchy bits. No shame in that.`,
-    gettingThere: `The ride starts from Shimla's main market area (The Ridge). If you're staying elsewhere, I can arrange pickup or share the exact GPS coordinates for the trailhead.
-
-**By Car:** Drive to Shimla, park near The Mall Road. The loop brings you back to the same spot.
-**By Bus:** HRTC buses run frequently from Delhi/Chandigarh to Shimla ISBT. The trailhead is 2 km from the bus stand.`,
+The summit is the real reward. Standing there with views in every direction, it\u2019s one of those moments where you forget you\u2019re just a couple hours from Shimla. There\u2019s a small temple at the top with a Pujari, and you can even camp here with permission.`,
+    gettingThere: `**By Bus:** Bus from Shimla ISBT to Khatnol (3 hours), then 3 km offroad to the trail head.
+**By Car:** Drive from Shimla, around 2-2.5 hours one way. Can also take a cab.`,
     whatToBring: [
-      "MTB with good brakes (full suspension recommended)",
-      "Helmet (non-negotiable)",
-      "Gloves and knee pads",
-      "3+ liters of water",
-      "Energy bars / trail snacks",
-      "Light rain jacket (weather changes fast)",
-      "Basic repair kit + spare tube",
-      "Sunscreen and sunglasses",
+      "Trail running shoes (rocky terrain)",
+      "1L water (also available at top)",
+      "Trekking pole (helps on descent)",
+      "Energy bar or snack",
+      "Extra layer for summit",
+      "In off-season, carry your own food (shop at top may not be open)",
     ],
     notes: [
       {
         title: "Start early.",
-        text: "I usually hit the trail by 6 AM to avoid afternoon clouds and have the forest roads to myself.",
+        text: "I started at 1 PM \u2014 too late. Go earlier for better light and more time at the top. Great spot for sunrise.",
       },
       {
-        title: "Carry extra water.",
-        text: "There's no reliable water source after Mashobra until you're back in town. I carry 3 liters minimum.",
+        title: "Off-season tip.",
+        text: "Carry your own food. The shop at the top may not be open in off-season.",
       },
       {
-        title: "Tire pressure matters.",
-        text: "Drop to around 22-24 PSI for the technical sections. You'll thank me on the descent.",
+        title: "Solo-friendly.",
+        text: "Solo runs are fine here, but it\u2019d be more fun with company.",
+      },
+      {
+        title: "Easy navigation.",
+        text: "The trail is straightforward, no navigation issues.",
       },
     ],
 
     // === MEDIA ===
-    audio: {
-      title: "Trail Notes",
-      duration: "12 min",
-      src: "", // Add real audio URL when available
-    },
     video: {
-      thumbnail: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1200&q=80",
-      title: "Kuppar Peak Full Ride",
-      youtubeId: "", // Add YouTube ID when available
+      thumbnail: "/images/experiences/shali-tibba-temple.jpg",
+      title: "Shali Tibba Trail Run",
+      youtubeId: "gB8VA90piM0",
     },
-    stravaActivityId: "", // Add Strava activity ID when available
+    stravaActivityId: "17012112435",
   },
-  // Coming Soon
+
+  // === COMING SOON ===
   {
-    slug: "shali-tibba",
-    title: "Shali Tibba Summit",
+    slug: "chandernahan",
+    title: "Chandernahan - First MTB Summit",
+    category: "Mountain Biking",
+    categoryValue: "mtb",
+    location: "Shimla District, Himachal Pradesh",
+    image: "/images/experiences/chandernahan.jpg",
+    distance: "",
+    elevation: "",
+    difficulty: "Hard",
+    difficultyLevel: 4,
+    duration: "",
+    hasContent: false,
+  },
+  {
+    slug: "chandertaal",
+    title: "Chandertaal - Trail Run",
     category: "Trail Running",
     categoryValue: "trail",
-    location: "Solan District, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80",
-    distance: "18 km",
-    elevation: "900m",
+    location: "Spiti Valley, Himachal Pradesh",
+    image: "/images/experiences/chandertaal.jpg",
+    distance: "",
+    elevation: "",
     difficulty: "Moderate",
     difficultyLevel: 3,
-    duration: "3-4 hrs",
+    duration: "",
     hasContent: false,
   },
   {
-    slug: "hatu-peak",
-    title: "Hatu Peak Trail",
+    slug: "chuur-peak",
+    title: "Chuur Peak - Hike",
     category: "Hiking",
     categoryValue: "hiking",
-    location: "Narkanda, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80",
-    distance: "12 km",
-    elevation: "600m",
-    difficulty: "Moderate",
-    difficultyLevel: 3,
-    duration: "4-5 hrs",
-    hasContent: false,
+    location: "Kullu, Himachal Pradesh",
+    image: "/images/experiences/chuur-peak.jpg",
+    distance: "10.7 km",
+    elevation: "1550m",
+    difficulty: "Hard",
+    difficultyLevel: 4,
+    duration: "8-9 hrs",
+    hasContent: true,
+
+    route: "Thanach Village \u2192 Chuur Peak (3850m) \u2192 Thanach Village (Out & Back)",
+    bestSeason: "Oct-Nov (late autumn)",
+    gear: "Hiking shoes \u00B7 Pole \u00B7 Guide essential",
+
+    photos: [
+      "/images/experiences/chuur-peak-gallery/1.jpg",
+      "/images/experiences/chuur-peak-gallery/2.jpg",
+      "/images/experiences/chuur-peak-gallery/3.jpg",
+      "/images/experiences/chuur-peak-gallery/4.jpg",
+      "/images/experiences/chuur-peak-gallery/5.jpg",
+      "/images/experiences/chuur-peak-gallery/6.jpg",
+      "/images/experiences/chuur-peak-gallery/7.jpg",
+    ],
+
+    intro:
+      "Most people drive past Jalori and never look up. This is what they're missing.",
+    openingParagraph:
+      "One of the less explored peaks in Himachal, Chuur Peak sits between the Jalori Pass area and Bashleo Pass. Most people drive right past it on the Anni road without knowing it's there.",
+    content: `I did this as a speed attempt in late December 2022, starting from Thanach village near Anni. The climb goes from 2300m to 3850m in just under 5 km. That's the kind of steep where you question your life choices every 20 minutes. And there's no proper trail - just dense, wild forest with towering trees blocking out the sunlight. As you go higher, it gets rocky with dangerous drops and sheer cliffs on either side. There was actually no route. We just pushed through.
+
+The forest here is serious. Bears live in it, and it's easy to get lost. Do not do this solo. Get a local guide or at least someone who knows the area.
+
+Once we reached the top, the views made everything worth it. Standing at 3850m, I could see Shrikhand Mahadev to the northeast, Churdhar to the southeast, then Kuppar Peak, Moral Danda, Saru Lake, Darkali Hills, and Sundru Peak stretching towards the east. Full panoramic views in every direction.
+
+One thing that hit me - it was late December and there was zero snow on these peaks. The only visible snow was on mountains above 5000m. That's how fast things are changing up here.`,
+    gettingThere: `First reach **Anni**, about 120 km from Shimla. From Anni, it's a 30-minute drive to **Thanach village**. No bus service to Thanach, so you'll need a taxi or your own vehicle. The hike starts from the village.`,
+    whatToBring: [
+      "1.5L water minimum per person (no water on the trail)",
+      "Trekking or hiking shoes",
+      "Draat (hatchet sickle) for the bushy sections",
+      "Plenty of food (avoid non-veg, it can attract wild animals)",
+      "Hiking pole",
+      "A guide or local person - this is not optional",
+    ],
+    notes: [
+      {
+        title: "Do not go solo.",
+        text: "Wild forest, bears, no marked trail. A local guide is essential.",
+      },
+      {
+        title: "Best in autumn.",
+        text: "Late October to November. Less bush, clearer views.",
+      },
+      {
+        title: "Relentless climbing.",
+        text: "2300m to 3850m in under 5 km. Be ready for it.",
+      },
+    ],
+
+    video: {
+      thumbnail: "/images/experiences/chuur-peak.jpg",
+      title: "Chuur Peak Hike",
+      youtubeId: "eFu2RSlQZ0I",
+    },
+    stravaActivityId: "8269328652",
   },
   {
-    slug: "churdhar",
-    title: "Churdhar Trek",
-    category: "Trekking",
+    slug: "dayara-thach",
+    title: "Dayara Thach - Random Peak Hike",
+    category: "Hiking",
     categoryValue: "hiking",
-    location: "Sirmour District, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    distance: "24 km",
-    elevation: "1800m",
-    difficulty: "Hard",
-    difficultyLevel: 4,
-    duration: "2 days",
-    hasContent: false,
-  },
-  {
-    slug: "jakhu-temple",
-    title: "Jakhu Temple Walk",
-    category: "Nature Walk",
-    categoryValue: "nature",
-    location: "Shimla, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80",
-    distance: "4 km",
-    elevation: "200m",
-    difficulty: "Easy",
-    difficultyLevel: 1,
-    duration: "1-2 hrs",
-    hasContent: false,
-  },
-  {
-    slug: "shimla-fagu",
-    title: "Shimla to Fagu",
-    category: "Road Cycling",
-    categoryValue: "road",
-    location: "Shimla District, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=800&q=80",
-    distance: "22 km",
-    elevation: "800m",
+    location: "Uttarakhand",
+    image: "/images/experiences/dayara-thach.jpg",
+    distance: "",
+    elevation: "",
     difficulty: "Moderate",
     difficultyLevel: 3,
-    duration: "2-3 hrs",
+    duration: "",
     hasContent: false,
   },
   {
-    slug: "kufri-road",
-    title: "Kufri Road Climb",
-    category: "Road Cycling",
-    categoryValue: "road",
-    location: "Kufri, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=800&q=80",
-    distance: "45 km",
-    elevation: "1500m",
+    slug: "ghepan-lake",
+    title: "Ghepan Lake - Hike",
+    category: "Hiking",
+    categoryValue: "hiking",
+    location: "Lahaul Spiti, Himachal Pradesh",
+    image: "/images/experiences/ghepan-lake.jpg",
+    distance: "23.3 km",
+    elevation: "1609m",
     difficulty: "Hard",
     difficultyLevel: 4,
-    duration: "3-4 hrs",
+    duration: "~10 hrs",
+    hasContent: true,
+
+    route: "Labrang Village (near Sissu) \u2192 Ghepan Lake \u2192 Labrang Village (Out & Back)",
+    bestSeason: "Autumn (Sep-Nov)",
+    gear: "Trail shoes \u00B7 Hiking pole \u00B7 Warm jacket",
+
+    photos: [
+      "/images/experiences/ghepan-lake-gallery/1.jpg",
+      "/images/experiences/ghepan-lake-gallery/2.jpg",
+      "/images/experiences/ghepan-lake-gallery/3.jpg",
+      "/images/experiences/ghepan-lake-gallery/4.jpg",
+      "/images/experiences/ghepan-lake-gallery/5.jpg",
+      "/images/experiences/ghepan-lake-gallery/6.jpg",
+      "/images/experiences/ghepan-lake-gallery/7.jpg",
+    ],
+
+    intro:
+      "The kind of lake you think only exists in wallpapers - until you're standing next to it.",
+    openingParagraph:
+      "Ghepan Lake sits at 4076m in the Lahaul Valley, near Sissu. To get there you cross the Atal Tunnel from Manali, enter Lahaul, and start the hike about 1 km above Labrang village, roughly 3 km from Sissu. This was my first proper big hike. Not a multi-day trek, just a single-day out-and-back. Left early morning, came back by evening. Took about 10 hours total.",
+    content: `We were three people. Packed boiled potatoes, eggs, chocolate, and peanut butter bread for lunch. For gear I had trail running shoes, a jacket, cap, sunglasses, and a water pack, though honestly there's plenty of water on the trail so you don't need to carry much.
+
+The route has four stream crossings. Three are manageable. One is genuinely difficult. Even in autumn when the water was lower, that one crossing made us work for it. My advice: start early. The glacier melts slower in the morning, so the water levels are lower and crossings get easier. By afternoon the meltwater picks up and it gets harder.
+
+Autumn is the better season for this hike. Less water in the streams, clearer skies, and the valley looks incredible. If you go during peak summer, expect higher water and tougher crossings.
+
+The altitude hits you. At 4076m, you feel it. Don't rush, take your time on the way up, and don't underestimate the mountain. This is not a casual walk. The elevation gain is over 1600m round trip, and by the time you're heading back you'll feel it in your legs and your lungs.`,
+    gettingThere: `First reach **Manali**. From Manali, take a bus (about 2 hours) or a taxi through the **Atal Tunnel** into Lahaul Valley. Get to **Sissu**, then head to **Labrang village**. The hike starts about 1 km above the village.`,
+    whatToBring: [
+      "Trail running or hiking shoes (good grip for stream crossings)",
+      "Warm jacket (it gets cold at altitude)",
+      "Cap and sunglasses",
+      "Water pack (but trail has water)",
+      "Food for the day (no shops on the trail)",
+      "Hiking pole",
+      "Mini oxygen cylinder (optional, but smart at this altitude)",
+    ],
+    notes: [
+      {
+        title: "Start early.",
+        text: "Morning glacier melt is slower, stream crossings are easier.",
+      },
+      {
+        title: "Altitude warning.",
+        text: "4076m hits different if you're not acclimatized. Don't rush.",
+      },
+      {
+        title: "Stream crossings.",
+        text: "4 total. One is very difficult even in autumn.",
+      },
+      {
+        title: "Best in autumn.",
+        text: "Less water, better conditions, clearer skies.",
+      },
+    ],
+
+    video: {
+      thumbnail: "/images/experiences/ghepan-lake.jpg",
+      title: "Ghepan Lake Hike",
+      youtubeId: "ySrJ9w9r8uQ",
+    },
+  },
+  {
+    slug: "hanumangarh",
+    title: "Hanumangarh Peak - Trail Run",
+    category: "Trail Running",
+    categoryValue: "trail",
+    location: "Shimla District, Himachal Pradesh",
+    image: "/images/experiences/hanumangarh.jpg",
+    distance: "",
+    elevation: "",
+    difficulty: "Moderate",
+    difficultyLevel: 3,
+    duration: "",
     hasContent: false,
   },
   {
-    slug: "glen-forest",
-    title: "Glen Forest Walk",
-    category: "Nature Walk",
-    categoryValue: "nature",
-    location: "Shimla, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
-    distance: "5 km",
-    elevation: "150m",
-    difficulty: "Easy",
-    difficultyLevel: 1,
-    duration: "2 hrs",
+    slug: "kuppar-peak",
+    title: "Kuppar Peak - Hike",
+    category: "Hiking",
+    categoryValue: "hiking",
+    location: "Shimla District, Himachal Pradesh",
+    image: "/images/experiences/kuppar-peak.jpg",
+    distance: "",
+    elevation: "",
+    difficulty: "Moderate",
+    difficultyLevel: 3,
+    duration: "",
     hasContent: false,
   },
   {
-    slug: "mashobra-fkt",
-    title: "Mashobra FKT",
-    category: "FKT",
-    categoryValue: "fkt",
-    location: "Mashobra, Himachal Pradesh",
-    image: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=800&q=80",
-    distance: "28 km",
-    elevation: "800m",
+    slug: "ladakh-high-passes",
+    title: "Ladakh High Passes - Cycling",
+    category: "Cycling",
+    categoryValue: "cycling",
+    location: "Ladakh, India",
+    image: "/images/experiences/ladakh.jpg",
+    distance: "",
+    elevation: "",
+    difficulty: "Hard",
+    difficultyLevel: 5,
+    duration: "",
+    hasContent: false,
+  },
+  {
+    slug: "shimla-to-bir",
+    title: "Shimla to Bir - Cycling",
+    category: "Cycling",
+    categoryValue: "cycling",
+    location: "Himachal Pradesh",
+    image: "/images/experiences/shimla-to-bir.jpg",
+    distance: "",
+    elevation: "",
     difficulty: "Hard",
     difficultyLevel: 4,
-    duration: "3 hrs",
+    duration: "",
+    hasContent: false,
+  },
+  {
+    slug: "skiing-narkanda",
+    title: "Skiing in Narkanda",
+    category: "Skiing",
+    categoryValue: "skiing",
+    location: "Narkanda, Himachal Pradesh",
+    image: "/images/experiences/skiing-narkanda.jpg",
+    distance: "",
+    elevation: "",
+    difficulty: "Moderate",
+    difficultyLevel: 3,
+    duration: "",
+    hasContent: false,
+  },
+  {
+    slug: "lambri-meadows",
+    title: "Lambri Meadows - Trail Run",
+    category: "Trail Running",
+    categoryValue: "trail",
+    location: "Shimla District, Himachal Pradesh",
+    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80",
+    distance: "",
+    elevation: "",
+    difficulty: "Moderate",
+    difficultyLevel: 3,
+    duration: "",
+    hasContent: false,
+  },
+  {
+    slug: "serolsar-lake",
+    title: "Serolsar Lake - MTB",
+    category: "Mountain Biking",
+    categoryValue: "mtb",
+    location: "Kullu District, Himachal Pradesh",
+    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80",
+    distance: "",
+    elevation: "",
+    difficulty: "Moderate",
+    difficultyLevel: 3,
+    duration: "",
+    hasContent: false,
+  },
+  {
+    slug: "nochi-top",
+    title: "Nochi Top - Hike",
+    category: "Hiking",
+    categoryValue: "hiking",
+    location: "Shimla District, Himachal Pradesh",
+    image: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80",
+    distance: "",
+    elevation: "",
+    difficulty: "Moderate",
+    difficultyLevel: 3,
+    duration: "",
     hasContent: false,
   },
 ];
@@ -423,26 +604,16 @@ export interface GalleryPhoto {
  * Generate gallery photos from experiences + additional scenic photos
  */
 export function getGalleryPhotos(): GalleryPhoto[] {
-  // Start with experience photos
+  // Use experience photos directly (local images don't need URL param changes)
   const experiencePhotos: GalleryPhoto[] = experiences.map((exp) => ({
-    src: exp.image.replace("w=800", "w=400"),
+    src: exp.image.startsWith("/") ? exp.image : exp.image.replace("w=800", "w=400"),
     alt: exp.title,
     label: exp.title,
     href: exp.hasContent ? `/experience/${exp.slug}` : undefined,
     slug: exp.slug,
   }));
 
-  // Add additional scenic photos (these don't link to experiences)
-  const scenicPhotos: GalleryPhoto[] = [
-    { src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", alt: "Mountain View", label: "Himalayan Vista", slug: "" },
-    { src: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=400&q=80", alt: "Snow Peak", label: "Snow Peak Ride", slug: "" },
-    { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80", alt: "Night Trail", label: "Starlight Trail", slug: "" },
-    { src: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=400&q=80", alt: "Summit", label: "Summit Push", slug: "" },
-    { src: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=400&q=80", alt: "Forest Trail", label: "Forest Loop", slug: "" },
-    { src: "https://images.unsplash.com/photo-1486218119243-13883505764c?w=400&q=80", alt: "Valley", label: "Valley Descent", slug: "" },
-  ];
-
-  return [...experiencePhotos, ...scenicPhotos];
+  return experiencePhotos;
 }
 
 /**
@@ -506,18 +677,15 @@ export function getAboutGalleryPhotos(): AboutGalleryPhoto[] {
 export const experienceCategories = [
   { label: "All", value: "all" },
   { label: "Mountain Biking", value: "mtb" },
-  { label: "Road Cycling", value: "road" },
   { label: "Trail Running", value: "trail" },
   { label: "Hiking", value: "hiking" },
-  { label: "Nature Walk", value: "nature" },
-  { label: "FKT", value: "fkt" },
+  { label: "Cycling", value: "cycling" },
+  { label: "Skiing", value: "skiing" },
 ];
 
 export const homepageCategories = [
-  { title: "Mountain Biking", image: "https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=400&q=80", href: "/experiences?category=mtb" },
-  { title: "Road Cycling", image: "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=400&q=80", href: "/experiences?category=road" },
-  { title: "Trail Running", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80", href: "/experiences?category=trail" },
-  { title: "Hiking & Treks", image: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=400&q=80", href: "/experiences?category=hiking" },
-  { title: "Nature Walks", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80", href: "/experiences?category=nature" },
-  { title: "Gravel Cycling", image: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=400&q=80", href: "/experiences?category=gravel" },
+  { title: "Mountain Biking", image: "/images/experiences/chandernahan.jpg", href: "/experiences?category=mtb" },
+  { title: "Trail Running", image: "/images/category-trail-running.jpg", href: "/experiences?category=trail" },
+  { title: "Hiking & Treks", image: "/images/experiences/ghepan-lake.jpg", href: "/experiences?category=hiking" },
+  { title: "Skiing", image: "/images/experiences/skiing-narkanda.jpg", href: "/experiences?category=skiing" },
 ];

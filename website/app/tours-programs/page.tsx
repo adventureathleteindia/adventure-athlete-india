@@ -9,7 +9,7 @@ import { Navigation, Footer } from "@/components/layout";
 const programs = [
   {
     title: "Shimla to Dharamshala Bike Tour",
-    image: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800&q=80",
+    image: "/images/tours-shimla-dharamshala.jpg",
     duration: "4 Days",
     type: "Bike Tour",
     description:
@@ -20,7 +20,7 @@ const programs = [
   },
   {
     title: "Manali to Leh High Altitude Ride",
-    image: "https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=800&q=80",
+    image: "/images/tours-manali-leh.jpg",
     duration: "8\u201310 Days",
     type: "High Altitude",
     description:
@@ -31,7 +31,7 @@ const programs = [
   },
   {
     title: "Village Base Camp",
-    image: "https://images.unsplash.com/photo-1626621331169-5f34be280ed9?w=800&q=80",
+    image: "/images/tours-village-basecamp.jpg",
     duration: "3\u20137 Days",
     type: "Village Experience",
     description:
@@ -53,7 +53,7 @@ const programs = [
   },
   {
     title: "Train with a Pro",
-    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80",
+    image: "/images/tours-train-pro.jpg",
     duration: "Custom",
     type: "MTB · Trail Running · Skiing",
     description:
@@ -141,7 +141,7 @@ export default function ToursProgramsPage() {
           justifyContent: 'flex-end',
           padding: '80px 40px',
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80)',
+            'url(/images/tours-hero.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           color: 'white',
@@ -172,11 +172,11 @@ export default function ToursProgramsPage() {
             Tours &amp; Programs
           </h1>
           <p
+            className="md:whitespace-nowrap"
             style={{
               fontSize: 'clamp(14px, 3vw, 20px)',
               fontWeight: 300,
               opacity: 0.95,
-              maxWidth: '600px',
               color: 'white',
               margin: 0,
               fontFamily: 'var(--font-body)',

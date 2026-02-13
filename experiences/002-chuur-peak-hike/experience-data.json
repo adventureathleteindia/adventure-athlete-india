@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "route_id": "002",
+    "slug": "chuur-peak-hike",
+    "folder_name": "002-chuur-peak-hike",
+    "status": "draft",
+    "created_date": "2026-02-13",
+    "polished": false,
+    "hasContent": false
+  },
+  "basic_info": {
+    "title": "Chuur Peak - Hike",
+    "intro": "Most people drive past Jalori and never look up. This is what they're missing.",
+    "category": "Hiking",
+    "categoryValue": "hiking",
+    "difficulty": "Hard",
+    "difficultyLevel": 4,
+    "date": "2022-12-22",
+    "tags": [
+      "hike"
+    ]
+  },
+  "location": {
+    "start_point": "Thanach village",
+    "end_point": "Thanach village",
+    "route": "Shimla, Anni, thanacha village, chuur peak, thanach village, anni, shimla",
+    "district": "Kullu",
+    "state": "Himachal Pradesh",
+    "location": "Kullu, Himachal Pradesh",
+    "how_to_reach": "To reach its little difficult because first you need to reach anni, that is around 120 km from Shimla. After any, it's a 30 minutes of drive till Taj Village unfortunately no bus service is there but you can book a taxi or take your own vehicle and from the natural village. The hike starts. It's very steep and do not go solo because there is a wild forest and that forest also has beer and one can get lost in this forest easily.."
+  },
+  "metrics": {
+    "strava_link": "https://www.strava.com/activities/8269328652",
+    "strava_activity_id": "8269328652",
+    "strava_distance_km": null,
+    "strava_elevation_m": null,
+    "distance_km": 10.7,
+    "distance": "10.7 km",
+    "elevation_gain_m": 1550,
+    "elevation": "1550m",
+    "duration": "8.8 hrs",
+    "max_altitude_m": 3850,
+    "start_altitude_m": 2300,
+    "_gpx_raw_elevation_gain": 4987,
+    "_gpx_raw_max_altitude": 7142,
+    "_note": "GPX altitude data was inaccurate (phone GPS). Corrected from raw notes: 2300m to 3850m summit."
+  },
+  "website_extras": {
+    "best_season": "Autumn is the best season maybe late October November",
+    "gear": "",
+    "what_to_bring": [
+      "There is no water in this hike so you need to carry an amount of water maybe 1.5 L for one person, tracking shoes, or hiking shoes, I think you should have draat (hatchet sickle) as it's a very bushy area and maybe while animals might be there so for safety, it might help, you should carry ample amount of food. Make sure to avoid non-vegetarian food as carnivores might attract., get yourself a hiking pole, a guide for sure or a local person because it's very tricky to go there"
+    ]
+  },
+  "notes": {
+    "raw_description": "Chuur Peak (3850m)\n\nOne of the less explored peak that lies between Jalori pass area and the Bashleo paas is this mighty Chuur Peak. We started our journey from Anni via vill Thanach and a speed attempt to end this year that started from 2300m and took us to 3850m in just under 5km. You can well imagine the steepness of the climb. However, hike to the peak was an incredible experience. The trail was surrounded by dense, wild forest, with towering trees and a canopy that blocked out much of the sunlight. As we made our way up the mountain, the trail(actually there was no route) became increasingly steep and rocky, with dangerous drops and sheer cliffs on either side.\n\nDespite the challenges, the views from the top were well worth the effort. The panoramic vista of the surrounding landscape was breathtaking, and we were able to see for miles in every direction. It was a true wilderness adventure, and one that I will always remember. \nOnce we reached the top, we were just in front of holy Shirikhand Mahadev that lies towards Northeast, Churdhar towards Southeast and followed by Kuppar peak, Moral Danda, Saru lake, Darkali Hills, Sundru Peak going towards east direction. These were all that i could locate.\n\nOne thing that shocked me was- how drastically our environment is changing as there was no snow even in these high peaks.(it's late December) Only visible snow was in the peaks that were above 5k m high.\nShare and support",
+    "notes_from_file": "",
+    "media_info": ""
+  },
+  "media": {
+    "hero_image": null,
+    "card_image": null,
+    "photos": null,
+    "youtube_url": "https://www.youtube.com/watch?v=eFu2RSlQZ0I",
+    "youtube_id": "eFu2RSlQZ0I",
+    "video_thumbnail": null,
+    "photos_count": 0,
+    "videos_count": 0,
+    "audio_count": 0,
+    "has_gpx": true
+  },
+  "polished_content": {
+    "website_description": null,
+    "opening_paragraph": null,
+    "content": null,
+    "instagram_caption": null,
+    "youtube_description": null,
+    "short_summary": null
+  },
+  "checklist": {
+    "basic_info_complete": true,
+    "location_complete": true,
+    "metrics_available": true,
+    "notes_added": true,
+    "media_added": false,
+    "polished": false,
+    "published": false
+  }
+}

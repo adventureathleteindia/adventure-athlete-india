@@ -53,7 +53,7 @@ const SearchIcon = ({ size = 28 }: { size?: number }) => (
 // Equipment data
 const equipmentItems = [
   {
-    image: "https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=800&q=80",
+    image: "/images/rental-mtb.jpg",
     alt: "Mountain Bikes",
     category: "Cycling",
     title: "Mountain Bikes",
@@ -67,7 +67,7 @@ const equipmentItems = [
     ],
   },
   {
-    image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80",
+    image: "/images/rental-ski.jpg",
     alt: "Ski Equipment",
     category: "Winter Sports",
     title: "Ski Set",

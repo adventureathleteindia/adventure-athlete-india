@@ -9,5 +9,6 @@ export { default as ProfileDashboard } from "./ProfileDashboard";
 export { default as AudioPlayer } from "./AudioPlayer";
 export { default as VideoPlayer } from "./VideoPlayer";
 export { default as StravaEmbed } from "./StravaEmbed";
+export { default as ElevationChart } from "./ElevationChart";
 export { default as RaceResults } from "./RaceResults";
 export { default as ComingSoonModal } from "./ComingSoonModal";

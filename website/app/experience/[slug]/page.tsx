@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Navigation, Footer } from "@/components/layout";
-import { StatsDashboard, AudioPlayer, VideoPlayer, StravaEmbed } from "@/components/ui";
+import { StatsDashboard, AudioPlayer, VideoPlayer, ElevationChart } from "@/components/ui";
 import { getExperienceBySlug, defaultAuthor } from "@/lib/experiences";
 
 // Grid Icon for View All button
@@ -22,7 +22,7 @@ export default function ExperienceDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
   const experience = getExperienceBySlug(slug);
-  const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Show "not found" if experience doesn't exist or doesn't have content
   if (!experience || !experience.hasContent) {
@@ -106,7 +106,7 @@ export default function ExperienceDetailPage() {
             alt="Trail view"
             width={600}
             height={400}
-            onClick={() => setShowGalleryModal(true)}
+            onClick={() => setLightboxIndex(0)}
             className="photo-main"
           />
 
@@ -117,7 +117,7 @@ export default function ExperienceDetailPage() {
               alt="Photo 2"
               width={300}
               height={200}
-              onClick={() => setShowGalleryModal(true)}
+              onClick={() => setLightboxIndex(1)}
               className="photo-small"
             />
           )}
@@ -129,14 +129,14 @@ export default function ExperienceDetailPage() {
               alt="Photo 3"
               width={300}
               height={200}
-              onClick={() => setShowGalleryModal(true)}
+              onClick={() => setLightboxIndex(2)}
               className="photo-small photo-desktop-only"
             />
           )}
 
           {/* View All Overlay */}
           {hasMorePhotos ? (
-            <div className="view-all-overlay" onClick={() => setShowGalleryModal(true)}>
+            <div className="view-all-overlay" onClick={() => setLightboxIndex(3)}>
               <Image
                 src={photos[3]}
                 alt="More photos"
@@ -157,7 +157,7 @@ export default function ExperienceDetailPage() {
                 alt="Photo 4"
                 width={300}
                 height={200}
-                onClick={() => setShowGalleryModal(true)}
+                onClick={() => setLightboxIndex(3)}
                 className="photo-small"
               />
             )
@@ -165,47 +165,14 @@ export default function ExperienceDetailPage() {
         </div>
       </div>
 
-      {/* Photo Gallery Modal - with accessibility */}
-      {showGalleryModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${experience.title} Gallery`}
-          className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setShowGalleryModal(false)}
-          onKeyDown={(e) => e.key === 'Escape' && setShowGalleryModal(false)}
-          tabIndex={-1}
-        >
-          <button
-            onClick={() => setShowGalleryModal(false)}
-            aria-label="Close gallery"
-            className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div
-            className="max-w-5xl max-h-[90vh] overflow-y-auto p-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-white font-[family-name:var(--font-heading)] text-2xl mb-6 text-center">
-              {experience.title} Gallery
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {photos.map((photo, index) => (
-                <Image
-                  key={index}
-                  src={photo}
-                  alt={`${experience.title} photo ${index + 1}`}
-                  width={400}
-                  height={300}
-                  className="object-cover rounded-lg w-full h-auto"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          photos={photos}
+          title={experience.title}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       )}
 
       {/* Content - per prototype order */}
@@ -249,10 +216,8 @@ export default function ExperienceDetailPage() {
           </>
         )}
 
-        {/* 6. Route Map & Elevation - per prototype comes before video (only show if Strava ID exists) */}
-        {experience.stravaActivityId && (
-          <StravaEmbed activityId={experience.stravaActivityId} />
-        )}
+        {/* 6. Elevation Profile - replaces broken Strava embed */}
+        <ElevationChart slug={slug} />
 
         {/* 7. Video Section - per prototype (only show if video thumbnail exists) */}
         {experience.video && experience.video.thumbnail && (
@@ -263,6 +228,7 @@ export default function ExperienceDetailPage() {
             <VideoPlayer
               thumbnailSrc={experience.video.thumbnail}
               title={experience.video.title}
+              youtubeId={experience.video.youtubeId}
             />
           </>
         )}
@@ -405,5 +371,227 @@ export default function ExperienceDetailPage() {
 
       <Footer />
     </>
+  );
+}
+
+// ============================================================
+// Lightbox Component - Full-screen photo viewer with navigation
+// ============================================================
+function Lightbox({
+  photos,
+  title,
+  initialIndex,
+  onClose,
+}: {
+  photos: string[];
+  title: string;
+  initialIndex: number;
+  onClose: () => void;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  const goNext = useCallback(() => {
+    setCurrentIndex((i) => (i + 1) % photos.length);
+  }, [photos.length]);
+
+  const goPrev = useCallback(() => {
+    setCurrentIndex((i) => (i - 1 + photos.length) % photos.length);
+  }, [photos.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [onClose, goNext, goPrev]);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} Gallery`}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 200,
+        background: 'rgba(0, 0, 0, 0.95)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        aria-label="Close gallery"
+        style={{
+          position: 'absolute',
+          top: '16px',
+          right: '16px',
+          width: '44px',
+          height: '44px',
+          background: 'rgba(255,255,255,0.1)',
+          border: 'none',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          cursor: 'pointer',
+          zIndex: 10,
+        }}
+      >
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Counter */}
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        color: 'rgba(255,255,255,0.7)',
+        fontSize: '14px',
+        zIndex: 10,
+      }}>
+        {currentIndex + 1} / {photos.length}
+      </div>
+
+      {/* Previous button */}
+      <button
+        onClick={(e) => { e.stopPropagation(); goPrev(); }}
+        aria-label="Previous photo"
+        style={{
+          position: 'absolute',
+          left: '16px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '48px',
+          height: '48px',
+          background: 'rgba(255,255,255,0.1)',
+          border: 'none',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          cursor: 'pointer',
+          zIndex: 10,
+        }}
+      >
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      {/* Next button */}
+      <button
+        onClick={(e) => { e.stopPropagation(); goNext(); }}
+        aria-label="Next photo"
+        style={{
+          position: 'absolute',
+          right: '16px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '48px',
+          height: '48px',
+          background: 'rgba(255,255,255,0.1)',
+          border: 'none',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          cursor: 'pointer',
+          zIndex: 10,
+        }}
+      >
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      {/* Photo - natural aspect ratio */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          maxWidth: '90vw',
+          maxHeight: '80vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Image
+          src={photos[currentIndex]}
+          alt={`${title} photo ${currentIndex + 1}`}
+          width={1200}
+          height={900}
+          style={{
+            maxWidth: '90vw',
+            maxHeight: '80vh',
+            width: 'auto',
+            height: 'auto',
+            objectFit: 'contain',
+            borderRadius: '4px',
+          }}
+        />
+      </div>
+
+      {/* Thumbnail strip */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: 'absolute',
+          bottom: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '8px',
+          maxWidth: '90vw',
+          overflowX: 'auto',
+          padding: '8px',
+        }}
+      >
+        {photos.map((photo, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            aria-label={`View photo ${index + 1}`}
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '4px',
+              overflow: 'hidden',
+              border: index === currentIndex ? '2px solid white' : '2px solid transparent',
+              opacity: index === currentIndex ? 1 : 0.5,
+              cursor: 'pointer',
+              flexShrink: 0,
+              padding: 0,
+              background: 'none',
+            }}
+          >
+            <Image
+              src={photo}
+              alt={`Thumbnail ${index + 1}`}
+              width={48}
+              height={48}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }

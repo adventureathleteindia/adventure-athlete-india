@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "route_id": "003",
+    "slug": "ghepan-lake-hike",
+    "folder_name": "003-ghepan-lake-hike",
+    "status": "draft",
+    "created_date": "2026-02-13",
+    "polished": false,
+    "hasContent": false
+  },
+  "basic_info": {
+    "title": "Ghepan lake - Hike",
+    "intro": "The kind of lake you think only exists in wallpapers - until you're standing next to it.",
+    "category": "Hiking",
+    "categoryValue": "hiking",
+    "difficulty": "Hard",
+    "difficultyLevel": 4,
+    "date": "2024-10-13",
+    "tags": [
+      "Amazing lake",
+      "glacier Lake",
+      "big Mountain"
+    ]
+  },
+  "location": {
+    "start_point": "Labrang village (Near Sissu)",
+    "end_point": "Labrang village (Near Sissu)",
+    "route": "Sissu, Labrang, Ghrpan lake, Labrang, Sissu",
+    "district": "Lahaul Spiti",
+    "state": "Himachal Pradesh",
+    "location": "Lahaul Spiti, Himachal Pradesh",
+    "how_to_reach": "To reach Sissu first you need to reach Manali, and from there, you can take the bus that usually takes two hours or a cab taxi to reach Sisu. You cross a tunnel and enter Lahaul Valley and reach Sisu."
+  },
+  "metrics": {
+    "strava_link": "",
+    "strava_activity_id": null,
+    "strava_distance_km": null,
+    "strava_elevation_m": null,
+    "distance_km": 23.3,
+    "distance": "23.3 km",
+    "elevation_gain_m": 1609,
+    "elevation": "1609m",
+    "duration": "10.2 hrs",
+    "max_altitude_m": 4076,
+    "start_altitude_m": 3475
+  },
+  "website_extras": {
+    "best_season": "Autumn ",
+    "gear": "Trail shoes, hiking pole, oxygen mini cyclinder, whistle, There is plenty of water on trail, ",
+    "what_to_bring": [
+      "Trail running shoes, hiking pole, a warm jacket, mini oxygen cylinder as it is high altitude, do not go solo."
+    ]
+  },
+  "notes": {
+    "raw_description": "It was a first hike for me like I did not do multiple days track. I went early morning and came back in the evening. It was around 8 to 10 hours of hike for me. I took some food items like boiled potatoes, eggs, chocolate, peanut butter bread we were three people so took enough for the lunch for three of us., apart from that in the gear, I was having trail learning shoes, jacket, cap, sunglasses, water pack, although there was plenty of water on the trail. The crossing of the water were four in which one of them was very difficult to cross, even in the autumn on the water was less so I think going early makes the water little less because the glacier melts slow in the morning and it gets easier. Ghepan lake in Lahaul Valley of Himachal Pradesh, India (near Sissu)\nStart point: 1 kms above Labrang village (i.e. 3 km from Sissu)\n\nTotal Distance: 23.5 kms\nMax elevation: 4100 m\nGPS route mapping:   / strava  \nElevation gain 1250 M (back and forth)\n\nAlert: The altitude hits you, stream crossing can be challenging in peak seasons, don't underestimate the mountain.\n",
+    "notes_from_file": "",
+    "media_info": ""
+  },
+  "media": {
+    "hero_image": null,
+    "card_image": null,
+    "photos": null,
+    "youtube_url": "https://www.youtube.com/watch?v=ySrJ9w9r8uQ",
+    "youtube_id": "ySrJ9w9r8uQ",
+    "video_thumbnail": null,
+    "photos_count": 0,
+    "videos_count": 0,
+    "audio_count": 0,
+    "has_gpx": true
+  },
+  "polished_content": {
+    "website_description": null,
+    "opening_paragraph": null,
+    "content": null,
+    "instagram_caption": null,
+    "youtube_description": null,
+    "short_summary": null
+  },
+  "checklist": {
+    "basic_info_complete": true,
+    "location_complete": true,
+    "metrics_available": true,
+    "notes_added": true,
+    "media_added": false,
+    "polished": false,
+    "published": false
+  }
+}

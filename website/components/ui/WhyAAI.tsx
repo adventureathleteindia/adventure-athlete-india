@@ -59,7 +59,7 @@ export default function WhyAAI() {
           {/* Image */}
           <div className="rounded-xl overflow-hidden" style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
             <Image
-              src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=800&q=80"
+              src="/images/atul-whyaai.jpg"
               alt="Atul Chauhan in action"
               width={600}
               height={400}
