@@ -36,6 +36,13 @@ Local Mac → GitHub (main) → Vercel (auto-deploy) → Live site
 - GitHub repo is the **single source of truth** for code
 - `.env.local` is gitignored — must be created manually on each machine
 
+### Pre-Push Checklist (MUST DO before every push)
+
+1. **`npx next build`** — must pass with zero errors
+2. **Check for untracked imports** — run `git status` and verify no untracked files are imported by committed code. Local builds pass even if a file isn't in git (it exists on disk), but Vercel clones from git and will fail.
+3. **Verify deployment after push** — check deployment status via `gh api repos/adventureathleteindia/adventure-athlete-india/deployments` and confirm state is "success", not "failure". Don't assume it worked.
+4. **No secrets** — never commit `.env`, credentials, or API keys
+
 ### Setting up on a new Mac
 
 1. Install Node.js
@@ -145,12 +152,69 @@ Full schema is at `website/lib/supabase/schema.sql`. Includes tables, RLS polici
 
 (No current bugs)
 
-### Pending
+### Pending — Pre-Launch
 
-- [ ] **Strava link**: Currently `strava.com/athletes/atulchauhan` — user will share correct URL later
-- [ ] **Custom domain**: User will purchase later, then configure in Vercel
-- [ ] **Jest config**: Never committed to git — tests can't run. Not blocking (build + lint are primary checks)
-- [ ] **Test the form → database flow**: User needs to submit a test form and verify row appears in Supabase
+- [ ] **Print business cards**: 100-200 qty, files ready at `/design/business-card/`
+- [ ] **Print hotel pamphlets**: 50-100 qty, files ready at `/design/hotel-pamphlet/`
+- [ ] **Set up WhatsApp Business**: Register business number
+- [ ] **Generate WhatsApp QR code**: For marketing materials
+- [ ] **Test form → database flow**: Submit test form on live site, verify row in Supabase
+- [ ] **Create price list PDF**: For sharing with leads
+- [ ] **Add photos to athlete profile**: User needs to add personal photos before finalizing print
+
+### Pending — Later
+
+- [ ] **Strava link**: Currently `strava.com/athletes/atulchauhan` — user will share correct URL
+- [ ] **Custom domain**: Purchase and configure in Vercel
+- [ ] **Instagram/Strava handle consistency**: User considering switching to `adventureathleindia` (no dot) across all platforms
+- [ ] **Jest config**: Never committed — tests can't run (not blocking, build + lint are primary checks)
+
+### Future Enhancements
+
+- [ ] **Add Motorbikes to hotel pamphlet**: Once partnered with motorcyclists (TODO added in HTML)
+- [ ] **Admin Expense Tracking** (`/admin/expenses`): Track all business expenses in one place (see schema below)
+- [ ] **Admin Calendar Integration**: Booking calendar, availability management
+- [ ] **Admin Email Templates**: Quick responses for common inquiries
+- [ ] **Admin Analytics Dashboard**: Lead conversion rates, popular experiences, seasonal trends
+
+### Expense Tracking Schema (Future)
+
+```sql
+-- Table: expenses
+CREATE TABLE expenses (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  date DATE NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  category TEXT NOT NULL,  -- equipment, marketing, travel, maintenance, partnerships, operations, legal, other
+  subcategory TEXT,        -- e.g., "bike parts", "hotel pamphlets", "fuel"
+  description TEXT NOT NULL,
+  vendor TEXT,             -- who was paid
+  payment_method TEXT,     -- cash, upi, card, bank_transfer
+  receipt_url TEXT,        -- optional: uploaded receipt image
+  is_recurring BOOLEAN DEFAULT FALSE,
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Categories to use:
+-- equipment     - bikes, ski gear, tools, safety equipment
+-- marketing     - printing, ads, promotional materials
+-- travel        - fuel, vehicle maintenance, transport
+-- maintenance   - bike repairs, gear servicing
+-- partnerships  - hotel commissions, guide fees
+-- operations    - software, hosting, subscriptions
+-- legal         - licenses, permits, insurance
+-- other         - miscellaneous
+```
+
+**Admin UI Features (planned):**
+- Add/edit/delete expenses
+- Filter by date range, category
+- Monthly/yearly totals
+- Category-wise breakdown charts
+- Export to CSV for accounting
+- Receipt image upload
 
 ### Lint Warnings (non-blocking, 0 errors)
 
@@ -166,9 +230,9 @@ Full schema is at `website/lib/supabase/schema.sql`. Includes tables, RLS polici
 - Nav overflow at tablet widths: Fixed by changing desktop breakpoint from `md` (768px) to `lg` (1024px)
 - Supabase tables: Dropped and recreated cleanly with full schema
 - Nav CTA button overflow at intermediate widths: Fixed by making button responsive ("Plan" at lg, full text at xl)
-- Hamburger menu not working on /tours-programs: Fixed using React Portal to render menu at document.body level
-- Z-index layering on /experiences hamburger menu: Fixed with same portal solution (z-index 9999)
+- Hamburger menu on /tours-programs: Fixed by removing `whiteSpace: nowrap` causing horizontal overflow, using direct fixed positioning (removed portal)
 - No current page indicator on mobile: Added centered page title in nav (amber color, mobile only)
+- Social icons on mobile: Dark grey (#374151) on homepage only, brand colors in hamburger menu (inline styles to prevent CSS override)
 
 ---
 
@@ -385,6 +449,17 @@ All optional fields use conditional rendering:
 - Empty strings (`""`) for media will NOT render the section
 - Author defaults to `defaultAuthor` (Atul Chauhan)
 - Photos default to single image array from card image
+
+### Publishing Experience Checklist (ALL steps when setting hasContent: true)
+
+When publishing an experience to the website, complete ALL of these steps:
+
+1. **Gallery images** — Convert photos from `experiences/XXX/media/photos/` to `website/public/images/experiences/<slug>-gallery/1.jpg, 2.jpg...` (use `sips -s format jpeg -Z 800`)
+2. **Update `experiences.ts`** — Set `hasContent: true`, add all content fields (intro, content, gettingThere, whatToBring, notes, video, etc.), add `photos` array pointing to gallery images
+3. **Update `elevation-data.ts`** — If GPX exists, parse it and add elevation profile data to `website/lib/elevation-data.ts` (clean GPS spikes if needed). The `ElevationChart` component reads from this file — without an entry, no chart shows.
+4. **Build** — Run `npx next build` to verify
+5. **Check untracked files** — Run `git status` and make sure ALL new files referenced by code are staged
+6. **Commit, push, verify** — Commit, push, then check Vercel deployment status is "success"
 
 ---
 

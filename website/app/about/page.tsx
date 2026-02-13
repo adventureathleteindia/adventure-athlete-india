@@ -57,7 +57,7 @@ const journey = [
 const summits = [
   { name: "Chandernahan Lake", altitude: "4,000m", desc: "First MTB to the sacred lake, 2019", image: "/images/about-chandernahan.jpg" },
   { name: "Nochi Top", altitude: "3,500m", desc: "First MTB ascent, Winter 2020", image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&q=80" },
-  { name: "Kuppar Peak", altitude: "3,350m", desc: "First MTB summit from Shimla side", image: "/images/about-kuppar.jpg" },
+  { name: "Kuppar Peak", altitude: "3,350m", desc: "First MTB summit from Shimla side", image: "/images/experiences/kuppar-peak.jpg" },
 ];
 
 // Per prototype: exact dashboard content
