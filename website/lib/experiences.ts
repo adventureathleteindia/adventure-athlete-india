@@ -519,10 +519,13 @@ export function getExperiencesWithContent(): Experience[] {
 }
 
 /**
- * Get experiences for home page (first 3, mix of content/coming soon)
+ * Get experiences for home page (curated selection with content)
  */
 export function getHomePageExperiences(): Experience[] {
-  return experiences.slice(0, 3);
+  const homePageSlugs = ["shali-tibba", "ghepan-lake", "chuur-peak"];
+  return homePageSlugs
+    .map((slug) => experiences.find((exp) => exp.slug === slug))
+    .filter((exp): exp is Experience => exp !== undefined);
 }
 
 /**
